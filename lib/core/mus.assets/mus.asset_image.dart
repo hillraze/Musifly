@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/core/mus.assets/export.dart';
-import 'package:flutter_application_1/core/mus.assets/mus.asset.dart';
+import 'package:musifly/core/mus.assets/export.dart';
+import 'package:musifly/core/mus.assets/mus.asset.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MusAssetImage extends StatelessWidget {
   const MusAssetImage(
@@ -33,6 +34,15 @@ class MusAssetImage extends StatelessWidget {
             fit: fit,
             alignment: alignment,
           ),
+        );
+      case MusAssetType.vector:
+        return SvgPicture.asset(
+          asset.path,
+          width: width,
+          height: height,
+          color: color,
+          fit: fit,
+          alignment: alignment,
         );
       default:
         return Container();

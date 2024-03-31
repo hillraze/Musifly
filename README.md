@@ -1,4 +1,4 @@
-# flutter_application_1
+# musifly
 
 A new Flutter project.
 

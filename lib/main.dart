@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/onboarding/onboarding_screen.dart';
-import 'pages/splash/splash_screen.dart';
-import 'pages/homepage/home_page.dart';
+import 'package:musifly/analytics/events/core/dependency_squirrel.dart';
+import 'package:musifly/utils/theme/mus.theme.dart';
+import 'package:provider/provider.dart';
+import 'providers/onboard_provider.dart';
+import 'package:musifly/presentation/navigation/router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+import 'utils/theme/mus.theme_provider.dart';
+
+GlobalKey<NavigatorState> screenNavigatorKey = GlobalKey();
+GlobalKey<NavigatorState> shellKey = GlobalKey();
+
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('storage');
+  RouterService.init(screenNavigatorKey, shellKey);
+
   runApp(const MyApp());
 }
 
@@ -13,17 +25,29 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: onboarding_screen_page(),
-      theme: ThemeData(
-        fontFamily: 'Poppins',
-        // elevatedButtonTheme: ElevatedButtonThemeData(
-        //   style: ButtonStyle(
-        //     textStyle: MaterialStatePropertyAll<TextStyle>(
-        //         TextStyle(fontFamily: 'Poppins')),
-        //   ),
-      ),
-    );
-    // );
+    final musThemeProvider =
+        MusThemeProvider(MusTheme(key: "default", name: 'default'));
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => AppService(),
+          ),
+          ChangeNotifierProvider<MusThemeProvider>(
+              create: (_) => musThemeProvider, lazy: false),
+        ],
+        child: Listen<MusThemeProvider>(builder: (context) {
+          return MaterialApp.router(
+            routerConfig: RouterService.instance.goRouter,
+            theme: ThemeData(
+              fontFamily: 'Poppins',
+              // elevatedButtonTheme: ElevatedButtonThemeData(
+              //   style: ButtonStyle(
+              //     textStyle: MaterialStatePropertyAll<TextStyle>(
+              //         TextStyle(fontFamily: 'Poppins')),
+              //   ),
+            ),
+          );
+        }));
   }
+  // );
 }
