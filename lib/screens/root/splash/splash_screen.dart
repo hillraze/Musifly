@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:musifly/analytics/events/screen_names.dart';
 import 'package:musifly/core/mus.assets/mus.assets.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
+import 'package:musifly/data/data_sources/api/rest_client/rest_client.dart';
 import 'package:musifly/providers/onboard_provider.dart';
+import 'package:musifly/utils/locator_service.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +20,17 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
+    getAlbums();
     _navigateAway();
+  }
+
+  Future getAlbums() async {
+    try {
+      final albums = await getIt<RestClient>().getNewAlbums();
+      print("Splash > get new albums: $albums");
+    } catch (e) {
+      print("ERROR >>> SPLASH: $e");
+    }
   }
 
   @override

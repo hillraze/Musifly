@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musifly/analytics/events/core/dependency_squirrel.dart';
+import 'package:musifly/utils/locator_service.dart';
 import 'package:musifly/utils/theme/mus.theme.dart';
 import 'package:provider/provider.dart';
 import 'providers/onboard_provider.dart';
@@ -15,6 +16,8 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox('storage');
   RouterService.init(screenNavigatorKey, shellKey);
+
+  await initLocator();
 
   runApp(const MyApp());
 }
