@@ -3,12 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musifly/analytics/events/screen_names.dart';
-import 'package:musifly/screens/bottom_bar/bottom_bar_shell.dart';
-import 'package:musifly/screens/favourites/favourites_screen.dart';
-import 'package:musifly/screens/homescreen/home_screen.dart';
-import 'package:musifly/screens/onboarding/onboarding_screen.dart';
-import 'package:musifly/screens/root/splash/splash_screen.dart';
-import 'package:musifly/screens/search/search_screen.dart';
+
+import '../screens/album_view/album_view_screen.dart';
+import '../screens/bottom_bar/bottom_bar_shell.dart';
+import '../screens/favourites/favourites_screen.dart';
+import '../screens/onboarding/onboarding_screen.dart';
+import '../screens/root/splash/splash_screen.dart';
+import '../screens/search/search_screen.dart';
 
 class RouterService {
   static RouterService? _instance;

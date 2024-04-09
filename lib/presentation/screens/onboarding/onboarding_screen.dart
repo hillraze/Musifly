@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:musifly/core/mus.assets/export.dart';
 import 'package:musifly/core/mus.assets/mus.assets.dart';
-import 'package:musifly/widgets/mus.button.dart';
 import 'package:gap/gap.dart';
+
+import '../../widgets/mus.button.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});

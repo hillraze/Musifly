@@ -3,7 +3,7 @@ import 'package:musifly/analytics/events/core/dependency_squirrel.dart';
 import 'package:musifly/utils/locator_service.dart';
 import 'package:musifly/utils/theme/mus.theme.dart';
 import 'package:provider/provider.dart';
-import 'providers/onboard_provider.dart';
+import 'presentation/providers/app_notifier.dart';
 import 'package:musifly/presentation/navigation/router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -32,9 +32,7 @@ class MyApp extends StatelessWidget {
         MusThemeProvider(MusTheme(key: "default", name: 'default'));
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(
-            create: (context) => AppService(),
-          ),
+          ChangeNotifierProvider(create: (context) => AppNotifier()),
           ChangeNotifierProvider<MusThemeProvider>(
               create: (_) => musThemeProvider, lazy: false),
         ],

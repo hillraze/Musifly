@@ -1,6 +1,5 @@
 import 'package:musifly/services/token_holder.dart';
 import 'package:musifly/utils/env_secret.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:dio/dio.dart';
 
 const _kDefaultConnectTimeout = Duration(seconds: 5);
@@ -36,8 +35,6 @@ class MyHttpClient {
     final hasToken = Tokens.hasToken;
     if (hasToken) {
       options.headers['Authorization'] = 'Bearer ${Tokens.token}';
-      options.headers['AppBuildNumber'] =
-          (await PackageInfo.fromPlatform()).buildNumber;
     }
 
     return handler.next(options);

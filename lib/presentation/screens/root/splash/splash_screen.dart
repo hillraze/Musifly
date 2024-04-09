@@ -4,7 +4,7 @@ import 'package:musifly/analytics/events/screen_names.dart';
 import 'package:musifly/core/mus.assets/mus.assets.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
 import 'package:musifly/data/data_sources/api/rest_client/rest_client.dart';
-import 'package:musifly/providers/onboard_provider.dart';
+import 'package:musifly/presentation/providers/app_notifier.dart';
 import 'package:musifly/utils/locator_service.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigateAway() async {
-    final firstVisit = context.read<AppService>().getFirstVisit();
+    final firstVisit = context.read<AppNotifier>().getFirstVisit();
     await Future.delayed(Duration(seconds: 3));
     if (mounted) {
       context.go(firstVisit ? ScreenNames.onboard : ScreenNames.home);

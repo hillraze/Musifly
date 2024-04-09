@@ -20,11 +20,9 @@ AlbumModel _$AlbumModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AlbumModel {
-  String get coverUrl => throw _privateConstructorUsedError;
-  String get artistName => throw _privateConstructorUsedError;
-  String get albumName => throw _privateConstructorUsedError;
+  String? get cover => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
   String get genre => throw _privateConstructorUsedError;
-  String get albumUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,12 +36,7 @@ abstract class $AlbumModelCopyWith<$Res> {
           AlbumModel value, $Res Function(AlbumModel) then) =
       _$AlbumModelCopyWithImpl<$Res, AlbumModel>;
   @useResult
-  $Res call(
-      {String coverUrl,
-      String artistName,
-      String albumName,
-      String genre,
-      String albumUrl});
+  $Res call({String? cover, String title, String genre});
 }
 
 /// @nodoc
@@ -59,32 +52,22 @@ class _$AlbumModelCopyWithImpl<$Res, $Val extends AlbumModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? coverUrl = null,
-    Object? artistName = null,
-    Object? albumName = null,
+    Object? cover = freezed,
+    Object? title = null,
     Object? genre = null,
-    Object? albumUrl = null,
   }) {
     return _then(_value.copyWith(
-      coverUrl: null == coverUrl
-          ? _value.coverUrl
-          : coverUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      artistName: null == artistName
-          ? _value.artistName
-          : artistName // ignore: cast_nullable_to_non_nullable
-              as String,
-      albumName: null == albumName
-          ? _value.albumName
-          : albumName // ignore: cast_nullable_to_non_nullable
+      cover: freezed == cover
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       genre: null == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
-              as String,
-      albumUrl: null == albumUrl
-          ? _value.albumUrl
-          : albumUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -98,12 +81,7 @@ abstract class _$$AlbumModelImplCopyWith<$Res>
       __$$AlbumModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String coverUrl,
-      String artistName,
-      String albumName,
-      String genre,
-      String albumUrl});
+  $Res call({String? cover, String title, String genre});
 }
 
 /// @nodoc
@@ -117,32 +95,22 @@ class __$$AlbumModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? coverUrl = null,
-    Object? artistName = null,
-    Object? albumName = null,
+    Object? cover = freezed,
+    Object? title = null,
     Object? genre = null,
-    Object? albumUrl = null,
   }) {
     return _then(_$AlbumModelImpl(
-      coverUrl: null == coverUrl
-          ? _value.coverUrl
-          : coverUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      artistName: null == artistName
-          ? _value.artistName
-          : artistName // ignore: cast_nullable_to_non_nullable
-              as String,
-      albumName: null == albumName
-          ? _value.albumName
-          : albumName // ignore: cast_nullable_to_non_nullable
+      cover: freezed == cover
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       genre: null == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
-              as String,
-      albumUrl: null == albumUrl
-          ? _value.albumUrl
-          : albumUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -152,29 +120,21 @@ class __$$AlbumModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AlbumModelImpl implements _AlbumModel {
   const _$AlbumModelImpl(
-      {required this.coverUrl,
-      required this.artistName,
-      required this.albumName,
-      required this.genre,
-      required this.albumUrl});
+      {this.cover, required this.title, required this.genre});
 
   factory _$AlbumModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AlbumModelImplFromJson(json);
 
   @override
-  final String coverUrl;
+  final String? cover;
   @override
-  final String artistName;
-  @override
-  final String albumName;
+  final String title;
   @override
   final String genre;
-  @override
-  final String albumUrl;
 
   @override
   String toString() {
-    return 'AlbumModel(coverUrl: $coverUrl, artistName: $artistName, albumName: $albumName, genre: $genre, albumUrl: $albumUrl)';
+    return 'AlbumModel(cover: $cover, title: $title, genre: $genre)';
   }
 
   @override
@@ -182,21 +142,14 @@ class _$AlbumModelImpl implements _AlbumModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AlbumModelImpl &&
-            (identical(other.coverUrl, coverUrl) ||
-                other.coverUrl == coverUrl) &&
-            (identical(other.artistName, artistName) ||
-                other.artistName == artistName) &&
-            (identical(other.albumName, albumName) ||
-                other.albumName == albumName) &&
-            (identical(other.genre, genre) || other.genre == genre) &&
-            (identical(other.albumUrl, albumUrl) ||
-                other.albumUrl == albumUrl));
+            (identical(other.cover, cover) || other.cover == cover) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.genre, genre) || other.genre == genre));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, coverUrl, artistName, albumName, genre, albumUrl);
+  int get hashCode => Object.hash(runtimeType, cover, title, genre);
 
   @JsonKey(ignore: true)
   @override
@@ -214,25 +167,19 @@ class _$AlbumModelImpl implements _AlbumModel {
 
 abstract class _AlbumModel implements AlbumModel {
   const factory _AlbumModel(
-      {required final String coverUrl,
-      required final String artistName,
-      required final String albumName,
-      required final String genre,
-      required final String albumUrl}) = _$AlbumModelImpl;
+      {final String? cover,
+      required final String title,
+      required final String genre}) = _$AlbumModelImpl;
 
   factory _AlbumModel.fromJson(Map<String, dynamic> json) =
       _$AlbumModelImpl.fromJson;
 
   @override
-  String get coverUrl;
+  String? get cover;
   @override
-  String get artistName;
-  @override
-  String get albumName;
+  String get title;
   @override
   String get genre;
-  @override
-  String get albumUrl;
   @override
   @JsonKey(ignore: true)
   _$$AlbumModelImplCopyWith<_$AlbumModelImpl> get copyWith =>

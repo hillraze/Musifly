@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musifly/analytics/events/screen_names.dart';
-import 'package:musifly/providers/onboard_provider.dart';
+import 'package:musifly/presentation/providers/app_notifier.dart';
 import 'package:provider/provider.dart';
 
 class MusButton extends StatelessWidget {
@@ -16,7 +16,7 @@ class MusButton extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           fixedSize: const Size(334, 89)),
       onPressed: () {
-        context.read<AppService>().setFirstVisit();
+        context.read<AppNotifier>().setFirstVisit();
         context.pushReplacement(ScreenNames.home);
       },
       child: const Text(

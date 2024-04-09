@@ -1,7 +1,8 @@
 import "package:flutter/material.dart";
-import "package:musifly/widgets/mus.albums.dart";
-import "package:musifly/widgets/mus.app_bar.dart";
-import "package:musifly/widgets/mus.songs.dart";
+
+import "../../widgets/mus.albums.dart";
+import "../../widgets/mus.app_bar.dart";
+import "../../widgets/mus.songs.dart";
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

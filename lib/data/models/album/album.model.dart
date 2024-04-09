@@ -7,20 +7,15 @@ part 'album.model.g.dart';
 class AlbumModel with _$AlbumModel {
   factory AlbumModel.mock() {
     return const AlbumModel(
-      coverUrl: "",
-      artistName: "Billie Eilish",
-      albumName: "don't smile at me",
+      title: "Billie Eilish",
       genre: 'k-pop',
-      albumUrl: '',
     );
   }
 
   const factory AlbumModel({
-    required String coverUrl,
-    required String artistName,
-    required String albumName,
+    String? cover,
+    required String title,
     required String genre,
-    required String albumUrl,
   }) = _AlbumModel;
 
   factory AlbumModel.fromJson(Map<String, dynamic> json) =>

@@ -2,7 +2,8 @@ import "dart:ui";
 
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
-import "package:musifly/widgets/mus.app_bar.dart";
+
+import "../../widgets/mus.app_bar.dart";
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});

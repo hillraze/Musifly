@@ -13,7 +13,7 @@ class _RestClient implements RestClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://172.20.14.228:8080/';
+    baseUrl ??= 'http://192.168.0.173:8080/';
   }
 
   final Dio _dio;
@@ -21,28 +21,31 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<dynamic> getNewAlbums() async {
+  Future<List<AlbumModel>> getNewAlbums() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+    final _result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<List<AlbumModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          'albums/new',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
-    final value = _result.data;
+            .compose(
+              _dio.options,
+              'albums/new',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var value = _result.data!
+        .map((dynamic i) => AlbumModel.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 

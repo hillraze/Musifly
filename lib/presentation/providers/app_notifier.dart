@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-class AppService extends ChangeNotifier {
+class AppNotifier extends ChangeNotifier {
   bool isFirstVisit;
 
-  AppService({this.isFirstVisit = true});
+  AppNotifier({this.isFirstVisit = true});
 
   Future<void> setFirstVisit() async {
     isFirstVisit = false;

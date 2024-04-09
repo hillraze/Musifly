@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
-import "package:musifly/widgets/mus.app_bar.dart";
+
+import "../../widgets/mus.app_bar.dart";
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,12 +16,9 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            ColoredBox(
-              color: Colors.red,
-              child: SizedBox(
-                width: 500,
-                height: 500,
-              ),
+            SizedBox(
+              width: 500,
+              height: 500,
             )
           ],
         ),
