@@ -7,20 +7,20 @@ part 'song.model.g.dart';
 class SongModel with _$SongModel {
   factory SongModel.mock() {
     return const SongModel(
-      coverUrl: "",
-      artistName: "Billie Eilish",
-      songName: "Bad Guy",
+      cover: "",
+      artist: "Billie Eilish",
+      title: "Bad Guy",
       genre: 'k-pop',
-      audioUrl: '',
+      audioLink: '',
     );
   }
 
   const factory SongModel({
-    required String coverUrl,
-    required String artistName,
-    required String songName,
+    required String cover,
+    required String title,
+    required String artist,
     required String genre,
-    required String audioUrl,
+    required String audioLink,
   }) = _SongModel;
 
   factory SongModel.fromJson(Map<String, dynamic> json) =>

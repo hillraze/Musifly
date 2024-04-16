@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musifly/analytics/events/core/dependency_squirrel.dart';
+import 'package:musifly/presentation/providers/home_screen_notifier.dart';
 import 'package:musifly/utils/locator_service.dart';
 import 'package:musifly/utils/theme/mus.theme.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
         MusThemeProvider(MusTheme(key: "default", name: 'default'));
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => AppNotifier()),
+          ChangeNotifierProvider(create: (_) => HomeProvider()),
+          ChangeNotifierProvider(create: (_) => AppNotifier()),
           ChangeNotifierProvider<MusThemeProvider>(
               create: (_) => musThemeProvider, lazy: false),
         ],

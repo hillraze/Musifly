@@ -3,8 +3,8 @@ import "package:flutter/widgets.dart";
 
 import "../../widgets/mus.app_bar.dart";
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class AlbumViewScreen extends StatelessWidget {
+  const AlbumViewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

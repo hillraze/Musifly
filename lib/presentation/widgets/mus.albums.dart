@@ -1,12 +1,17 @@
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
-import "package:gap/gap.dart";
-import "package:musifly/core/mus.assets/export.dart";
+
+import "../../data/models/album/album.model.dart";
 
 class MusAlbum extends StatelessWidget {
-  const MusAlbum({super.key});
+  const MusAlbum({super.key, required this.data});
 
+  final List<AlbumModel> data;
+
+  @override
   Widget build(BuildContext context) {
+    print(data);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -41,121 +46,35 @@ class MusAlbum extends StatelessWidget {
           ),
         ),
         Center(
-            child: Container(
-          width: double.infinity,
-          height: 194,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-            children: <Widget>[
-              Column(
-                children: [
-                  Container(
-                    height: 160,
-                    width: 160,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(MusAssets.mockCover.path),
-                      ),
+          child: SizedBox(
+              width: double.infinity,
+              height: 194,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                itemCount: data.length,
+                itemBuilder: (context, index) => Column(
+                  children: [
+                    Container(
+                      height: 160,
+                      width: 160,
+                      decoration: data[index].cover != null
+                          ? BoxDecoration(
+                              image: DecorationImage(
+                              image: NetworkImage(data[index].cover!),
+                            ))
+                          : null,
                     ),
-                  ),
-                  Container(
-                    child: const Text('Chained To The Rhythm',
-                        style: TextStyle(fontSize: 12, color: Colors.white)),
-                  ),
-                  Container(
-                    child: const Text('Katy Perry',
-                        style: TextStyle(fontSize: 10, color: Colors.grey)),
-                  ),
-                ],
-              ),
-              const Gap(10),
-              Column(
-                children: [
-                  Container(
-                    height: 160,
-                    width: 160,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: AssetImage(MusAssets.mockCover.path),
-                    )),
-                  ),
-                  Container(
-                    child: const Text('Chained To The Rhythm',
-                        style: TextStyle(fontSize: 12, color: Colors.white)),
-                  ),
-                  Container(
-                    child: const Text('Katy Perry',
-                        style: TextStyle(fontSize: 10, color: Colors.grey)),
-                  ),
-                ],
-              ),
-              const Gap(10),
-              Column(
-                children: [
-                  Container(
-                    height: 160,
-                    width: 160,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: AssetImage(MusAssets.mockCover.path),
-                    )),
-                  ),
-                  Container(
-                    child: const Text('Chained To The Rhythm',
-                        style: TextStyle(fontSize: 12, color: Colors.white)),
-                  ),
-                  Container(
-                    child: const Text('Katy Perry',
-                        style: TextStyle(fontSize: 10, color: Colors.grey)),
-                  ),
-                ],
-              ),
-              const Gap(10),
-              Column(
-                children: [
-                  Container(
-                    height: 160,
-                    width: 160,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: AssetImage(MusAssets.mockCover.path),
-                    )),
-                  ),
-                  Container(
-                    child: const Text('Chained To The Rhythm',
-                        style: TextStyle(fontSize: 12, color: Colors.white)),
-                  ),
-                  Container(
-                    child: const Text('Katy Perry',
-                        style: TextStyle(fontSize: 10, color: Colors.grey)),
-                  ),
-                ],
-              ),
-              const Gap(10),
-              Column(
-                children: [
-                  Container(
-                    height: 160,
-                    width: 160,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: AssetImage(MusAssets.mockCover.path),
-                    )),
-                  ),
-                  Container(
-                    child: const Text('Chained To The Rhythm',
-                        style: TextStyle(fontSize: 12, color: Colors.white)),
-                  ),
-                  Container(
-                    child: const Text('Katy Perry',
-                        style: TextStyle(fontSize: 10, color: Colors.grey)),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        )),
+                    Text(data[index].title,
+                        style:
+                            const TextStyle(fontSize: 12, color: Colors.white)),
+                    Text(data[index].genre,
+                        style:
+                            const TextStyle(fontSize: 10, color: Colors.grey)),
+                  ],
+                ),
+              )),
+        ),
       ],
     );
   }

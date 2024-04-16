@@ -7,6 +7,7 @@ import 'package:musifly/analytics/events/screen_names.dart';
 import '../screens/album_view/album_view_screen.dart';
 import '../screens/bottom_bar/bottom_bar_shell.dart';
 import '../screens/favourites/favourites_screen.dart';
+import '../screens/home/home_screen.dart';
 import '../screens/onboarding/onboarding_screen.dart';
 import '../screens/root/splash/splash_screen.dart';
 import '../screens/search/search_screen.dart';

@@ -8,18 +8,18 @@ part of 'song.model.dart';
 
 _$SongModelImpl _$$SongModelImplFromJson(Map<String, dynamic> json) =>
     _$SongModelImpl(
-      coverUrl: json['coverUrl'] as String,
-      artistName: json['artistName'] as String,
-      songName: json['songName'] as String,
+      cover: json['cover'] as String,
+      artist: json['artist'] as String,
+      title: json['title'] as String,
       genre: json['genre'] as String,
-      audioUrl: json['audioUrl'] as String,
+      audioLink: json['audioLink'] as String,
     );
 
 Map<String, dynamic> _$$SongModelImplToJson(_$SongModelImpl instance) =>
     <String, dynamic>{
-      'coverUrl': instance.coverUrl,
-      'artistName': instance.artistName,
-      'songName': instance.songName,
+      'cover': instance.cover,
+      'artist': instance.artist,
+      'title': instance.title,
       'genre': instance.genre,
-      'audioUrl': instance.audioUrl,
+      'audioLink': instance.audioLink,
     };

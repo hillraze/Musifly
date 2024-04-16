@@ -20,11 +20,11 @@ SongModel _$SongModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SongModel {
-  String get coverUrl => throw _privateConstructorUsedError;
-  String get artistName => throw _privateConstructorUsedError;
-  String get songName => throw _privateConstructorUsedError;
+  String get cover => throw _privateConstructorUsedError;
+  String get artist => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
   String get genre => throw _privateConstructorUsedError;
-  String get audioUrl => throw _privateConstructorUsedError;
+  String get audioLink => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,11 +38,11 @@ abstract class $SongModelCopyWith<$Res> {
       _$SongModelCopyWithImpl<$Res, SongModel>;
   @useResult
   $Res call(
-      {String coverUrl,
-      String artistName,
-      String songName,
+      {String cover,
+      String artist,
+      String title,
       String genre,
-      String audioUrl});
+      String audioLink});
 }
 
 /// @nodoc
@@ -58,32 +58,32 @@ class _$SongModelCopyWithImpl<$Res, $Val extends SongModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? coverUrl = null,
-    Object? artistName = null,
-    Object? songName = null,
+    Object? cover = null,
+    Object? artist = null,
+    Object? title = null,
     Object? genre = null,
-    Object? audioUrl = null,
+    Object? audioLink = null,
   }) {
     return _then(_value.copyWith(
-      coverUrl: null == coverUrl
-          ? _value.coverUrl
-          : coverUrl // ignore: cast_nullable_to_non_nullable
+      cover: null == cover
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
               as String,
-      artistName: null == artistName
-          ? _value.artistName
-          : artistName // ignore: cast_nullable_to_non_nullable
+      artist: null == artist
+          ? _value.artist
+          : artist // ignore: cast_nullable_to_non_nullable
               as String,
-      songName: null == songName
-          ? _value.songName
-          : songName // ignore: cast_nullable_to_non_nullable
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       genre: null == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
               as String,
-      audioUrl: null == audioUrl
-          ? _value.audioUrl
-          : audioUrl // ignore: cast_nullable_to_non_nullable
+      audioLink: null == audioLink
+          ? _value.audioLink
+          : audioLink // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -98,11 +98,11 @@ abstract class _$$SongModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String coverUrl,
-      String artistName,
-      String songName,
+      {String cover,
+      String artist,
+      String title,
       String genre,
-      String audioUrl});
+      String audioLink});
 }
 
 /// @nodoc
@@ -116,32 +116,32 @@ class __$$SongModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? coverUrl = null,
-    Object? artistName = null,
-    Object? songName = null,
+    Object? cover = null,
+    Object? artist = null,
+    Object? title = null,
     Object? genre = null,
-    Object? audioUrl = null,
+    Object? audioLink = null,
   }) {
     return _then(_$SongModelImpl(
-      coverUrl: null == coverUrl
-          ? _value.coverUrl
-          : coverUrl // ignore: cast_nullable_to_non_nullable
+      cover: null == cover
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
               as String,
-      artistName: null == artistName
-          ? _value.artistName
-          : artistName // ignore: cast_nullable_to_non_nullable
+      artist: null == artist
+          ? _value.artist
+          : artist // ignore: cast_nullable_to_non_nullable
               as String,
-      songName: null == songName
-          ? _value.songName
-          : songName // ignore: cast_nullable_to_non_nullable
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       genre: null == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
               as String,
-      audioUrl: null == audioUrl
-          ? _value.audioUrl
-          : audioUrl // ignore: cast_nullable_to_non_nullable
+      audioLink: null == audioLink
+          ? _value.audioLink
+          : audioLink // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -151,29 +151,29 @@ class __$$SongModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SongModelImpl implements _SongModel {
   const _$SongModelImpl(
-      {required this.coverUrl,
-      required this.artistName,
-      required this.songName,
+      {required this.cover,
+      required this.artist,
+      required this.title,
       required this.genre,
-      required this.audioUrl});
+      required this.audioLink});
 
   factory _$SongModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SongModelImplFromJson(json);
 
   @override
-  final String coverUrl;
+  final String cover;
   @override
-  final String artistName;
+  final String artist;
   @override
-  final String songName;
+  final String title;
   @override
   final String genre;
   @override
-  final String audioUrl;
+  final String audioLink;
 
   @override
   String toString() {
-    return 'SongModel(coverUrl: $coverUrl, artistName: $artistName, songName: $songName, genre: $genre, audioUrl: $audioUrl)';
+    return 'SongModel(cover: $cover, artist: $artist, title: $title, genre: $genre, audioLink: $audioLink)';
   }
 
   @override
@@ -181,21 +181,18 @@ class _$SongModelImpl implements _SongModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SongModelImpl &&
-            (identical(other.coverUrl, coverUrl) ||
-                other.coverUrl == coverUrl) &&
-            (identical(other.artistName, artistName) ||
-                other.artistName == artistName) &&
-            (identical(other.songName, songName) ||
-                other.songName == songName) &&
+            (identical(other.cover, cover) || other.cover == cover) &&
+            (identical(other.artist, artist) || other.artist == artist) &&
+            (identical(other.title, title) || other.title == title) &&
             (identical(other.genre, genre) || other.genre == genre) &&
-            (identical(other.audioUrl, audioUrl) ||
-                other.audioUrl == audioUrl));
+            (identical(other.audioLink, audioLink) ||
+                other.audioLink == audioLink));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, coverUrl, artistName, songName, genre, audioUrl);
+      Object.hash(runtimeType, cover, artist, title, genre, audioLink);
 
   @JsonKey(ignore: true)
   @override
@@ -213,25 +210,25 @@ class _$SongModelImpl implements _SongModel {
 
 abstract class _SongModel implements SongModel {
   const factory _SongModel(
-      {required final String coverUrl,
-      required final String artistName,
-      required final String songName,
+      {required final String cover,
+      required final String artist,
+      required final String title,
       required final String genre,
-      required final String audioUrl}) = _$SongModelImpl;
+      required final String audioLink}) = _$SongModelImpl;
 
   factory _SongModel.fromJson(Map<String, dynamic> json) =
       _$SongModelImpl.fromJson;
 
   @override
-  String get coverUrl;
+  String get cover;
   @override
-  String get artistName;
+  String get artist;
   @override
-  String get songName;
+  String get title;
   @override
   String get genre;
   @override
-  String get audioUrl;
+  String get audioLink;
   @override
   @JsonKey(ignore: true)
   _$$SongModelImplCopyWith<_$SongModelImpl> get copyWith =>

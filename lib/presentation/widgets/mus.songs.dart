@@ -4,9 +4,12 @@ import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:musifly/core/mus.assets/export.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
+import 'package:musifly/data/models/song/song.model.dart';
 
 class MusSongs extends StatelessWidget {
-  const MusSongs({super.key});
+  const MusSongs({super.key, required this.data});
+
+  final List<SongModel> data;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,7 @@ class MusSongs extends StatelessWidget {
             return GridView.builder(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
-                itemCount: 12,
+                itemCount: data.length,
                 padding: const EdgeInsets.only(left: 16),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
@@ -57,25 +60,33 @@ class MusSongs extends StatelessWidget {
                   return Row(
                     children: [
                       ClipRRect(
-                        child: const MusAssetImage(MusAssets.mockCover,
-                            height: 50),
                         borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: data[index].cover != null
+                              ? BoxDecoration(
+                                  image: DecorationImage(
+                                  image: NetworkImage(data[index].cover!),
+                                ))
+                              : null,
+                        ),
                       ),
-                      Gap(4),
-                      const Expanded(
+                      const Gap(4),
+                      Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Chained to the Rhytm ',
+                              data[index].title,
                               overflow: TextOverflow.ellipsis,
                               style:
                                   TextStyle(color: Colors.white, fontSize: 12),
                             ),
                             Flexible(
                               child: Text(
-                                'Katty Perry',
+                                data[index].genre,
                                 overflow: TextOverflow.ellipsis,
                                 style:
                                     TextStyle(color: Colors.grey, fontSize: 10),
@@ -85,9 +96,9 @@ class MusSongs extends StatelessWidget {
                         ),
                       ),
                       // Spacer(),
-                      Gap(5),
+                      const Gap(5),
                       const MusAssetImage(MusAssets.vdots),
-                      Gap(15)
+                      const Gap(15)
                     ],
                   );
                 });
