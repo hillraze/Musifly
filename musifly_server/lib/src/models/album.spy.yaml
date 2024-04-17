@@ -1,0 +1,7 @@
+class: Album
+fields:
+  cover: String
+  artist: String
+  title: String
+  genre: String
+  songs: List<Song>  # assuming you want to link songs directly to albums

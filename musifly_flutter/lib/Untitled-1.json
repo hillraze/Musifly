@@ -1,0 +1,24 @@
+[
+    {
+        "cover": "https://lastfm.freetls.fastly.net/i/u/770x0/30ef0d3d35720910529fe026a2d2fe7c.jpg#30ef0d3d35720910529fe026a2d2fe7c",
+        "artist": "Death Grips",
+        "title": "Hit of the hits",
+        "genre": "Rock",
+        "songs": [
+            {
+                "artist": "Death Grips",
+                "audioLink": "https://dl.last.fm/static/1711196557/131211148/73edd47ee53a01958852b3d9f2938a603b603da021b2cdf1429cbb6e23370aa4/Death+Grips+-+Get+Got.mp3",
+                "cover": "https://lastfm.freetls.fastly.net/i/u/770x0/30ef0d3d35720910529fe026a2d2fe7c.jpg#30ef0d3d35720910529fe026a2d2fe7c",
+                "genre": "Pop",
+                "title": "Get Got"
+            },
+            {
+                "artist": "Joy Wants Eternity",
+                "audioLink": "https://dl.last.fm/static/1711196557/113553508/772dadd35e1bee9c0a9eb740e89670b051c2b0f849c70865f6010dad26f1516f/Joy+Wants+Eternity+-+From+Embrace+To+Embrace.mp3",
+                "cover": "https://lastfm.freetls.fastly.net/i/u/770x0/1b3e92a577ea478cad88c440b26d5b39.jpg#1b3e92a577ea478cad88c440b26d5b39",
+                "genre": "Rock",
+                "title": "From Embrace To Embrace"
+            }
+        ]
+    }
+]

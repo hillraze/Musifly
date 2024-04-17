@@ -1,0 +1,4 @@
+album:
+  - getNewAlbums:
+song:
+  - getNewSongs:
