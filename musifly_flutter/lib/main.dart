@@ -1,141 +1,65 @@
 import 'package:musifly_client/musifly_client.dart';
 import 'package:flutter/material.dart';
-import 'package:serverpod_flutter/serverpod_flutter.dart';
+import 'package:musifly/analytics/events/core/dependency_squirrel.dart';
+import 'package:musifly/presentation/providers/home_screen_notifier.dart';
+import 'package:musifly/utils/locator_service.dart';
+import 'package:musifly/utils/theme/mus.theme.dart';
+import 'package:provider/provider.dart';
+// import 'package:serverpod_flutter/serverpod_flutter.dart';
+import 'presentation/providers/app_notifier.dart';
+import 'package:musifly/presentation/navigation/router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-// Sets up a singleton client object that can be used to talk to the server from
-// anywhere in our app. The client is generated from your server code.
-// The client is set up to connect to a Serverpod running on a local server on
-// the default port. You will need to modify this to connect to staging or
-// production servers.
-var client = Client('http://$localhost:8080/')
-  ..connectivityMonitor = FlutterConnectivityMonitor();
+import 'utils/theme/mus.theme_provider.dart';
 
-void main() {
+GlobalKey<NavigatorState> screenNavigatorKey = GlobalKey();
+GlobalKey<NavigatorState> shellKey = GlobalKey();
+
+// var client = Client('http://192.168.0.173:8080/')
+//   ..connectivityMonitor = FlutterConnectivityMonitor();
+
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('storage');
+  RouterService.init(screenNavigatorKey, shellKey);
+
+  await initLocator();
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Serverpod Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Serverpod Example'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  MyHomePageState createState() => MyHomePageState();
-}
-
-class MyHomePageState extends State<MyHomePage> {
-  // These fields hold the last result or error message that we've received from
-  // the server or null if no result exists yet.
-  List<Album>? _resultMessage;
-  String? _errorMessage;
-
-  final _textEditingController = TextEditingController();
-
-  // Calls the `hello` method of the `example` endpoint. Will set either the
-  // `_resultMessage` or `_errorMessage` field, depending on if the call
-  // is successful.
-  void _callHello() async {
-    try {
-      final result = await client.album.getNewAlbums();
-      setState(() {
-        _errorMessage = null;
-        _resultMessage = result;
-      });
-    } catch (e) {
-      setState(() {
-        _errorMessage = '$e';
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: TextField(
-                controller: _textEditingController,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your name',
-                ),
-              ),
+    final musThemeProvider =
+        MusThemeProvider(MusTheme(key: "default", name: 'default'));
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => HomeProvider()),
+          ChangeNotifierProvider(create: (_) => AppNotifier()),
+          ChangeNotifierProvider<MusThemeProvider>(
+              create: (_) => musThemeProvider, lazy: false),
+        ],
+        child: Listen<MusThemeProvider>(builder: (context) {
+          return MaterialApp.router(
+            routerConfig: RouterService.instance.goRouter,
+            theme: ThemeData(
+              fontFamily: 'Poppins',
+              // elevatedButtonTheme: ElevatedButtonThemeData(
+              //   style: ButtonStyle(
+              //     textStyle: MaterialStatePropertyAll<TextStyle>(
+              //         TextStyle(fontFamily: 'Poppins')),
+              //   ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: ElevatedButton(
-                onPressed: _callHello,
-                child: const Text('Send to Server'),
-              ),
-            ),
-            _ResultDisplay(
-              resultMessage: _resultMessage,
-              errorMessage: _errorMessage,
-            ),
-          ],
-        ),
-      ),
-    );
+          );
+        }));
   }
+  // );
 }
 
-// _ResultDisplays shows the result of the call. Either the returned result from
-// the `example.hello` endpoint method or an error message.
-class _ResultDisplay extends StatelessWidget {
-  final List<Album>? resultMessage;
-  final String? errorMessage;
 
-  const _ResultDisplay({
-    this.resultMessage,
-    this.errorMessage,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    String text;
-    Color backgroundColor;
-    if (errorMessage != null) {
-      backgroundColor = Colors.red[300]!;
-      text = errorMessage!;
-    } else if (resultMessage != null) {
-      backgroundColor = Colors.green[300]!;
-      text = 'Works!';
-    } else {
-      backgroundColor = Colors.grey[300]!;
-      text = 'No server response yet.';
-    }
-
-    return Container(
-      height: 50,
-      color: backgroundColor,
-      child: Center(
-        child: ListView(
-          children: [
-            for (var message in resultMessage ?? []) Text(message.title),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// 
