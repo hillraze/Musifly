@@ -11,12 +11,14 @@ library protocol; // ignore_for_file: no_leading_underscores_for_library_prefixe
 
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'album.dart' as _i2;
-import 'song.dart' as _i3;
-import 'protocol.dart' as _i4;
-import 'package:musifly_client/src/protocol/album.dart' as _i5;
-import 'package:musifly_client/src/protocol/song.dart' as _i6;
+import 'playlist.dart' as _i3;
+import 'track.dart' as _i4;
+import 'protocol.dart' as _i5;
+import 'package:musifly_client/src/protocol/album.dart' as _i6;
+import 'package:musifly_client/src/protocol/track.dart' as _i7;
 export 'album.dart';
-export 'song.dart';
+export 'playlist.dart';
+export 'track.dart';
 export 'client.dart';
 
 class Protocol extends _i1.SerializationManager {
@@ -40,25 +42,31 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i2.Album) {
       return _i2.Album.fromJson(data, this) as T;
     }
-    if (t == _i3.Song) {
-      return _i3.Song.fromJson(data, this) as T;
+    if (t == _i3.Playlist) {
+      return _i3.Playlist.fromJson(data, this) as T;
+    }
+    if (t == _i4.Track) {
+      return _i4.Track.fromJson(data, this) as T;
     }
     if (t == _i1.getType<_i2.Album?>()) {
       return (data != null ? _i2.Album.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i3.Song?>()) {
-      return (data != null ? _i3.Song.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i3.Playlist?>()) {
+      return (data != null ? _i3.Playlist.fromJson(data, this) : null) as T;
     }
-    if (t == List<_i4.Song>) {
-      return (data as List).map((e) => deserialize<_i4.Song>(e)).toList()
+    if (t == _i1.getType<_i4.Track?>()) {
+      return (data != null ? _i4.Track.fromJson(data, this) : null) as T;
+    }
+    if (t == List<_i5.Track>) {
+      return (data as List).map((e) => deserialize<_i5.Track>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i5.Album>) {
-      return (data as List).map((e) => deserialize<_i5.Album>(e)).toList()
+    if (t == List<_i6.Album>) {
+      return (data as List).map((e) => deserialize<_i6.Album>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i6.Song>) {
-      return (data as List).map((e) => deserialize<_i6.Song>(e)).toList()
+    if (t == List<_i7.Track>) {
+      return (data as List).map((e) => deserialize<_i7.Track>(e)).toList()
           as dynamic;
     }
     return super.deserialize<T>(data, t);
@@ -69,8 +77,11 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i2.Album) {
       return 'Album';
     }
-    if (data is _i3.Song) {
-      return 'Song';
+    if (data is _i3.Playlist) {
+      return 'Playlist';
+    }
+    if (data is _i4.Track) {
+      return 'Track';
     }
     return super.getClassNameForObject(data);
   }
@@ -80,8 +91,11 @@ class Protocol extends _i1.SerializationManager {
     if (data['className'] == 'Album') {
       return deserialize<_i2.Album>(data['data']);
     }
-    if (data['className'] == 'Song') {
-      return deserialize<_i3.Song>(data['data']);
+    if (data['className'] == 'Playlist') {
+      return deserialize<_i3.Playlist>(data['data']);
+    }
+    if (data['className'] == 'Track') {
+      return deserialize<_i4.Track>(data['data']);
     }
     return super.deserializeByClassName(data);
   }

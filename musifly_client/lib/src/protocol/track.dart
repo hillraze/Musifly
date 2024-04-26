@@ -8,10 +8,11 @@
 // ignore_for_file: type_literal_in_constant_pattern
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class Song extends _i1.SerializableEntity {
-  Song._({
+abstract class Track extends _i1.SerializableEntity {
+  Track._({
+    this.id,
     required this.artist,
     required this.audioLink,
     required this.cover,
@@ -19,19 +20,21 @@ abstract class Song extends _i1.SerializableEntity {
     required this.title,
   });
 
-  factory Song({
+  factory Track({
+    int? id,
     required String artist,
     required String audioLink,
     required String cover,
     required String genre,
     required String title,
-  }) = _SongImpl;
+  }) = _TrackImpl;
 
-  factory Song.fromJson(
+  factory Track.fromJson(
     Map<String, dynamic> jsonSerialization,
     _i1.SerializationManager serializationManager,
   ) {
-    return Song(
+    return Track(
+      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
       artist:
           serializationManager.deserialize<String>(jsonSerialization['artist']),
       audioLink: serializationManager
@@ -45,6 +48,11 @@ abstract class Song extends _i1.SerializableEntity {
     );
   }
 
+  /// The database id, set if the object has been inserted into the
+  /// database or if it has been fetched from the database. Otherwise,
+  /// the id will be null.
+  int? id;
+
   String artist;
 
   String audioLink;
@@ -55,7 +63,8 @@ abstract class Song extends _i1.SerializableEntity {
 
   String title;
 
-  Song copyWith({
+  Track copyWith({
+    int? id,
     String? artist,
     String? audioLink,
     String? cover,
@@ -65,17 +74,7 @@ abstract class Song extends _i1.SerializableEntity {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'artist': artist,
-      'audioLink': audioLink,
-      'cover': cover,
-      'genre': genre,
-      'title': title,
-    };
-  }
-
-  @override
-  Map<String, dynamic> allToJson() {
-    return {
+      if (id != null) 'id': id,
       'artist': artist,
       'audioLink': audioLink,
       'cover': cover,
@@ -85,14 +84,18 @@ abstract class Song extends _i1.SerializableEntity {
   }
 }
 
-class _SongImpl extends Song {
-  _SongImpl({
+class _Undefined {}
+
+class _TrackImpl extends Track {
+  _TrackImpl({
+    int? id,
     required String artist,
     required String audioLink,
     required String cover,
     required String genre,
     required String title,
   }) : super._(
+          id: id,
           artist: artist,
           audioLink: audioLink,
           cover: cover,
@@ -101,14 +104,16 @@ class _SongImpl extends Song {
         );
 
   @override
-  Song copyWith({
+  Track copyWith({
+    Object? id = _Undefined,
     String? artist,
     String? audioLink,
     String? cover,
     String? genre,
     String? title,
   }) {
-    return Song(
+    return Track(
+      id: id is int? ? id : this.id,
       artist: artist ?? this.artist,
       audioLink: audioLink ?? this.audioLink,
       cover: cover ?? this.cover,

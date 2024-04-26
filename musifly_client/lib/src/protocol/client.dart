@@ -11,8 +11,9 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:musifly_client/src/protocol/album.dart' as _i3;
-import 'package:musifly_client/src/protocol/song.dart' as _i4;
-import 'protocol.dart' as _i5;
+import 'package:musifly_client/src/protocol/playlist.dart' as _i4;
+import 'package:musifly_client/src/protocol/track.dart' as _i5;
+import 'protocol.dart' as _i6;
 
 /// {@category Endpoint}
 class EndpointAlbum extends _i1.EndpointRef {
@@ -30,16 +31,69 @@ class EndpointAlbum extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
-class EndpointSong extends _i1.EndpointRef {
-  EndpointSong(_i1.EndpointCaller caller) : super(caller);
+class EndpointPlaylistEndpoints extends _i1.EndpointRef {
+  EndpointPlaylistEndpoints(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'song';
+  String get name => 'playlistEndpoints';
 
-  _i2.Future<List<_i4.Song>> getNewSongs() =>
-      caller.callServerEndpoint<List<_i4.Song>>(
-        'song',
-        'getNewSongs',
+  _i2.Future<_i4.Playlist> createPlaylist({
+    required String name,
+    required String userId,
+    required bool isPublic,
+  }) =>
+      caller.callServerEndpoint<_i4.Playlist>(
+        'playlistEndpoints',
+        'createPlaylist',
+        {
+          'name': name,
+          'userId': userId,
+          'isPublic': isPublic,
+        },
+      );
+
+  /// Update Playlist with new trackIds
+  _i2.Future<_i4.Playlist> addTrack({
+    required int playlistId,
+    required int trackId,
+  }) =>
+      caller.callServerEndpoint<_i4.Playlist>(
+        'playlistEndpoints',
+        'addTrack',
+        {
+          'playlistId': playlistId,
+          'trackId': trackId,
+        },
+      );
+
+  _i2.Future<_i4.Playlist> getPlaylist(int id) =>
+      caller.callServerEndpoint<_i4.Playlist>(
+        'playlistEndpoints',
+        'getPlaylist',
+        {'id': id},
+      );
+}
+
+/// {@category Endpoint}
+class EndpointTrack extends _i1.EndpointRef {
+  EndpointTrack(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'track';
+
+  /// Get a Track by ID
+  /// @param id The ID of the Track
+  _i2.Future<_i5.Track> getTrack(int id) =>
+      caller.callServerEndpoint<_i5.Track>(
+        'track',
+        'getTrack',
+        {'id': id},
+      );
+
+  _i2.Future<List<_i5.Track>> getNewTracks() =>
+      caller.callServerEndpoint<List<_i5.Track>>(
+        'track',
+        'getNewTracks',
         {},
       );
 }
@@ -53,24 +107,28 @@ class Client extends _i1.ServerpodClient {
     Duration? connectionTimeout,
   }) : super(
           host,
-          _i5.Protocol(),
+          _i6.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
           connectionTimeout: connectionTimeout,
         ) {
     album = EndpointAlbum(this);
-    song = EndpointSong(this);
+    playlistEndpoints = EndpointPlaylistEndpoints(this);
+    track = EndpointTrack(this);
   }
 
   late final EndpointAlbum album;
 
-  late final EndpointSong song;
+  late final EndpointPlaylistEndpoints playlistEndpoints;
+
+  late final EndpointTrack track;
 
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
         'album': album,
-        'song': song,
+        'playlistEndpoints': playlistEndpoints,
+        'track': track,
       };
 
   @override

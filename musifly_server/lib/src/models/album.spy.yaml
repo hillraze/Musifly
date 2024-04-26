@@ -4,4 +4,4 @@ fields:
   artist: String
   title: String
   genre: String
-  songs: List<Song>  # assuming you want to link songs directly to albums
+  tracks: List<Track>

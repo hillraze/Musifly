@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a music player app that allows users to search for songs, create playlists, and listen to music. Users can also view the lyrics of the song they are listening to.
+This is a music player app that allows users to search for tracks, create playlists, and listen to music. Users can also view the lyrics of the track they are listening to.
 
 musifly_server is the backend server for the musifly app.
 musifly_client is auto-generated logic

@@ -1,7 +1,6 @@
 # Name of the class to generate.
-class: Song
-
-# The fields (and columns if connected to the database) of the class.
+class: Track
+table: tracks
 fields:
   artist: String
   audioLink: String

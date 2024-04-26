@@ -1,4 +1,9 @@
 album:
   - getNewAlbums:
-song:
-  - getNewSongs:
+playlistEndpoints:
+  - createPlaylist:
+  - addTrack:
+  - getPlaylist:
+track:
+  - getTrack:
+  - getNewTracks:

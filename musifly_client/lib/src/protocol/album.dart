@@ -17,7 +17,7 @@ abstract class Album extends _i1.SerializableEntity {
     required this.artist,
     required this.title,
     required this.genre,
-    required this.songs,
+    required this.tracks,
   });
 
   factory Album({
@@ -25,7 +25,7 @@ abstract class Album extends _i1.SerializableEntity {
     required String artist,
     required String title,
     required String genre,
-    required List<_i2.Song> songs,
+    required List<_i2.Track> tracks,
   }) = _AlbumImpl;
 
   factory Album.fromJson(
@@ -41,8 +41,8 @@ abstract class Album extends _i1.SerializableEntity {
           serializationManager.deserialize<String>(jsonSerialization['title']),
       genre:
           serializationManager.deserialize<String>(jsonSerialization['genre']),
-      songs: serializationManager
-          .deserialize<List<_i2.Song>>(jsonSerialization['songs']),
+      tracks: serializationManager
+          .deserialize<List<_i2.Track>>(jsonSerialization['tracks']),
     );
   }
 
@@ -54,14 +54,14 @@ abstract class Album extends _i1.SerializableEntity {
 
   String genre;
 
-  List<_i2.Song> songs;
+  List<_i2.Track> tracks;
 
   Album copyWith({
     String? cover,
     String? artist,
     String? title,
     String? genre,
-    List<_i2.Song>? songs,
+    List<_i2.Track>? tracks,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -70,7 +70,7 @@ abstract class Album extends _i1.SerializableEntity {
       'artist': artist,
       'title': title,
       'genre': genre,
-      'songs': songs.toJson(valueToJson: (v) => v.toJson()),
+      'tracks': tracks.toJson(valueToJson: (v) => v.toJson()),
     };
   }
 }
@@ -81,13 +81,13 @@ class _AlbumImpl extends Album {
     required String artist,
     required String title,
     required String genre,
-    required List<_i2.Song> songs,
+    required List<_i2.Track> tracks,
   }) : super._(
           cover: cover,
           artist: artist,
           title: title,
           genre: genre,
-          songs: songs,
+          tracks: tracks,
         );
 
   @override
@@ -96,14 +96,14 @@ class _AlbumImpl extends Album {
     String? artist,
     String? title,
     String? genre,
-    List<_i2.Song>? songs,
+    List<_i2.Track>? tracks,
   }) {
     return Album(
       cover: cover ?? this.cover,
       artist: artist ?? this.artist,
       title: title ?? this.title,
       genre: genre ?? this.genre,
-      songs: songs ?? this.songs.clone(),
+      tracks: tracks ?? this.tracks.clone(),
     );
   }
 }

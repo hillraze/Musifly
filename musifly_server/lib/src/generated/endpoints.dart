@@ -9,8 +9,9 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import '../endpoints/album_endpoint.dart' as _i2;
-import '../endpoints/song_endpoint.dart' as _i3;
+import '../endpoints/album_endpoints.dart' as _i2;
+import '../endpoints/playlist_endpoints.dart' as _i3;
+import '../endpoints/track_endpoints.dart' as _i4;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -22,10 +23,16 @@ class Endpoints extends _i1.EndpointDispatch {
           'album',
           null,
         ),
-      'song': _i3.SongEndpoint()
+      'playlistEndpoints': _i3.PlaylistEndpoints()
         ..initialize(
           server,
-          'song',
+          'playlistEndpoints',
+          null,
+        ),
+      'track': _i4.TrackEndpoint()
+        ..initialize(
+          server,
+          'track',
           null,
         ),
     };
@@ -44,19 +51,118 @@ class Endpoints extends _i1.EndpointDispatch {
         )
       },
     );
-    connectors['song'] = _i1.EndpointConnector(
-      name: 'song',
-      endpoint: endpoints['song']!,
+    connectors['playlistEndpoints'] = _i1.EndpointConnector(
+      name: 'playlistEndpoints',
+      endpoint: endpoints['playlistEndpoints']!,
       methodConnectors: {
-        'getNewSongs': _i1.MethodConnector(
-          name: 'getNewSongs',
+        'createPlaylist': _i1.MethodConnector(
+          name: 'createPlaylist',
+          params: {
+            'name': _i1.ParameterDescription(
+              name: 'name',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'userId': _i1.ParameterDescription(
+              name: 'userId',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'isPublic': _i1.ParameterDescription(
+              name: 'isPublic',
+              type: _i1.getType<bool>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['playlistEndpoints'] as _i3.PlaylistEndpoints)
+                  .createPlaylist(
+            session,
+            name: params['name'],
+            userId: params['userId'],
+            isPublic: params['isPublic'],
+          ),
+        ),
+        'addTrack': _i1.MethodConnector(
+          name: 'addTrack',
+          params: {
+            'playlistId': _i1.ParameterDescription(
+              name: 'playlistId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'trackId': _i1.ParameterDescription(
+              name: 'trackId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['playlistEndpoints'] as _i3.PlaylistEndpoints)
+                  .addTrack(
+            session,
+            playlistId: params['playlistId'],
+            trackId: params['trackId'],
+          ),
+        ),
+        'getPlaylist': _i1.MethodConnector(
+          name: 'getPlaylist',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['playlistEndpoints'] as _i3.PlaylistEndpoints)
+                  .getPlaylist(
+            session,
+            params['id'],
+          ),
+        ),
+      },
+    );
+    connectors['track'] = _i1.EndpointConnector(
+      name: 'track',
+      endpoint: endpoints['track']!,
+      methodConnectors: {
+        'getTrack': _i1.MethodConnector(
+          name: 'getTrack',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['track'] as _i4.TrackEndpoint).getTrack(
+            session,
+            params['id'],
+          ),
+        ),
+        'getNewTracks': _i1.MethodConnector(
+          name: 'getNewTracks',
           params: {},
           call: (
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['song'] as _i3.SongEndpoint).getNewSongs(session),
-        )
+              (endpoints['track'] as _i4.TrackEndpoint).getNewTracks(session),
+        ),
       },
     );
   }

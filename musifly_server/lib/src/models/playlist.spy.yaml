@@ -1,0 +1,9 @@
+class: Playlist
+table: playlists
+fields:
+  name: String
+  userId: String
+  isPublic: bool
+  tracks: List<Track>
+  createdAt: DateTime
+  updatedAt: DateTime 

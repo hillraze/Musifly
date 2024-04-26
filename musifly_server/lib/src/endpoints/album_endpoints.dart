@@ -3,7 +3,7 @@ import '../generated/protocol.dart';
 
 class AlbumEndpoint extends Endpoint {
   Future<List<Album>> getNewAlbums(Session session) async {
-    // Mock data for albums with embedded songs
+    // Mock data for albums with embedded tracks
     var albums = [
       ...List.generate(
         5,
@@ -13,8 +13,8 @@ class AlbumEndpoint extends Endpoint {
           title: "Hit of the hits",
           genre: "Rock",
           artist: "Death Grips",
-          songs: [
-            Song(
+          tracks: [
+            Track(
               cover:
                   "https://lastfm.freetls.fastly.net/i/u/770x0/30ef0d3d35720910529fe026a2d2fe7c.jpg#30ef0d3d35720910529fe026a2d2fe7c",
               title: "Get Got",
@@ -23,7 +23,7 @@ class AlbumEndpoint extends Endpoint {
               audioLink:
                   "https://dl.last.fm/static/1711196557/131211148/73edd47ee53a01958852b3d9f2938a603b603da021b2cdf1429cbb6e23370aa4/Death+Grips+-+Get+Got.mp3",
             ),
-            Song(
+            Track(
               cover:
                   "https://lastfm.freetls.fastly.net/i/u/770x0/1b3e92a577ea478cad88c440b26d5b39.jpg#1b3e92a577ea478cad88c440b26d5b39",
               title: "From Embrace To Embrace",
