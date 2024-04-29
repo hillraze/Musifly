@@ -3,7 +3,7 @@ import 'package:musifly/data/models/album/album.model.dart';
 import 'package:musifly_client/musifly_client.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
-import '../../../models/song/song.model.dart';
+import '../../../models/track/track.model.dart';
 
 // We will use this client as singleton in GetIt Service Locator
 // It's enough to create Client Object from serverpod_flutter here
@@ -32,14 +32,14 @@ class ClientServerpod {
     }
   }
 
-  Future<List<SongModel>> getNewSongs() async {
+  Future<List<TrackModel>> getNewTracks() async {
     try {
-      final res = await _client.song.getNewSongs();
+      final res = await _client.track.getNewTracks();
 
       // There we should convert Server Model to our Frontend Model
       // To make it more clear and robust to use
 
-      final model = res.map(SongModel.fromResponse).toList();
+      final model = res.map(TrackModel.fromResponse).toList();
       return model;
     } catch (e) {
       _logger.error(e);

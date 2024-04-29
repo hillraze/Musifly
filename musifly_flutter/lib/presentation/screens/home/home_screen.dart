@@ -1,11 +1,11 @@
 import "package:flutter/material.dart";
 import "package:gap/gap.dart";
 import "package:musifly/presentation/providers/home_screen_notifier.dart";
-import "package:musifly/presentation/widgets/mus.songs.dart";
 import "package:provider/provider.dart";
 
 import "../../../core/mus.assets/mus.assets.dart";
 import "../../widgets/mus.albums.dart";
+import "../../widgets/mus.tracks.dart";
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<HomeProvider>().getNewSongs();
+      context.read<HomeProvider>().getNewTracks();
     });
   }
 
@@ -102,11 +102,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   // Gap(5),
                   Consumer<HomeProvider>(
                     builder: (context, state, child) {
-                      if (state.newSongs.isEmpty) {
+                      if (state.newTracks.isEmpty) {
                         return const Center(child: CircularProgressIndicator());
                       }
 
-                      return MusSongs(data: state.newSongs);
+                      return MusTracks(data: state.newTracks);
                     },
                   )
                 ],

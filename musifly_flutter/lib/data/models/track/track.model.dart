@@ -1,21 +1,21 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:musifly_client/musifly_client.dart';
 
-part 'song.model.freezed.dart';
-part 'song.model.g.dart';
+part 'track.model.freezed.dart';
+part 'track.model.g.dart';
 
 @freezed
-class SongModel with _$SongModel {
-  const factory SongModel({
+class TrackModel with _$TrackModel {
+  const factory TrackModel({
     required String cover,
     required String title,
     required String artist,
     required String genre,
     required String audioLink,
-  }) = _SongModel;
+  }) = _TrackModel;
 
-  factory SongModel.mock() {
-    return const SongModel(
+  factory TrackModel.mock() {
+    return const TrackModel(
       cover: "",
       artist: "Billie Eilish",
       title: "Bad Guy",
@@ -24,13 +24,13 @@ class SongModel with _$SongModel {
     );
   }
 
-  factory SongModel.fromResponse(Song response) => SongModel(
+  factory TrackModel.fromResponse(Track response) => TrackModel(
       title: response.title,
       artist: response.artist,
       genre: response.genre,
       cover: response.cover,
       audioLink: response.audioLink);
 
-  factory SongModel.fromJson(Map<String, dynamic> json) =>
-      _$SongModelFromJson(json);
+  factory TrackModel.fromJson(Map<String, dynamic> json) =>
+      _$TrackModelFromJson(json);
 }

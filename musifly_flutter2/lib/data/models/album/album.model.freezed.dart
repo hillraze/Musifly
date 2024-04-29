@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'song.model.dart';
+part of 'album.model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,41 +14,42 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-SongModel _$SongModelFromJson(Map<String, dynamic> json) {
-  return _SongModel.fromJson(json);
+AlbumModel _$AlbumModelFromJson(Map<String, dynamic> json) {
+  return _AlbumModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$SongModel {
+mixin _$AlbumModel {
   String get cover => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get artist => throw _privateConstructorUsedError;
   String get genre => throw _privateConstructorUsedError;
-  String get audioLink => throw _privateConstructorUsedError;
+  List<TrackModel> get tracks => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SongModelCopyWith<SongModel> get copyWith =>
+  $AlbumModelCopyWith<AlbumModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SongModelCopyWith<$Res> {
-  factory $SongModelCopyWith(SongModel value, $Res Function(SongModel) then) =
-      _$SongModelCopyWithImpl<$Res, SongModel>;
+abstract class $AlbumModelCopyWith<$Res> {
+  factory $AlbumModelCopyWith(
+          AlbumModel value, $Res Function(AlbumModel) then) =
+      _$AlbumModelCopyWithImpl<$Res, AlbumModel>;
   @useResult
   $Res call(
       {String cover,
       String title,
       String artist,
       String genre,
-      String audioLink});
+      List<TrackModel> tracks});
 }
 
 /// @nodoc
-class _$SongModelCopyWithImpl<$Res, $Val extends SongModel>
-    implements $SongModelCopyWith<$Res> {
-  _$SongModelCopyWithImpl(this._value, this._then);
+class _$AlbumModelCopyWithImpl<$Res, $Val extends AlbumModel>
+    implements $AlbumModelCopyWith<$Res> {
+  _$AlbumModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -62,7 +63,7 @@ class _$SongModelCopyWithImpl<$Res, $Val extends SongModel>
     Object? title = null,
     Object? artist = null,
     Object? genre = null,
-    Object? audioLink = null,
+    Object? tracks = null,
   }) {
     return _then(_value.copyWith(
       cover: null == cover
@@ -81,20 +82,20 @@ class _$SongModelCopyWithImpl<$Res, $Val extends SongModel>
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
               as String,
-      audioLink: null == audioLink
-          ? _value.audioLink
-          : audioLink // ignore: cast_nullable_to_non_nullable
-              as String,
+      tracks: null == tracks
+          ? _value.tracks
+          : tracks // ignore: cast_nullable_to_non_nullable
+              as List<TrackModel>,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$SongModelImplCopyWith<$Res>
-    implements $SongModelCopyWith<$Res> {
-  factory _$$SongModelImplCopyWith(
-          _$SongModelImpl value, $Res Function(_$SongModelImpl) then) =
-      __$$SongModelImplCopyWithImpl<$Res>;
+abstract class _$$AlbumModelImplCopyWith<$Res>
+    implements $AlbumModelCopyWith<$Res> {
+  factory _$$AlbumModelImplCopyWith(
+          _$AlbumModelImpl value, $Res Function(_$AlbumModelImpl) then) =
+      __$$AlbumModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -102,15 +103,15 @@ abstract class _$$SongModelImplCopyWith<$Res>
       String title,
       String artist,
       String genre,
-      String audioLink});
+      List<TrackModel> tracks});
 }
 
 /// @nodoc
-class __$$SongModelImplCopyWithImpl<$Res>
-    extends _$SongModelCopyWithImpl<$Res, _$SongModelImpl>
-    implements _$$SongModelImplCopyWith<$Res> {
-  __$$SongModelImplCopyWithImpl(
-      _$SongModelImpl _value, $Res Function(_$SongModelImpl) _then)
+class __$$AlbumModelImplCopyWithImpl<$Res>
+    extends _$AlbumModelCopyWithImpl<$Res, _$AlbumModelImpl>
+    implements _$$AlbumModelImplCopyWith<$Res> {
+  __$$AlbumModelImplCopyWithImpl(
+      _$AlbumModelImpl _value, $Res Function(_$AlbumModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -120,9 +121,9 @@ class __$$SongModelImplCopyWithImpl<$Res>
     Object? title = null,
     Object? artist = null,
     Object? genre = null,
-    Object? audioLink = null,
+    Object? tracks = null,
   }) {
-    return _then(_$SongModelImpl(
+    return _then(_$AlbumModelImpl(
       cover: null == cover
           ? _value.cover
           : cover // ignore: cast_nullable_to_non_nullable
@@ -139,26 +140,27 @@ class __$$SongModelImplCopyWithImpl<$Res>
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
               as String,
-      audioLink: null == audioLink
-          ? _value.audioLink
-          : audioLink // ignore: cast_nullable_to_non_nullable
-              as String,
+      tracks: null == tracks
+          ? _value._tracks
+          : tracks // ignore: cast_nullable_to_non_nullable
+              as List<TrackModel>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$SongModelImpl implements _SongModel {
-  const _$SongModelImpl(
+class _$AlbumModelImpl implements _AlbumModel {
+  const _$AlbumModelImpl(
       {required this.cover,
       required this.title,
       required this.artist,
       required this.genre,
-      required this.audioLink});
+      required final List<TrackModel> tracks})
+      : _tracks = tracks;
 
-  factory _$SongModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SongModelImplFromJson(json);
+  factory _$AlbumModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AlbumModelImplFromJson(json);
 
   @override
   final String cover;
@@ -168,56 +170,60 @@ class _$SongModelImpl implements _SongModel {
   final String artist;
   @override
   final String genre;
+  final List<TrackModel> _tracks;
   @override
-  final String audioLink;
+  List<TrackModel> get tracks {
+    if (_tracks is EqualUnmodifiableListView) return _tracks;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tracks);
+  }
 
   @override
   String toString() {
-    return 'SongModel(cover: $cover, title: $title, artist: $artist, genre: $genre, audioLink: $audioLink)';
+    return 'AlbumModel(cover: $cover, title: $title, artist: $artist, genre: $genre, tracks: $tracks)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SongModelImpl &&
+            other is _$AlbumModelImpl &&
             (identical(other.cover, cover) || other.cover == cover) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.artist, artist) || other.artist == artist) &&
             (identical(other.genre, genre) || other.genre == genre) &&
-            (identical(other.audioLink, audioLink) ||
-                other.audioLink == audioLink));
+            const DeepCollectionEquality().equals(other._tracks, _tracks));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, cover, title, artist, genre, audioLink);
+  int get hashCode => Object.hash(runtimeType, cover, title, artist, genre,
+      const DeepCollectionEquality().hash(_tracks));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SongModelImplCopyWith<_$SongModelImpl> get copyWith =>
-      __$$SongModelImplCopyWithImpl<_$SongModelImpl>(this, _$identity);
+  _$$AlbumModelImplCopyWith<_$AlbumModelImpl> get copyWith =>
+      __$$AlbumModelImplCopyWithImpl<_$AlbumModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$SongModelImplToJson(
+    return _$$AlbumModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _SongModel implements SongModel {
-  const factory _SongModel(
+abstract class _AlbumModel implements AlbumModel {
+  const factory _AlbumModel(
       {required final String cover,
       required final String title,
       required final String artist,
       required final String genre,
-      required final String audioLink}) = _$SongModelImpl;
+      required final List<TrackModel> tracks}) = _$AlbumModelImpl;
 
-  factory _SongModel.fromJson(Map<String, dynamic> json) =
-      _$SongModelImpl.fromJson;
+  factory _AlbumModel.fromJson(Map<String, dynamic> json) =
+      _$AlbumModelImpl.fromJson;
 
   @override
   String get cover;
@@ -228,9 +234,9 @@ abstract class _SongModel implements SongModel {
   @override
   String get genre;
   @override
-  String get audioLink;
+  List<TrackModel> get tracks;
   @override
   @JsonKey(ignore: true)
-  _$$SongModelImplCopyWith<_$SongModelImpl> get copyWith =>
+  _$$AlbumModelImplCopyWith<_$AlbumModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

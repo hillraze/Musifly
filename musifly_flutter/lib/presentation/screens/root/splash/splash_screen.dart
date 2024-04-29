@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     getAlbums();
-    getSongs();
+    getTracks();
     _navigateAway();
   }
 
@@ -34,10 +34,10 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  Future getSongs() async {
+  Future getTracks() async {
     try {
-      final songs = await getIt<ClientServerpod>().getNewSongs();
-      print("Splash > get new songs: $songs");
+      final tracks = await getIt<ClientServerpod>().getNewTracks();
+      print("Splash > get new tracks: $tracks");
     } catch (e) {
       print("ERROR >>> SPLASH: $e");
     }

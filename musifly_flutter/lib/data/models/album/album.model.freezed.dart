@@ -24,7 +24,7 @@ mixin _$AlbumModel {
   String get title => throw _privateConstructorUsedError;
   String get artist => throw _privateConstructorUsedError;
   String get genre => throw _privateConstructorUsedError;
-  List<SongModel> get songs => throw _privateConstructorUsedError;
+  List<TrackModel> get tracks => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +43,7 @@ abstract class $AlbumModelCopyWith<$Res> {
       String title,
       String artist,
       String genre,
-      List<SongModel> songs});
+      List<TrackModel> tracks});
 }
 
 /// @nodoc
@@ -63,7 +63,7 @@ class _$AlbumModelCopyWithImpl<$Res, $Val extends AlbumModel>
     Object? title = null,
     Object? artist = null,
     Object? genre = null,
-    Object? songs = null,
+    Object? tracks = null,
   }) {
     return _then(_value.copyWith(
       cover: null == cover
@@ -82,10 +82,10 @@ class _$AlbumModelCopyWithImpl<$Res, $Val extends AlbumModel>
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
               as String,
-      songs: null == songs
-          ? _value.songs
-          : songs // ignore: cast_nullable_to_non_nullable
-              as List<SongModel>,
+      tracks: null == tracks
+          ? _value.tracks
+          : tracks // ignore: cast_nullable_to_non_nullable
+              as List<TrackModel>,
     ) as $Val);
   }
 }
@@ -103,7 +103,7 @@ abstract class _$$AlbumModelImplCopyWith<$Res>
       String title,
       String artist,
       String genre,
-      List<SongModel> songs});
+      List<TrackModel> tracks});
 }
 
 /// @nodoc
@@ -121,7 +121,7 @@ class __$$AlbumModelImplCopyWithImpl<$Res>
     Object? title = null,
     Object? artist = null,
     Object? genre = null,
-    Object? songs = null,
+    Object? tracks = null,
   }) {
     return _then(_$AlbumModelImpl(
       cover: null == cover
@@ -140,10 +140,10 @@ class __$$AlbumModelImplCopyWithImpl<$Res>
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
               as String,
-      songs: null == songs
-          ? _value._songs
-          : songs // ignore: cast_nullable_to_non_nullable
-              as List<SongModel>,
+      tracks: null == tracks
+          ? _value._tracks
+          : tracks // ignore: cast_nullable_to_non_nullable
+              as List<TrackModel>,
     ));
   }
 }
@@ -156,8 +156,8 @@ class _$AlbumModelImpl implements _AlbumModel {
       required this.title,
       required this.artist,
       required this.genre,
-      required final List<SongModel> songs})
-      : _songs = songs;
+      required final List<TrackModel> tracks})
+      : _tracks = tracks;
 
   factory _$AlbumModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AlbumModelImplFromJson(json);
@@ -170,17 +170,17 @@ class _$AlbumModelImpl implements _AlbumModel {
   final String artist;
   @override
   final String genre;
-  final List<SongModel> _songs;
+  final List<TrackModel> _tracks;
   @override
-  List<SongModel> get songs {
-    if (_songs is EqualUnmodifiableListView) return _songs;
+  List<TrackModel> get tracks {
+    if (_tracks is EqualUnmodifiableListView) return _tracks;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_songs);
+    return EqualUnmodifiableListView(_tracks);
   }
 
   @override
   String toString() {
-    return 'AlbumModel(cover: $cover, title: $title, artist: $artist, genre: $genre, songs: $songs)';
+    return 'AlbumModel(cover: $cover, title: $title, artist: $artist, genre: $genre, tracks: $tracks)';
   }
 
   @override
@@ -192,13 +192,13 @@ class _$AlbumModelImpl implements _AlbumModel {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.artist, artist) || other.artist == artist) &&
             (identical(other.genre, genre) || other.genre == genre) &&
-            const DeepCollectionEquality().equals(other._songs, _songs));
+            const DeepCollectionEquality().equals(other._tracks, _tracks));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, cover, title, artist, genre,
-      const DeepCollectionEquality().hash(_songs));
+      const DeepCollectionEquality().hash(_tracks));
 
   @JsonKey(ignore: true)
   @override
@@ -220,7 +220,7 @@ abstract class _AlbumModel implements AlbumModel {
       required final String title,
       required final String artist,
       required final String genre,
-      required final List<SongModel> songs}) = _$AlbumModelImpl;
+      required final List<TrackModel> tracks}) = _$AlbumModelImpl;
 
   factory _AlbumModel.fromJson(Map<String, dynamic> json) =
       _$AlbumModelImpl.fromJson;
@@ -234,7 +234,7 @@ abstract class _AlbumModel implements AlbumModel {
   @override
   String get genre;
   @override
-  List<SongModel> get songs;
+  List<TrackModel> get tracks;
   @override
   @JsonKey(ignore: true)
   _$$AlbumModelImplCopyWith<_$AlbumModelImpl> get copyWith =>

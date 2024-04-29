@@ -4,12 +4,12 @@ import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:musifly/core/mus.assets/export.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
-import 'package:musifly/data/models/song/song.model.dart';
+import 'package:musifly/data/models/track/track.model.dart';
 
-class MusSongs extends StatelessWidget {
-  const MusSongs({super.key, required this.data});
+class MusTracks extends StatelessWidget {
+  const MusTracks({super.key, required this.data});
 
-  final List<SongModel> data;
+  final List<TrackModel> data;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class MusSongs extends StatelessWidget {
                 height: 45,
                 margin: const EdgeInsets.only(bottom: 15),
                 // color: Colors.white,
-                child: const Text('Songs',
+                child: const Text('Tracks',
                     style: TextStyle(
                         fontSize: 30,
                         color: Colors.white,
