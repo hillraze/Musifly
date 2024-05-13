@@ -34,7 +34,7 @@ class ClientServerpod {
 
   Future<List<SongModel>> getNewSongs() async {
     try {
-      final res = await _client.song.getNewSongs();
+      final res = await _client.track.getNewTracks();
 
       // There we should convert Server Model to our Frontend Model
       // To make it more clear and robust to use

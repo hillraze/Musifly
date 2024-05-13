@@ -31,7 +31,7 @@ class AlbumModel with _$AlbumModel {
         artist: response.artist,
         genre: response.genre,
         cover: response.cover,
-        songs: response.songs.map(SongModel.fromResponse).toList(),
+        songs: response.tracks.map(SongModel.fromResponse).toList(),
       );
 
   factory AlbumModel.fromJson(Map<String, dynamic> json) =>

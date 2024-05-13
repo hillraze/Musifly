@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:musifly/analytics/events/screen_names.dart';
 import 'package:musifly/core/mus.assets/export.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
 import 'package:musifly/data/models/song/song.model.dart';
@@ -57,49 +59,56 @@ class MusSongs extends StatelessWidget {
                     crossAxisCount: 3,
                     mainAxisExtent: constraints.maxWidth * 0.6),
                 itemBuilder: (BuildContext context, int index) {
-                  return Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Container(
-                          height: 50,
-                          width: 50,
-                          decoration: data[index].cover != null
-                              ? BoxDecoration(
-                                  image: DecorationImage(
-                                  image: NetworkImage(data[index].cover!),
-                                ))
-                              : null,
+                  final track = data[index];
+                  return GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      context.push(ScreenNames.player, extra: {'track': track});
+                    },
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: track.cover != null
+                                ? BoxDecoration(
+                                    image: DecorationImage(
+                                    image: NetworkImage(track.cover!),
+                                  ))
+                                : null,
+                          ),
                         ),
-                      ),
-                      const Gap(4),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              data[index].title,
-                              overflow: TextOverflow.ellipsis,
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 12),
-                            ),
-                            Flexible(
-                              child: Text(
-                                data[index].artist,
+                        const Gap(4),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                track.title,
                                 overflow: TextOverflow.ellipsis,
-                                style:
-                                    TextStyle(color: Colors.grey, fontSize: 10),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 12),
                               ),
-                            ),
-                          ],
+                              Flexible(
+                                child: Text(
+                                  track.artist,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 10),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      // Spacer(),
-                      const Gap(5),
-                      const MusAssetImage(MusAssets.vdots),
-                      const Gap(15)
-                    ],
+                        // Spacer(),
+                        const Gap(5),
+                        const MusAssetImage(MusAssets.vdots),
+                        const Gap(15)
+                      ],
+                    ),
                   );
                 });
           }),

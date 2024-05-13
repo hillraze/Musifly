@@ -1,7 +1,7 @@
-import 'package:musifly_client/musifly_client.dart';
 import 'package:flutter/material.dart';
 import 'package:musifly/analytics/events/core/dependency_squirrel.dart';
 import 'package:musifly/presentation/providers/home_screen_notifier.dart';
+import 'package:musifly/presentation/providers/player_notifier.dart';
 import 'package:musifly/utils/locator_service.dart';
 import 'package:musifly/utils/theme/mus.theme.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +15,7 @@ import 'utils/theme/mus.theme_provider.dart';
 GlobalKey<NavigatorState> screenNavigatorKey = GlobalKey();
 GlobalKey<NavigatorState> shellKey = GlobalKey();
 
-// var client = Client('http://192.168.0.173:8080/')
+// var client = Client('http://192.168.16.1:8080/')
 //   ..connectivityMonitor = FlutterConnectivityMonitor();
 
 void main() async {
@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => AppNotifier()),
           ChangeNotifierProvider<MusThemeProvider>(
               create: (_) => musThemeProvider, lazy: false),
+          ChangeNotifierProvider(create: (_) => PlayerNotifier()),
         ],
         child: Listen<MusThemeProvider>(builder: (context) {
           return MaterialApp.router(

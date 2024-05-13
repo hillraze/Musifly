@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
-import "package:gap/gap.dart";
 
 import "../../data/models/album/album.model.dart";
 

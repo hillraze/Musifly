@@ -24,7 +24,7 @@ class SongModel with _$SongModel {
     );
   }
 
-  factory SongModel.fromResponse(Song response) => SongModel(
+  factory SongModel.fromResponse(Track response) => SongModel(
       title: response.title,
       artist: response.artist,
       genre: response.genre,
