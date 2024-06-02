@@ -23,7 +23,7 @@ class TrackEndpoint extends Endpoint {
         title: "From Embrace To Embrace",
         artist: "Joy Wants Eternity",
         genre: "Rock",
-        audioLink: "https://playi.net/music/0-0-1-27772-20",
+        audioLink: "https://playi.net/music/0-0-1-26083-20",
       ),
       ...List.generate(
           5,
@@ -33,7 +33,7 @@ class TrackEndpoint extends Endpoint {
                 title: "Get Got",
                 artist: "Death Grips",
                 genre: "Pop",
-                audioLink: "https://playi.net/music/0-0-1-27772-20",
+                audioLink: "https://playi.net/music/0-0-1-26083-20",
               )),
     ];
 

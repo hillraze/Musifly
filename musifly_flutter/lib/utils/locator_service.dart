@@ -8,5 +8,5 @@ Future initLocator() async {
   getIt.registerSingleton<ClientServerpod>(
 
       //IP ADRESS HERE:
-      ClientServerpod('http://192.168.1.102:8080/'));
+      ClientServerpod('http://192.168.0.173:8080/'));
 }

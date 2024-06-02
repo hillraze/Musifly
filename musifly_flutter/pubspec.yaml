@@ -50,9 +50,10 @@ dependencies:
   dio: ^5.4.2+1
   retrofit: ^4.1.0
   get_it: ^7.6.8
-  audioplayers: ^6.0.0
-
-  
+  skeletonizer: ^1.1.2+1
+  just_audio: ^0.9.38
+  audio_session: ^0.1.19
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:
@@ -88,4 +89,3 @@ flutter:
           weight: 200
         - asset: assets/fonts/Poppins/PoppinsThin.ttf
           weight: 100
-

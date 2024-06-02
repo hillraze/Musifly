@@ -28,14 +28,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
     super.initState();
     SongModel trackModel = widget.extra['track'];
     context.read<PlayerNotifier>().setTrack(trackModel);
-
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   context.read<HomeProvider>().getNewAlbums();
-    // });
-
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   context.read<HomeProvider>().getNewSongs();
-    // });
   }
 
   @override
@@ -90,8 +82,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               alignment: Alignment.center,
               children: [
                 // MusAssetImage(MusAssets.playerBackground, fit: BoxFit.fill),
-                Positioned(
-                    top: 0, child: PlayerCover(cover: notifier.track!.cover)),
+                Positioned(top: 0, child: PlayerCover(notifier: notifier)),
                 Positioned(bottom: 0, child: ControlBar()),
                 // Positioned(
                 //     bottom: 0,

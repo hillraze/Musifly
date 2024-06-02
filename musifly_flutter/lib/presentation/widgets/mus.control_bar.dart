@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:musifly/analytics/events/core/extentions/context_extentions.dart';
 import 'package:musifly/core/mus.assets/mus.assets.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:musifly/presentation/providers/player_notifier.dart';
 import 'package:musifly/presentation/widgets/mus.player.dart';
 import 'package:provider/provider.dart';
