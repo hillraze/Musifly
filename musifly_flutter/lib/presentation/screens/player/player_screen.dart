@@ -8,6 +8,7 @@ import "package:musifly/core/core.dart";
 import "package:musifly/data/models/song/song.model.dart";
 import "package:musifly/presentation/providers/player_notifier.dart";
 import "package:musifly/presentation/widgets/mus.player_cover.dart";
+import "package:musifly/utils/show_feature_notification.dart";
 import "package:provider/provider.dart";
 
 import "../../../core/mus.assets/mus.asset_image.dart";
@@ -42,9 +43,17 @@ class _PlayerScreenState extends State<PlayerScreen> {
           child: SizedBox.square(
             dimension: 10,
             child: Center(
-              child: MusAssetImage(
-                MusAssets.back,
-                fit: BoxFit.contain,
+              child: Container(
+                decoration: const BoxDecoration(boxShadow: [
+                  BoxShadow(
+                      color: Color.fromARGB(121, 158, 158, 158),
+                      blurRadius: 10,
+                      offset: Offset(0, 1))
+                ]),
+                child: const MusAssetImage(
+                  MusAssets.back,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           ),
@@ -53,16 +62,33 @@ class _PlayerScreenState extends State<PlayerScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
-            Text('Now playing',
+            const Spacer(),
+            const Text('Now playing',
                 style: TextStyle(
+                    shadows: [
+                      Shadow(
+                          color: Color.fromARGB(130, 0, 0, 0),
+                          blurRadius: 10,
+                          offset: Offset(0, 1))
+                    ],
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     fontSize: 22)),
-            Gap(100),
-            MusAssetImage(
-              MusAssets.vdots,
-              width: 5,
+            const Gap(100),
+            GestureDetector(
+              onTap: () => showFeatureNotification(context),
+              child: Container(
+                decoration: const BoxDecoration(boxShadow: [
+                  BoxShadow(
+                      color: Color.fromARGB(85, 0, 0, 0),
+                      blurRadius: 1,
+                      offset: Offset(0, 1))
+                ]),
+                child: const MusAssetImage(
+                  MusAssets.vdots,
+                  width: 5,
+                ),
+              ),
             ),
           ],
         ),
@@ -83,7 +109,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               children: [
                 // MusAssetImage(MusAssets.playerBackground, fit: BoxFit.fill),
                 Positioned(top: 0, child: PlayerCover(notifier: notifier)),
-                Positioned(bottom: 0, child: ControlBar()),
+                const Positioned(bottom: 0, child: ControlBar()),
                 // Positioned(
                 //     bottom: 0,
                 //     child: Container(

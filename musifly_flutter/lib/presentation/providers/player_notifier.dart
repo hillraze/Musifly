@@ -40,6 +40,14 @@ class PlayerNotifier extends ChangeNotifier {
     // notifyListeners();
   }
 
+  Future<void> playTrack() async {
+    unawaited(player.play());
+  }
+
+  void pauseTrack() {
+    player.pause();
+  }
+
   Future<void> prepareSource(String newTrackUrl) async {
     // Inform the operating system of our app's audio attributes etc.
     // We pick a reasonable default for an app that plays speech.
@@ -77,31 +85,6 @@ class PlayerNotifier extends ChangeNotifier {
     }
     notifyListeners();
   }
-  // Future<void> prepareSource(String newTrackUrl) async {
-//     try {
-//       print(_player.source.toString());
-
-//       final oldTrackUrl = _player.source.toString();
-
-//       // case: we already prepared this track
-//       if (newTrackUrl == oldTrackUrl) return;
-
-//       // use resetPlayer when trackUrl is declared now or just updated
-//       //
-//       resetPlayer();
-
-//       print('before setSource: ${_player.state} ');
-//       await _player
-//           .setSource(DeviceFileSource(newTrackUrl, mimeType: 'audio/mpeg'));
-
-//       print('after setSource: ${_player.state} ');
-//       // await _player.resume();
-//       print('end of preparesource');
-//       notifyListeners();
-//     } catch (e) {
-//       _logger.error(e);
-//     }
-//   }
 
   @override
   void dispose() {

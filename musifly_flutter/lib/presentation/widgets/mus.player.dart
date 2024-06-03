@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:musifly/core/mus.assets/mus.asset.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
 import 'package:musifly/core/mus.assets/mus.assets.dart';
 import 'package:musifly/presentation/providers/player_notifier.dart';
 import 'package:musifly/presentation/widgets/mus.seekbar.dart';
+import 'package:musifly/utils/show_feature_notification.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -42,45 +44,61 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                   onChangeEnd: notifier.player.seek,
                 );
               }),
+          Gap(35),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              IconButton(
+                icon: MusAssetImage(MusAssets.repeat),
+                iconSize: 64.0,
+                onPressed: () => showFeatureNotification(context),
+              ),
+              IconButton(
+                onPressed: () => showFeatureNotification(context),
+                icon: MusAssetImage(MusAssets.backward),
+                iconSize: 64.0,
+              ),
               StreamBuilder<PlayerState>(
                 stream: notifier.player.playerStateStream,
                 builder: (context, snapshot) {
                   final playerState = snapshot.data;
                   final processingState = playerState?.processingState;
                   final playing = playerState?.playing;
+
+                  if (processingState == ProcessingState.completed) {
+                    notifier.player.seek(Duration.zero);
+                    notifier.player.play();
+                  }
+
                   if (processingState == ProcessingState.loading ||
                       processingState == ProcessingState.buffering) {
-                    return Skeletonizer(
-                      child: IconButton(
-                        icon: Icon(Icons.play_arrow),
-                        iconSize: 64.0,
-                        onPressed: () => null,
-                      ),
+                    return IconButton(
+                      icon: const MusAssetImage(MusAssets.playLoading),
+                      iconSize: 64.0,
+                      onPressed: () => null,
                     );
                   } else if (playing != true) {
                     return IconButton(
                       icon: const MusAssetImage(MusAssets.play),
                       iconSize: 64.0,
-                      onPressed: notifier.player.play,
-                    );
-                  } else if (processingState != ProcessingState.completed) {
-                    return IconButton(
-                      icon: const MusAssetImage(MusAssets.pause),
-                      iconSize: 64.0,
-                      onPressed: notifier.player.pause,
+                      onPressed: notifier.playTrack,
                     );
                   } else {
                     return IconButton(
-                      icon: const Icon(Icons.replay),
+                      icon: const MusAssetImage(MusAssets.pause),
                       iconSize: 64.0,
-                      onPressed: () => notifier.player.seek(Duration.zero),
+                      onPressed: notifier.pauseTrack,
                     );
                   }
                 },
               ),
+              IconButton(
+                  onPressed: () => showFeatureNotification(context),
+                  icon: MusAssetImage(MusAssets.forward),
+                  iconSize: 64.0),
+              IconButton(
+                  onPressed: () => showFeatureNotification(context),
+                  icon: MusAssetImage(MusAssets.shuffle))
             ],
           ),
         ],

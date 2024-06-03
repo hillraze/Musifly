@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
@@ -5,6 +6,7 @@ import 'package:musifly/analytics/events/core/extentions/context_extentions.dart
 import 'package:musifly/core/mus.assets/mus.assets.dart';
 import 'package:musifly/presentation/providers/player_notifier.dart';
 import 'package:musifly/presentation/widgets/mus.player.dart';
+import 'package:musifly/utils/show_feature_notification.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/mus.assets/mus.asset_image.dart';
@@ -72,7 +74,11 @@ class _ControlBarState extends State<ControlBar> {
                         );
                       }),
                       Spacer(),
-                      MusAssetImage(MusAssets.favouritesFilled)
+                      GestureDetector(
+                          onTap: () => showFeatureNotification(context),
+                          child: MusAssetImage(
+                            MusAssets.favouritesFilled,
+                          ))
                     ],
                   ),
                 ),

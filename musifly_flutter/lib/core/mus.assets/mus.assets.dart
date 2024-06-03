@@ -29,6 +29,8 @@ class MusAssets {
   static const shuffle = MusAsset.vector('assets/svg/shuffle-button.svg');
   static const back = MusAsset.vector('assets/svg/back-icon.svg');
 
+  static const playLoading = MusAsset.vector('assets/svg/play-loading.svg');
+
   static const favouritesFilled =
       MusAsset.vector('assets/svg/active-heart.svg');
 }
