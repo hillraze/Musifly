@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'song.model.dart';
+part of 'track.model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SongModelImpl _$$SongModelImplFromJson(Map<String, dynamic> json) =>
-    _$SongModelImpl(
+_$TrackModelImpl _$$TrackModelImplFromJson(Map<String, dynamic> json) =>
+    _$TrackModelImpl(
       cover: json['cover'] as String,
       title: json['title'] as String,
       artist: json['artist'] as String,
@@ -15,7 +15,7 @@ _$SongModelImpl _$$SongModelImplFromJson(Map<String, dynamic> json) =>
       audioLink: json['audioLink'] as String,
     );
 
-Map<String, dynamic> _$$SongModelImplToJson(_$SongModelImpl instance) =>
+Map<String, dynamic> _$$TrackModelImplToJson(_$TrackModelImpl instance) =>
     <String, dynamic>{
       'cover': instance.cover,
       'title': instance.title,

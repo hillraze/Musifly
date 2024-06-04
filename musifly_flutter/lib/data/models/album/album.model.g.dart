@@ -12,8 +12,8 @@ _$AlbumModelImpl _$$AlbumModelImplFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String,
       artist: json['artist'] as String,
       genre: json['genre'] as String,
-      songs: (json['songs'] as List<dynamic>)
-          .map((e) => SongModel.fromJson(e as Map<String, dynamic>))
+      tracks: (json['tracks'] as List<dynamic>)
+          .map((e) => TrackModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -23,5 +23,5 @@ Map<String, dynamic> _$$AlbumModelImplToJson(_$AlbumModelImpl instance) =>
       'title': instance.title,
       'artist': instance.artist,
       'genre': instance.genre,
-      'songs': instance.songs,
+      'tracks': instance.tracks,
     };

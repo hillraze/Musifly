@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:musifly/data/models/song/song.model.dart';
+import 'package:musifly/data/models/track/track.model.dart';
 import 'package:musifly_client/musifly_client.dart';
 
 part 'album.model.freezed.dart';
@@ -13,7 +13,7 @@ class AlbumModel with _$AlbumModel {
       title: "Billie Eilish",
       artist: "dsddsd",
       genre: 'k-pop',
-      songs: [],
+      tracks: [],
     );
   }
 
@@ -22,7 +22,7 @@ class AlbumModel with _$AlbumModel {
     required String title,
     required String artist,
     required String genre,
-    required List<SongModel> songs,
+    required List<TrackModel> tracks,
   }) = _AlbumModel;
 
   // Convert Serverpod Model to our Frontend Model
@@ -31,7 +31,7 @@ class AlbumModel with _$AlbumModel {
         artist: response.artist,
         genre: response.genre,
         cover: response.cover,
-        songs: response.tracks.map(SongModel.fromResponse).toList(),
+        tracks: response.tracks.map(TrackModel.fromResponse).toList(),
       );
 
   factory AlbumModel.fromJson(Map<String, dynamic> json) =>
