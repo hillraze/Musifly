@@ -13,7 +13,7 @@ class PlaylistEndpoints extends Endpoint {
     required String userId,
     bool isPublic = false,
   }) async {
-    final playlist = await session.dbNext.insertRow<Playlist>(
+    final playlist = await session.db.insertRow<Playlist>(
       Playlist(
         name: name,
         userId: userId,
@@ -33,25 +33,25 @@ class PlaylistEndpoints extends Endpoint {
     required int playlistId,
     required int trackId,
   }) async {
-    final track = await session.dbNext.findById<Track>(trackId);
+    final track = await session.db.findById<Track>(trackId);
 
     if (track == null) {
       throw Exception('Track not found');
     }
 
-    final playlist = await session.dbNext.findById<Playlist>(playlistId);
+    final playlist = await session.db.findById<Playlist>(playlistId);
 
     if (playlist == null) {
       throw Exception('Playlist not found');
     }
 
-    return session.dbNext.updateRow<Playlist>(
+    return session.db.updateRow<Playlist>(
       playlist..tracks.add(track),
     );
   }
 
   Future<Playlist> getPlaylist(Session session, int id) async {
-    final playlist = await session.dbNext.findById<Playlist>(id);
+    final playlist = await session.db.findById<Playlist>(id);
     if (playlist == null) {
       throw Exception('Playlist not found');
     }

@@ -11,7 +11,7 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
 
-abstract class Playlist extends _i1.SerializableEntity {
+abstract class Playlist implements _i1.SerializableModel {
   Playlist._({
     this.id,
     required this.name,
@@ -32,23 +32,19 @@ abstract class Playlist extends _i1.SerializableEntity {
     required DateTime updatedAt,
   }) = _PlaylistImpl;
 
-  factory Playlist.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Playlist.fromJson(Map<String, dynamic> jsonSerialization) {
     return Playlist(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      name: serializationManager.deserialize<String>(jsonSerialization['name']),
-      userId:
-          serializationManager.deserialize<String>(jsonSerialization['userId']),
-      isPublic:
-          serializationManager.deserialize<bool>(jsonSerialization['isPublic']),
-      tracks: serializationManager
-          .deserialize<List<_i2.Track>>(jsonSerialization['tracks']),
-      createdAt: serializationManager
-          .deserialize<DateTime>(jsonSerialization['createdAt']),
-      updatedAt: serializationManager
-          .deserialize<DateTime>(jsonSerialization['updatedAt']),
+      id: jsonSerialization['id'] as int?,
+      name: jsonSerialization['name'] as String,
+      userId: jsonSerialization['userId'] as String,
+      isPublic: jsonSerialization['isPublic'] as bool,
+      tracks: (jsonSerialization['tracks'] as List)
+          .map((e) => _i2.Track.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      createdAt:
+          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+      updatedAt:
+          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -89,6 +85,11 @@ abstract class Playlist extends _i1.SerializableEntity {
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
     };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 

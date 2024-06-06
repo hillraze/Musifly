@@ -12,7 +12,8 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import 'protocol.dart' as _i2;
 import 'package:serverpod_serialization/serverpod_serialization.dart';
 
-abstract class Playlist extends _i1.TableRow {
+abstract class Playlist extends _i1.TableRow
+    implements _i1.ProtocolSerialization {
   Playlist._({
     int? id,
     required this.name,
@@ -33,23 +34,19 @@ abstract class Playlist extends _i1.TableRow {
     required DateTime updatedAt,
   }) = _PlaylistImpl;
 
-  factory Playlist.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Playlist.fromJson(Map<String, dynamic> jsonSerialization) {
     return Playlist(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      name: serializationManager.deserialize<String>(jsonSerialization['name']),
-      userId:
-          serializationManager.deserialize<String>(jsonSerialization['userId']),
-      isPublic:
-          serializationManager.deserialize<bool>(jsonSerialization['isPublic']),
-      tracks: serializationManager
-          .deserialize<List<_i2.Track>>(jsonSerialization['tracks']),
-      createdAt: serializationManager
-          .deserialize<DateTime>(jsonSerialization['createdAt']),
-      updatedAt: serializationManager
-          .deserialize<DateTime>(jsonSerialization['updatedAt']),
+      id: jsonSerialization['id'] as int?,
+      name: jsonSerialization['name'] as String,
+      userId: jsonSerialization['userId'] as String,
+      isPublic: jsonSerialization['isPublic'] as bool,
+      tracks: (jsonSerialization['tracks'] as List)
+          .map((e) => _i2.Track.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      createdAt:
+          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+      updatedAt:
+          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -95,180 +92,16 @@ abstract class Playlist extends _i1.TableRow {
   }
 
   @override
-  @Deprecated('Will be removed in 2.0.0')
-  Map<String, dynamic> toJsonForDatabase() {
-    return {
-      'id': id,
-      'name': name,
-      'userId': userId,
-      'isPublic': isPublic,
-      'tracks': tracks,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
-    };
-  }
-
-  @override
-  Map<String, dynamic> allToJson() {
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
       'name': name,
       'userId': userId,
       'isPublic': isPublic,
-      'tracks': tracks.toJson(valueToJson: (v) => v.allToJson()),
+      'tracks': tracks.toJson(valueToJson: (v) => v.toJsonForProtocol()),
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
     };
-  }
-
-  @override
-  @Deprecated('Will be removed in 2.0.0')
-  void setColumn(
-    String columnName,
-    value,
-  ) {
-    switch (columnName) {
-      case 'id':
-        id = value;
-        return;
-      case 'name':
-        name = value;
-        return;
-      case 'userId':
-        userId = value;
-        return;
-      case 'isPublic':
-        isPublic = value;
-        return;
-      case 'tracks':
-        tracks = value;
-        return;
-      case 'createdAt':
-        createdAt = value;
-        return;
-      case 'updatedAt':
-        updatedAt = value;
-        return;
-      default:
-        throw UnimplementedError();
-    }
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.find instead.')
-  static Future<List<Playlist>> find(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<PlaylistTable>? where,
-    int? limit,
-    int? offset,
-    _i1.Column? orderBy,
-    List<_i1.Order>? orderByList,
-    bool orderDescending = false,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.find<Playlist>(
-      where: where != null ? where(Playlist.t) : null,
-      limit: limit,
-      offset: offset,
-      orderBy: orderBy,
-      orderByList: orderByList,
-      orderDescending: orderDescending,
-      useCache: useCache,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.findRow instead.')
-  static Future<Playlist?> findSingleRow(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<PlaylistTable>? where,
-    int? offset,
-    _i1.Column? orderBy,
-    bool orderDescending = false,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.findSingleRow<Playlist>(
-      where: where != null ? where(Playlist.t) : null,
-      offset: offset,
-      orderBy: orderBy,
-      orderDescending: orderDescending,
-      useCache: useCache,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.findById instead.')
-  static Future<Playlist?> findById(
-    _i1.Session session,
-    int id,
-  ) async {
-    return session.db.findById<Playlist>(id);
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.deleteWhere instead.')
-  static Future<int> delete(
-    _i1.Session session, {
-    required _i1.WhereExpressionBuilder<PlaylistTable> where,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.delete<Playlist>(
-      where: where(Playlist.t),
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.deleteRow instead.')
-  static Future<bool> deleteRow(
-    _i1.Session session,
-    Playlist row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.deleteRow(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.update instead.')
-  static Future<bool> update(
-    _i1.Session session,
-    Playlist row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.update(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated(
-      'Will be removed in 2.0.0. Use: db.insert instead. Important note: In db.insert, the object you pass in is no longer modified, instead a new copy with the added row is returned which contains the inserted id.')
-  static Future<void> insert(
-    _i1.Session session,
-    Playlist row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.insert(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.count instead.')
-  static Future<int> count(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<PlaylistTable>? where,
-    int? limit,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.count<Playlist>(
-      where: where != null ? where(Playlist.t) : null,
-      limit: limit,
-      useCache: useCache,
-      transaction: transaction,
-    );
   }
 
   static PlaylistInclude include() {
@@ -293,6 +126,11 @@ abstract class Playlist extends _i1.TableRow {
       orderByList: orderByList?.call(Playlist.t),
       include: include,
     );
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -391,9 +229,6 @@ class PlaylistTable extends _i1.Table {
       ];
 }
 
-@Deprecated('Use PlaylistTable.t instead.')
-PlaylistTable tPlaylist = PlaylistTable();
-
 class PlaylistInclude extends _i1.IncludeObject {
   PlaylistInclude._();
 
@@ -437,7 +272,7 @@ class PlaylistRepository {
     _i1.OrderByListBuilder<PlaylistTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.find<Playlist>(
+    return session.db.find<Playlist>(
       where: where?.call(Playlist.t),
       orderBy: orderBy?.call(Playlist.t),
       orderByList: orderByList?.call(Playlist.t),
@@ -457,7 +292,7 @@ class PlaylistRepository {
     _i1.OrderByListBuilder<PlaylistTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.findFirstRow<Playlist>(
+    return session.db.findFirstRow<Playlist>(
       where: where?.call(Playlist.t),
       orderBy: orderBy?.call(Playlist.t),
       orderByList: orderByList?.call(Playlist.t),
@@ -472,7 +307,7 @@ class PlaylistRepository {
     int id, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.findById<Playlist>(
+    return session.db.findById<Playlist>(
       id,
       transaction: transaction,
     );
@@ -483,7 +318,7 @@ class PlaylistRepository {
     List<Playlist> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insert<Playlist>(
+    return session.db.insert<Playlist>(
       rows,
       transaction: transaction,
     );
@@ -494,7 +329,7 @@ class PlaylistRepository {
     Playlist row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insertRow<Playlist>(
+    return session.db.insertRow<Playlist>(
       row,
       transaction: transaction,
     );
@@ -506,7 +341,7 @@ class PlaylistRepository {
     _i1.ColumnSelections<PlaylistTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.update<Playlist>(
+    return session.db.update<Playlist>(
       rows,
       columns: columns?.call(Playlist.t),
       transaction: transaction,
@@ -519,41 +354,41 @@ class PlaylistRepository {
     _i1.ColumnSelections<PlaylistTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.updateRow<Playlist>(
+    return session.db.updateRow<Playlist>(
       row,
       columns: columns?.call(Playlist.t),
       transaction: transaction,
     );
   }
 
-  Future<List<int>> delete(
+  Future<List<Playlist>> delete(
     _i1.Session session,
     List<Playlist> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.delete<Playlist>(
+    return session.db.delete<Playlist>(
       rows,
       transaction: transaction,
     );
   }
 
-  Future<int> deleteRow(
+  Future<Playlist> deleteRow(
     _i1.Session session,
     Playlist row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteRow<Playlist>(
+    return session.db.deleteRow<Playlist>(
       row,
       transaction: transaction,
     );
   }
 
-  Future<List<int>> deleteWhere(
+  Future<List<Playlist>> deleteWhere(
     _i1.Session session, {
     required _i1.WhereExpressionBuilder<PlaylistTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteWhere<Playlist>(
+    return session.db.deleteWhere<Playlist>(
       where: where(Playlist.t),
       transaction: transaction,
     );
@@ -565,7 +400,7 @@ class PlaylistRepository {
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.count<Playlist>(
+    return session.db.count<Playlist>(
       where: where?.call(Playlist.t),
       limit: limit,
       transaction: transaction,

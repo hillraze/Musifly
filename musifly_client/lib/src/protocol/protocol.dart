@@ -26,8 +26,6 @@ class Protocol extends _i1.SerializationManager {
 
   factory Protocol() => _instance;
 
-  static final Map<Type, _i1.constructor> customConstructors = {};
-
   static final Protocol _instance = Protocol._();
 
   @override
@@ -36,26 +34,23 @@ class Protocol extends _i1.SerializationManager {
     Type? t,
   ]) {
     t ??= T;
-    if (customConstructors.containsKey(t)) {
-      return customConstructors[t]!(data, this) as T;
-    }
     if (t == _i2.Album) {
-      return _i2.Album.fromJson(data, this) as T;
+      return _i2.Album.fromJson(data) as T;
     }
     if (t == _i3.Playlist) {
-      return _i3.Playlist.fromJson(data, this) as T;
+      return _i3.Playlist.fromJson(data) as T;
     }
     if (t == _i4.Track) {
-      return _i4.Track.fromJson(data, this) as T;
+      return _i4.Track.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.Album?>()) {
-      return (data != null ? _i2.Album.fromJson(data, this) : null) as T;
+      return (data != null ? _i2.Album.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i3.Playlist?>()) {
-      return (data != null ? _i3.Playlist.fromJson(data, this) : null) as T;
+      return (data != null ? _i3.Playlist.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i4.Track?>()) {
-      return (data != null ? _i4.Track.fromJson(data, this) : null) as T;
+      return (data != null ? _i4.Track.fromJson(data) : null) as T;
     }
     if (t == List<_i5.Track>) {
       return (data as List).map((e) => deserialize<_i5.Track>(e)).toList()

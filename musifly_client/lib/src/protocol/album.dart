@@ -11,7 +11,7 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
 
-abstract class Album extends _i1.SerializableEntity {
+abstract class Album implements _i1.SerializableModel {
   Album._({
     required this.cover,
     required this.artist,
@@ -28,21 +28,15 @@ abstract class Album extends _i1.SerializableEntity {
     required List<_i2.Track> tracks,
   }) = _AlbumImpl;
 
-  factory Album.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Album.fromJson(Map<String, dynamic> jsonSerialization) {
     return Album(
-      cover:
-          serializationManager.deserialize<String>(jsonSerialization['cover']),
-      artist:
-          serializationManager.deserialize<String>(jsonSerialization['artist']),
-      title:
-          serializationManager.deserialize<String>(jsonSerialization['title']),
-      genre:
-          serializationManager.deserialize<String>(jsonSerialization['genre']),
-      tracks: serializationManager
-          .deserialize<List<_i2.Track>>(jsonSerialization['tracks']),
+      cover: jsonSerialization['cover'] as String,
+      artist: jsonSerialization['artist'] as String,
+      title: jsonSerialization['title'] as String,
+      genre: jsonSerialization['genre'] as String,
+      tracks: (jsonSerialization['tracks'] as List)
+          .map((e) => _i2.Track.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 
@@ -72,6 +66,11 @@ abstract class Album extends _i1.SerializableEntity {
       'genre': genre,
       'tracks': tracks.toJson(valueToJson: (v) => v.toJson()),
     };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 

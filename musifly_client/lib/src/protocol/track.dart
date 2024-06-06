@@ -10,7 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class Track extends _i1.SerializableEntity {
+abstract class Track implements _i1.SerializableModel {
   Track._({
     this.id,
     required this.artist,
@@ -29,22 +29,14 @@ abstract class Track extends _i1.SerializableEntity {
     required String title,
   }) = _TrackImpl;
 
-  factory Track.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Track.fromJson(Map<String, dynamic> jsonSerialization) {
     return Track(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      artist:
-          serializationManager.deserialize<String>(jsonSerialization['artist']),
-      audioLink: serializationManager
-          .deserialize<String>(jsonSerialization['audioLink']),
-      cover:
-          serializationManager.deserialize<String>(jsonSerialization['cover']),
-      genre:
-          serializationManager.deserialize<String>(jsonSerialization['genre']),
-      title:
-          serializationManager.deserialize<String>(jsonSerialization['title']),
+      id: jsonSerialization['id'] as int?,
+      artist: jsonSerialization['artist'] as String,
+      audioLink: jsonSerialization['audioLink'] as String,
+      cover: jsonSerialization['cover'] as String,
+      genre: jsonSerialization['genre'] as String,
+      title: jsonSerialization['title'] as String,
     );
   }
 
@@ -81,6 +73,11 @@ abstract class Track extends _i1.SerializableEntity {
       'genre': genre,
       'title': title,
     };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 

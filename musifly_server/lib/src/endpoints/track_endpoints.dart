@@ -6,7 +6,7 @@ class TrackEndpoint extends Endpoint {
   /// Get a Track by ID
   /// @param id The ID of the Track
   Future<Track> getTrack(Session session, int id) async {
-    final track = await session.dbNext.findById<Track>(id);
+    final track = await session.db.findById<Track>(id);
     if (track == null) {
       throw Exception('Track not found');
     }

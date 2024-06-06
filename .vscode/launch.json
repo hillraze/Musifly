@@ -1,0 +1,40 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "musifly_client",
+            "cwd": "musifly_client",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "musifly_flutter",
+            "cwd": "musifly_flutter",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "musifly_flutter (profile mode)",
+            "cwd": "musifly_flutter",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "musifly_flutter (release mode)",
+            "cwd": "musifly_flutter",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "musifly_server",
+            "cwd": "musifly_server",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}
