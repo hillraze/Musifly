@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musifly/analytics/events/screen_names.dart';
-import 'package:musifly/data/models/song/song.model.dart';
+import 'package:musifly/data/models/track/track.model.dart';
 import 'package:musifly/presentation/screens/player/player_screen.dart';
 
 import '../screens/bottom_bar/bottom_bar_shell.dart';
@@ -24,7 +24,7 @@ class RouterService {
   late final GoRouter _goRouter;
   GoRouter get goRouter => _goRouter;
 
-  late final List<SongModel> data;
+  late final List<TrackModel> data;
 
   RouterService._(GlobalKey<NavigatorState> screenNavigatorKey,
       GlobalKey<NavigatorState> shellKey) {

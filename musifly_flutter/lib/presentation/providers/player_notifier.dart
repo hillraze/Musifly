@@ -8,7 +8,7 @@ import 'package:musifly/analytics/mus.logger.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:musifly/data/models/song/song.model.dart';
+import 'package:musifly/data/models/track/track.model.dart';
 import 'package:musifly/utils/locator_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
@@ -26,15 +26,15 @@ class PlayerNotifier extends ChangeNotifier {
 
   AudioPlayer get player => _player;
 
-  SongModel? _track;
-  SongModel? get track => _track;
+  TrackModel? _track;
+  TrackModel? get track => _track;
 
-  // set track(SongModel? newTrack) {
+  // set track(TrackModel? newTrack) {
   //   _track = newTrack;
   //   notifyListeners();
   // }
 
-  void setTrack(SongModel newTrack) {
+  void setTrack(TrackModel newTrack) {
     _track = newTrack;
     prepareSource(newTrack.audioLink);
     // notifyListeners();
@@ -135,10 +135,10 @@ T? ambiguate<T>(T? value) => value;
 //   StreamSubscription? _playerCompleteSubscription;
 //   StreamSubscription? _playerStateChangeSubscription;
 
-//   SongModel? _track;
-//   SongModel? get track => _track;
+//   TrackModel? _track;
+//   TrackModel? get track => _track;
 
-//   // set track(SongModel? newTrack) {
+//   // set track(TrackModel? newTrack) {
 //   //   _track = newTrack;
 //   //   notifyListeners();
 //   // }

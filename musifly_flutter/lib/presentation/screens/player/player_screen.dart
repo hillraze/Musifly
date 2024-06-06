@@ -5,7 +5,7 @@ import "package:gap/gap.dart";
 import "package:go_router/go_router.dart";
 import "package:musifly/analytics/events/core/extentions/context_extentions.dart";
 import "package:musifly/core/core.dart";
-import "package:musifly/data/models/song/song.model.dart";
+import "package:musifly/data/models/track/track.model.dart";
 import "package:musifly/presentation/providers/player_notifier.dart";
 import "package:musifly/presentation/widgets/mus.player_cover.dart";
 import "package:musifly/utils/show_feature_notification.dart";
@@ -27,7 +27,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
   @override
   void initState() {
     super.initState();
-    SongModel trackModel = widget.extra['track'];
+    TrackModel trackModel = widget.extra['track'];
     context.read<PlayerNotifier>().setTrack(trackModel);
   }
 
