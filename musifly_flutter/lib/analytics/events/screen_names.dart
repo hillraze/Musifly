@@ -7,7 +7,9 @@ class ScreenNames {
   static const favourites = '/favourites-screen';
   static const search = '/search-screen';
   static const player = '/player-screen';
+  static const playlistCreate = '/create-playlist';
+  static const playlist = '/playlist-screen';
 
   static List<String> get all =>
-      [splash, home, onboard, favourites, search, player];
+      [splash, home, onboard, favourites, search, player, playlistCreate, playlist];
 }

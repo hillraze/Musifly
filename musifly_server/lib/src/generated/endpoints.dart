@@ -55,8 +55,8 @@ class Endpoints extends _i1.EndpointDispatch {
       name: 'playlistEndpoints',
       endpoint: endpoints['playlistEndpoints']!,
       methodConnectors: {
-        'createPlaylist': _i1.MethodConnector(
-          name: 'createPlaylist',
+        'PlaylistCreate': _i1.MethodConnector(
+          name: 'PlaylistCreate',
           params: {
             'name': _i1.ParameterDescription(
               name: 'name',
@@ -79,7 +79,7 @@ class Endpoints extends _i1.EndpointDispatch {
             Map<String, dynamic> params,
           ) async =>
               (endpoints['playlistEndpoints'] as _i3.PlaylistEndpoints)
-                  .createPlaylist(
+                  .PlaylistCreate(
             session,
             name: params['name'],
             userId: params['userId'],

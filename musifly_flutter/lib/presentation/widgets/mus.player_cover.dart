@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musifly/analytics/events/core/extentions/context_extentions.dart';
 import 'package:musifly/presentation/providers/player_notifier.dart';
-import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class PlayerCover extends StatelessWidget {

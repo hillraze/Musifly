@@ -1,7 +1,7 @@
 album:
   - getNewAlbums:
 playlistEndpoints:
-  - createPlaylist:
+  - PlaylistCreate:
   - addTrack:
   - getPlaylist:
 track:

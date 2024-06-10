@@ -7,7 +7,7 @@ class PlaylistEndpoints extends Endpoint {
   //Path: /playlist/create
   // Method: POST
   // Description: Creates a new playlist.
-  Future<Playlist> createPlaylist(
+  Future<Playlist> PlaylistCreate(
     Session session, {
     String name = 'Untitled',
     required String userId,

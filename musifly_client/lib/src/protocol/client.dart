@@ -37,14 +37,14 @@ class EndpointPlaylistEndpoints extends _i1.EndpointRef {
   @override
   String get name => 'playlistEndpoints';
 
-  _i2.Future<_i4.Playlist> createPlaylist({
+  _i2.Future<_i4.Playlist> PlaylistCreate({
     required String name,
     required String userId,
     required bool isPublic,
   }) =>
       caller.callServerEndpoint<_i4.Playlist>(
         'playlistEndpoints',
-        'createPlaylist',
+        'PlaylistCreate',
         {
           'name': name,
           'userId': userId,

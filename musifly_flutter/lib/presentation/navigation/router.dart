@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:musifly/analytics/events/screen_names.dart';
 import 'package:musifly/data/models/track/track.model.dart';
 import 'package:musifly/presentation/screens/player/player_screen.dart';
+import 'package:musifly/presentation/screens/playlist/playlist_create.dart';
+import 'package:musifly/presentation/screens/playlist/playlist_screen.dart';
 
 import '../screens/bottom_bar/bottom_bar_shell.dart';
 import '../screens/favourites/favourites_screen.dart';
@@ -75,6 +77,26 @@ class RouterService {
             return _rootMaterialPage(
               PlayerScreen(extra: state.extra as Map<String, dynamic>),
               ScreenNames.player,
+            );
+          },
+        ),
+        GoRoute(
+          path: ScreenNames.playlistCreate,
+          name: ScreenNames.playlistCreate,
+          pageBuilder: (ctx, state) {
+            return _rootMaterialPage(
+              PlaylistCreate(),
+              ScreenNames.playlistCreate,
+            );
+          },
+        ),
+        GoRoute(
+          path: ScreenNames.playlist,
+          name: ScreenNames.playlist,
+          pageBuilder: (ctx, state) {
+            return _rootMaterialPage(
+              PlaylistScreen(),
+              ScreenNames.playlist,
             );
           },
         ),

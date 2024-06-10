@@ -1,7 +1,5 @@
 import "package:flutter/material.dart";
 import "package:gap/gap.dart";
-import "package:go_router/go_router.dart";
-import "package:musifly/analytics/events/screen_names.dart";
 import "package:musifly/presentation/providers/home_screen_notifier.dart";
 import "package:provider/provider.dart";
 
