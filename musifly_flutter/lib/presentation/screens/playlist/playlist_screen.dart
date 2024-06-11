@@ -10,8 +10,12 @@ import "package:musifly/analytics/events/core/extentions/context_extentions.dart
 import "package:musifly/core/core.dart";
 import "package:musifly/core/mus.assets/mus.asset_image.dart";
 import "package:musifly/core/mus.assets/mus.assets.dart";
+import "package:musifly/presentation/providers/player_notifier.dart";
 import "package:musifly/presentation/providers/playlist_notifier.dart";
+import "package:musifly/presentation/widgets/mus.add_tracks.dart";
+import "package:musifly/presentation/widgets/mus.tracks.dart";
 import "package:musifly/utils/show_feature_notification.dart";
+import "package:musifly_client/musifly_client.dart";
 import "package:provider/provider.dart";
 
 
@@ -28,6 +32,10 @@ class PlaylistScreen extends StatefulWidget {
   void initState() {
     super.initState();
     _focusNode.addListener(_onFocusChange);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<PlaylistNotifier>().getNewTracks();
+    });
+
   }
    @override
   void dispose() {
@@ -81,7 +89,7 @@ class PlaylistScreen extends StatefulWidget {
                 child: Container(
                   width: double.infinity,
                   height: 390,                
-                  decoration: BoxDecoration(image: DecorationImage(image: AssetImage(MusAssets.mockCover.path), fit: BoxFit.cover)),
+                  decoration: BoxDecoration(image: DecorationImage(image: AssetImage(MusAssets.noteCover.path), fit: BoxFit.cover)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,9 +206,21 @@ class PlaylistScreen extends StatefulWidget {
                                   decoration: const BoxDecoration(
                                     color: Color.fromARGB(255, 63, 63, 63),
                                     borderRadius: BorderRadius.all(Radius.circular(10))
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Consumer<PlaylistNotifier>(
+                                        builder: (context, state, child) {
+                                          if (state.tracks.isEmpty) {
+                                            return const Center(child: CircularProgressIndicator());
+                                          }
+
+                                          return MusAddTracks(data: state.tracks);
+                                        },
+                                      )
 
 
-
+                                    ],
                                   ),
                                   
                                 

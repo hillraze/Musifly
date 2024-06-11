@@ -10,7 +10,7 @@ class MusAlbum extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(data);
+    // print(data);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

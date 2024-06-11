@@ -11,6 +11,7 @@ class MusAssets {
 
   static const mockGenres = MusAsset.bitmap('assets/images/squares.jpg');
   static const playlistAdd = MusAsset.bitmap('assets/images/playlist-add.jpg');
+  static const noteCover = MusAsset.bitmap('assets/images/fade-note.jpg');
 
   static const playerBackground =
       MusAsset.bitmap('assets/images/bkgd-photo.jpg');
@@ -34,6 +35,7 @@ class MusAssets {
   static const planet = MusAsset.vector('assets/svg/planet-img.svg');
   static const loop = MusAsset.vector('assets/svg/loop.svg');
   static const addPlaylist = MusAsset.vector('assets/svg/add-playlist.svg');
+  static const addSong = MusAsset.vector('assets/svg/add-song.svg');
 
   static const playLoading = MusAsset.vector('assets/svg/play-loading.svg');
 
