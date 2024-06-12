@@ -7,14 +7,14 @@ import '../../../models/track/track.model.dart';
 
 // We will use this client as singleton in GetIt Service Locator
 // It's enough to create Client Object from serverpod_flutter here
-class ClientServerpod {
-  ClientServerpod(String baseUrl) {
+class ServerpodClient {
+  ServerpodClient(String baseUrl) {
     _client = Client(baseUrl)
       ..connectivityMonitor = FlutterConnectivityMonitor();
   }
   late final Client _client;
 
-  static final MusLogger _logger = MusLogger("ClientServerpod");
+  static final MusLogger _logger = MusLogger("ServerpodClient");
 
   Future<List<AlbumModel>> getNewAlbums() async {
     try {

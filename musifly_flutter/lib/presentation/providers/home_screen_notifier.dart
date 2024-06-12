@@ -17,7 +17,7 @@ class HomeProvider extends ChangeNotifier {
 
   Future<void> getNewAlbums() async {
     try {
-      _newAlbums = await getIt<ClientServerpod>().getNewAlbums();
+      _newAlbums = await getIt<ServerpodClient>().getNewAlbums();
       _logger.info('notifier albums is succeful');
     } catch (e) {
       _logger.error("Can't pull album: $e");
@@ -28,7 +28,7 @@ class HomeProvider extends ChangeNotifier {
 
   Future<void> getNewTracks() async {
     try {
-      _newTracks = await getIt<ClientServerpod>().getNewTracks();
+      _newTracks = await getIt<ServerpodClient>().getNewTracks();
 
       _logger.info('notifier tracks is succeful');
     } catch (e) {
