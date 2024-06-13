@@ -28,8 +28,8 @@ class TrackModel with _$TrackModel {
       title: response.title,
       artist: response.artist,
       genre: response.genre,
-      cover: response.cover,
-      audioLink: response.audioLink);
+      cover: response.coverUrl,
+      audioLink: response.audioUrl);
 
   factory TrackModel.fromJson(Map<String, dynamic> json) =>
       _$TrackModelFromJson(json);

@@ -13,3 +13,18 @@ Then you can start the Serverpod server.
 When you are finished, you can shut down Serverpod with `Ctrl-C`, then stop Postgres and Redis.
 
     docker compose stop
+
+
+
+Database Migrations:
+
+1. Update model
+
+2. Re-generate model in src/generated/ folder: 
+```serverpod generate```
+
+3. Create migration note in /migrations: 
+```serverpod create-migration```
+
+4. Apply Database Migration: 
+```dart run bin/main.dart --role maintenance --apply-migrations```

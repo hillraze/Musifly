@@ -34,7 +34,7 @@ class ServerpodClient {
 
   Future<List<TrackModel>> getNewTracks() async {
     try {
-      final res = await _client.track.getNewTracks();
+      final res = await _client.track.getTracks();
 
       // There we should convert Server Model to our Frontend Model
       // To make it more clear and robust to use

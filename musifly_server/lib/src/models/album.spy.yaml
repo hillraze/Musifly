@@ -1,7 +1,13 @@
 class: Album
+table: album
 fields:
-  cover: String
-  artist: String
   title: String
-  genre: String
-  tracks: List<Track>
+  genre: String?
+  coverUrl: String?
+  artist: Artist?, relation
+  releasedAt: DateTime
+indexes:
+  album_artist_unique_idx:
+    fields: artistId
+    unique: true
+ 

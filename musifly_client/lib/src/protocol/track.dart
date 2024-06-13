@@ -9,34 +9,35 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'protocol.dart' as _i2;
 
 abstract class Track implements _i1.SerializableModel {
   Track._({
     this.id,
-    required this.artist,
-    required this.audioLink,
-    required this.cover,
-    required this.genre,
+    required this.albumId,
+    this.album,
     required this.title,
+    required this.audioUrl,
   });
 
   factory Track({
     int? id,
-    required String artist,
-    required String audioLink,
-    required String cover,
-    required String genre,
+    required int albumId,
+    _i2.Album? album,
     required String title,
+    required String audioUrl,
   }) = _TrackImpl;
 
   factory Track.fromJson(Map<String, dynamic> jsonSerialization) {
     return Track(
       id: jsonSerialization['id'] as int?,
-      artist: jsonSerialization['artist'] as String,
-      audioLink: jsonSerialization['audioLink'] as String,
-      cover: jsonSerialization['cover'] as String,
-      genre: jsonSerialization['genre'] as String,
+      albumId: jsonSerialization['albumId'] as int,
+      album: jsonSerialization['album'] == null
+          ? null
+          : _i2.Album.fromJson(
+              (jsonSerialization['album'] as Map<String, dynamic>)),
       title: jsonSerialization['title'] as String,
+      audioUrl: jsonSerialization['audioUrl'] as String,
     );
   }
 
@@ -45,33 +46,29 @@ abstract class Track implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  String artist;
+  int albumId;
 
-  String audioLink;
-
-  String cover;
-
-  String genre;
+  _i2.Album? album;
 
   String title;
 
+  String audioUrl;
+
   Track copyWith({
     int? id,
-    String? artist,
-    String? audioLink,
-    String? cover,
-    String? genre,
+    int? albumId,
+    _i2.Album? album,
     String? title,
+    String? audioUrl,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
-      'artist': artist,
-      'audioLink': audioLink,
-      'cover': cover,
-      'genre': genre,
+      'albumId': albumId,
+      if (album != null) 'album': album?.toJson(),
       'title': title,
+      'audioUrl': audioUrl,
     };
   }
 
@@ -86,36 +83,32 @@ class _Undefined {}
 class _TrackImpl extends Track {
   _TrackImpl({
     int? id,
-    required String artist,
-    required String audioLink,
-    required String cover,
-    required String genre,
+    required int albumId,
+    _i2.Album? album,
     required String title,
+    required String audioUrl,
   }) : super._(
           id: id,
-          artist: artist,
-          audioLink: audioLink,
-          cover: cover,
-          genre: genre,
+          albumId: albumId,
+          album: album,
           title: title,
+          audioUrl: audioUrl,
         );
 
   @override
   Track copyWith({
     Object? id = _Undefined,
-    String? artist,
-    String? audioLink,
-    String? cover,
-    String? genre,
+    int? albumId,
+    Object? album = _Undefined,
     String? title,
+    String? audioUrl,
   }) {
     return Track(
       id: id is int? ? id : this.id,
-      artist: artist ?? this.artist,
-      audioLink: audioLink ?? this.audioLink,
-      cover: cover ?? this.cover,
-      genre: genre ?? this.genre,
+      albumId: albumId ?? this.albumId,
+      album: album is _i2.Album? ? album : this.album?.copyWith(),
       title: title ?? this.title,
+      audioUrl: audioUrl ?? this.audioUrl,
     );
   }
 }

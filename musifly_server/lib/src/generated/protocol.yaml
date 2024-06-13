@@ -1,9 +1,25 @@
+admin:
 album:
+  - createAlbum:
+  - updateAlbum:
+  - getAlbums:
+  - getAlbum:
+  - deleteAlbum:
+  - getTopAlbums:
   - getNewAlbums:
+artist:
+  - addArtist:
+  - getArtists:
+  - updateArtist:
+  - deleteArtist:
 playlistEndpoints:
-  - PlaylistCreate:
-  - addTrack:
+  - createPlaylist:
   - getPlaylist:
+  - getPlaylists:
+  - updatePlaylist:
+  - deletePlaylist:
 track:
-  - getTrack:
-  - getNewTracks:
+  - createTrack:
+  - updateTrack:
+  - deleteTrack:
+  - getTracks:

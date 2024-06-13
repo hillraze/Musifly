@@ -13,58 +13,77 @@ import 'protocol.dart' as _i2;
 
 abstract class Album implements _i1.SerializableModel {
   Album._({
-    required this.cover,
-    required this.artist,
+    this.id,
     required this.title,
-    required this.genre,
-    required this.tracks,
+    this.genre,
+    this.coverUrl,
+    required this.artistId,
+    this.artist,
+    required this.releasedAt,
   });
 
   factory Album({
-    required String cover,
-    required String artist,
+    int? id,
     required String title,
-    required String genre,
-    required List<_i2.Track> tracks,
+    String? genre,
+    String? coverUrl,
+    required int artistId,
+    _i2.Artist? artist,
+    required DateTime releasedAt,
   }) = _AlbumImpl;
 
   factory Album.fromJson(Map<String, dynamic> jsonSerialization) {
     return Album(
-      cover: jsonSerialization['cover'] as String,
-      artist: jsonSerialization['artist'] as String,
+      id: jsonSerialization['id'] as int?,
       title: jsonSerialization['title'] as String,
-      genre: jsonSerialization['genre'] as String,
-      tracks: (jsonSerialization['tracks'] as List)
-          .map((e) => _i2.Track.fromJson((e as Map<String, dynamic>)))
-          .toList(),
+      genre: jsonSerialization['genre'] as String?,
+      coverUrl: jsonSerialization['coverUrl'] as String?,
+      artistId: jsonSerialization['artistId'] as int,
+      artist: jsonSerialization['artist'] == null
+          ? null
+          : _i2.Artist.fromJson(
+              (jsonSerialization['artist'] as Map<String, dynamic>)),
+      releasedAt:
+          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['releasedAt']),
     );
   }
 
-  String cover;
-
-  String artist;
+  /// The database id, set if the object has been inserted into the
+  /// database or if it has been fetched from the database. Otherwise,
+  /// the id will be null.
+  int? id;
 
   String title;
 
-  String genre;
+  String? genre;
 
-  List<_i2.Track> tracks;
+  String? coverUrl;
+
+  int artistId;
+
+  _i2.Artist? artist;
+
+  DateTime releasedAt;
 
   Album copyWith({
-    String? cover,
-    String? artist,
+    int? id,
     String? title,
     String? genre,
-    List<_i2.Track>? tracks,
+    String? coverUrl,
+    int? artistId,
+    _i2.Artist? artist,
+    DateTime? releasedAt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
-      'cover': cover,
-      'artist': artist,
+      if (id != null) 'id': id,
       'title': title,
-      'genre': genre,
-      'tracks': tracks.toJson(valueToJson: (v) => v.toJson()),
+      if (genre != null) 'genre': genre,
+      if (coverUrl != null) 'coverUrl': coverUrl,
+      'artistId': artistId,
+      if (artist != null) 'artist': artist?.toJson(),
+      'releasedAt': releasedAt.toJson(),
     };
   }
 
@@ -74,35 +93,45 @@ abstract class Album implements _i1.SerializableModel {
   }
 }
 
+class _Undefined {}
+
 class _AlbumImpl extends Album {
   _AlbumImpl({
-    required String cover,
-    required String artist,
+    int? id,
     required String title,
-    required String genre,
-    required List<_i2.Track> tracks,
+    String? genre,
+    String? coverUrl,
+    required int artistId,
+    _i2.Artist? artist,
+    required DateTime releasedAt,
   }) : super._(
-          cover: cover,
-          artist: artist,
+          id: id,
           title: title,
           genre: genre,
-          tracks: tracks,
+          coverUrl: coverUrl,
+          artistId: artistId,
+          artist: artist,
+          releasedAt: releasedAt,
         );
 
   @override
   Album copyWith({
-    String? cover,
-    String? artist,
+    Object? id = _Undefined,
     String? title,
-    String? genre,
-    List<_i2.Track>? tracks,
+    Object? genre = _Undefined,
+    Object? coverUrl = _Undefined,
+    int? artistId,
+    Object? artist = _Undefined,
+    DateTime? releasedAt,
   }) {
     return Album(
-      cover: cover ?? this.cover,
-      artist: artist ?? this.artist,
+      id: id is int? ? id : this.id,
       title: title ?? this.title,
-      genre: genre ?? this.genre,
-      tracks: tracks ?? this.tracks.clone(),
+      genre: genre is String? ? genre : this.genre,
+      coverUrl: coverUrl is String? ? coverUrl : this.coverUrl,
+      artistId: artistId ?? this.artistId,
+      artist: artist is _i2.Artist? ? artist : this.artist?.copyWith(),
+      releasedAt: releasedAt ?? this.releasedAt,
     );
   }
 }

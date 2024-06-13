@@ -4,58 +4,28 @@ import 'package:serverpod/serverpod.dart';
 import '../generated/playlist.dart';
 
 class PlaylistEndpoints extends Endpoint {
-  //Path: /playlist/create
-  // Method: POST
-  // Description: Creates a new playlist.
-  Future<Playlist> PlaylistCreate(
-    Session session, {
-    String name = 'Untitled',
-    required String userId,
-    bool isPublic = false,
-  }) async {
-    final playlist = await session.db.insertRow<Playlist>(
-      Playlist(
-        name: name,
-        userId: userId,
-        tracks: [],
-        isPublic: isPublic,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      ),
-    );
-
-    return playlist;
+  Future<Playlist> createPlaylist(Session session, Playlist playlist) async {
+    return Playlist.db.insertRow(session, playlist);
   }
 
-  /// Update Playlist with new trackIds
-  Future<Playlist> addTrack(
-    Session session, {
-    required int playlistId,
-    required int trackId,
-  }) async {
-    final track = await session.db.findById<Track>(trackId);
+  Future<Playlist?> getPlaylist(Session session, int id) async {
+    return await Playlist.db.findById(session, id);
+  }
 
-    if (track == null) {
-      throw Exception('Track not found');
-    }
+  Future<List<Playlist>> getPlaylists(Session session) async {
+    return await Playlist.db.find(session);
+  }
 
-    final playlist = await session.db.findById<Playlist>(playlistId);
+  Future<Playlist> updatePlaylist(Session session, Playlist playlist) async {
+    return Playlist.db.updateRow(session, playlist);
+  }
 
+  Future<Playlist> deletePlaylist(Session session, int id) async {
+    var playlist = await Playlist.db.findById(session, id);
     if (playlist == null) {
       throw Exception('Playlist not found');
     }
-
-    return session.db.updateRow<Playlist>(
-      playlist..tracks.add(track),
-    );
-  }
-
-  Future<Playlist> getPlaylist(Session session, int id) async {
-    final playlist = await session.db.findById<Playlist>(id);
-    if (playlist == null) {
-      throw Exception('Playlist not found');
-    }
-
-    return playlist;
+    var playlistDeleted = await Playlist.db.deleteRow(session, playlist);
+    return playlistDeleted;
   }
 }

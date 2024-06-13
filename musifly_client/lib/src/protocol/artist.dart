@@ -9,39 +9,29 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'protocol.dart' as _i2;
 
-abstract class Playlist implements _i1.SerializableModel {
-  Playlist._({
+abstract class Artist implements _i1.SerializableModel {
+  Artist._({
     this.id,
     required this.name,
-    required this.isPublic,
-    required this.tracks,
+    required this.bio,
     required this.createdAt,
-    required this.updatedAt,
   });
 
-  factory Playlist({
+  factory Artist({
     int? id,
     required String name,
-    required bool isPublic,
-    required List<_i2.Track> tracks,
+    required String bio,
     required DateTime createdAt,
-    required DateTime updatedAt,
-  }) = _PlaylistImpl;
+  }) = _ArtistImpl;
 
-  factory Playlist.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Playlist(
+  factory Artist.fromJson(Map<String, dynamic> jsonSerialization) {
+    return Artist(
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
-      isPublic: jsonSerialization['isPublic'] as bool,
-      tracks: (jsonSerialization['tracks'] as List)
-          .map((e) => _i2.Track.fromJson((e as Map<String, dynamic>)))
-          .toList(),
+      bio: jsonSerialization['bio'] as String,
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
-      updatedAt:
-          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -52,31 +42,23 @@ abstract class Playlist implements _i1.SerializableModel {
 
   String name;
 
-  bool isPublic;
-
-  List<_i2.Track> tracks;
+  String bio;
 
   DateTime createdAt;
 
-  DateTime updatedAt;
-
-  Playlist copyWith({
+  Artist copyWith({
     int? id,
     String? name,
-    bool? isPublic,
-    List<_i2.Track>? tracks,
+    String? bio,
     DateTime? createdAt,
-    DateTime? updatedAt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'name': name,
-      'isPublic': isPublic,
-      'tracks': tracks.toJson(valueToJson: (v) => v.toJson()),
+      'bio': bio,
       'createdAt': createdAt.toJson(),
-      'updatedAt': updatedAt.toJson(),
     };
   }
 
@@ -88,39 +70,31 @@ abstract class Playlist implements _i1.SerializableModel {
 
 class _Undefined {}
 
-class _PlaylistImpl extends Playlist {
-  _PlaylistImpl({
+class _ArtistImpl extends Artist {
+  _ArtistImpl({
     int? id,
     required String name,
-    required bool isPublic,
-    required List<_i2.Track> tracks,
+    required String bio,
     required DateTime createdAt,
-    required DateTime updatedAt,
   }) : super._(
           id: id,
           name: name,
-          isPublic: isPublic,
-          tracks: tracks,
+          bio: bio,
           createdAt: createdAt,
-          updatedAt: updatedAt,
         );
 
   @override
-  Playlist copyWith({
+  Artist copyWith({
     Object? id = _Undefined,
     String? name,
-    bool? isPublic,
-    List<_i2.Track>? tracks,
+    String? bio,
     DateTime? createdAt,
-    DateTime? updatedAt,
   }) {
-    return Playlist(
+    return Artist(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
-      isPublic: isPublic ?? this.isPublic,
-      tracks: tracks ?? this.tracks.clone(),
+      bio: bio ?? this.bio,
       createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 }

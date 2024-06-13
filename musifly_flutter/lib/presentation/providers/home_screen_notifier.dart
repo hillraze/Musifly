@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:musifly/analytics/mus.logger.dart';
 import 'package:musifly/data/data_sources/api/serverpod/serverpod_client.dart';
+
 import '../../data/models/album/album.model.dart';
 import '../../data/models/track/track.model.dart';
-
-import '../../utils/service_locator.dart';
+import '../../service_locator.dart';
 
 class HomeProvider extends ChangeNotifier {
   List<AlbumModel> _newAlbums = []; // State to store new albums

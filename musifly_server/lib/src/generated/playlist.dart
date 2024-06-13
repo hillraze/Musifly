@@ -17,7 +17,6 @@ abstract class Playlist extends _i1.TableRow
   Playlist._({
     int? id,
     required this.name,
-    required this.userId,
     required this.isPublic,
     required this.tracks,
     required this.createdAt,
@@ -27,7 +26,6 @@ abstract class Playlist extends _i1.TableRow
   factory Playlist({
     int? id,
     required String name,
-    required String userId,
     required bool isPublic,
     required List<_i2.Track> tracks,
     required DateTime createdAt,
@@ -38,7 +36,6 @@ abstract class Playlist extends _i1.TableRow
     return Playlist(
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
-      userId: jsonSerialization['userId'] as String,
       isPublic: jsonSerialization['isPublic'] as bool,
       tracks: (jsonSerialization['tracks'] as List)
           .map((e) => _i2.Track.fromJson((e as Map<String, dynamic>)))
@@ -56,8 +53,6 @@ abstract class Playlist extends _i1.TableRow
 
   String name;
 
-  String userId;
-
   bool isPublic;
 
   List<_i2.Track> tracks;
@@ -72,7 +67,6 @@ abstract class Playlist extends _i1.TableRow
   Playlist copyWith({
     int? id,
     String? name,
-    String? userId,
     bool? isPublic,
     List<_i2.Track>? tracks,
     DateTime? createdAt,
@@ -83,7 +77,6 @@ abstract class Playlist extends _i1.TableRow
     return {
       if (id != null) 'id': id,
       'name': name,
-      'userId': userId,
       'isPublic': isPublic,
       'tracks': tracks.toJson(valueToJson: (v) => v.toJson()),
       'createdAt': createdAt.toJson(),
@@ -96,7 +89,6 @@ abstract class Playlist extends _i1.TableRow
     return {
       if (id != null) 'id': id,
       'name': name,
-      'userId': userId,
       'isPublic': isPublic,
       'tracks': tracks.toJson(valueToJson: (v) => v.toJsonForProtocol()),
       'createdAt': createdAt.toJson(),
@@ -140,7 +132,6 @@ class _PlaylistImpl extends Playlist {
   _PlaylistImpl({
     int? id,
     required String name,
-    required String userId,
     required bool isPublic,
     required List<_i2.Track> tracks,
     required DateTime createdAt,
@@ -148,7 +139,6 @@ class _PlaylistImpl extends Playlist {
   }) : super._(
           id: id,
           name: name,
-          userId: userId,
           isPublic: isPublic,
           tracks: tracks,
           createdAt: createdAt,
@@ -159,7 +149,6 @@ class _PlaylistImpl extends Playlist {
   Playlist copyWith({
     Object? id = _Undefined,
     String? name,
-    String? userId,
     bool? isPublic,
     List<_i2.Track>? tracks,
     DateTime? createdAt,
@@ -168,7 +157,6 @@ class _PlaylistImpl extends Playlist {
     return Playlist(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
-      userId: userId ?? this.userId,
       isPublic: isPublic ?? this.isPublic,
       tracks: tracks ?? this.tracks.clone(),
       createdAt: createdAt ?? this.createdAt,
@@ -178,13 +166,9 @@ class _PlaylistImpl extends Playlist {
 }
 
 class PlaylistTable extends _i1.Table {
-  PlaylistTable({super.tableRelation}) : super(tableName: 'playlists') {
+  PlaylistTable({super.tableRelation}) : super(tableName: 'playlist') {
     name = _i1.ColumnString(
       'name',
-      this,
-    );
-    userId = _i1.ColumnString(
-      'userId',
       this,
     );
     isPublic = _i1.ColumnBool(
@@ -207,8 +191,6 @@ class PlaylistTable extends _i1.Table {
 
   late final _i1.ColumnString name;
 
-  late final _i1.ColumnString userId;
-
   late final _i1.ColumnBool isPublic;
 
   late final _i1.ColumnSerializable tracks;
@@ -221,7 +203,6 @@ class PlaylistTable extends _i1.Table {
   List<_i1.Column> get columns => [
         id,
         name,
-        userId,
         isPublic,
         tracks,
         createdAt,

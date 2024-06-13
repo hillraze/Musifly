@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  serverpod_flutter: ^2.0.0
+  serverpod_flutter:  2.0.0
   musifly_client:
     path: ../musifly_client
 

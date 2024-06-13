@@ -1,0 +1,6 @@
+class: Artist
+table: artist
+fields:
+  name: String
+  bio: String
+  createdAt: DateTime

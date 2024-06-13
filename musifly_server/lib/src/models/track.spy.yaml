@@ -1,9 +1,11 @@
 # Name of the class to generate.
 class: Track
-table: tracks
+table: track
 fields:
-  artist: String
-  audioLink: String
-  cover: String
-  genre: String
+  album: Album?, relation
   title: String
+  audioUrl: String
+indexes:
+  track_album_unique_idx:
+    fields: albumId
+    unique: true

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:musifly/analytics/events/core/dependency_squirrel.dart';
 import 'package:musifly/data/models/track/track.model.adapter.dart';
+import 'package:musifly/presentation/navigation/router.dart';
 import 'package:musifly/presentation/providers/home_screen_notifier.dart';
 import 'package:musifly/presentation/providers/player_notifier.dart';
 import 'package:musifly/presentation/providers/playlist_notifier.dart';
-import 'package:musifly/utils/service_locator.dart';
+import 'package:musifly/service_locator.dart';
 import 'package:musifly/utils/theme/mus.theme.dart';
 import 'package:provider/provider.dart';
+
 // import 'package:serverpod_flutter/serverpod_flutter.dart';
 import 'presentation/providers/app_notifier.dart';
-import 'package:musifly/presentation/navigation/router.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
 import 'utils/theme/mus.theme_provider.dart';
 
 GlobalKey<NavigatorState> screenNavigatorKey = GlobalKey();
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<MusThemeProvider>(
               create: (_) => musThemeProvider, lazy: false),
           ChangeNotifierProvider(create: (_) => PlayerNotifier()),
-          ChangeNotifierProvider(create: (_)=> PlaylistNotifier()),
+          ChangeNotifierProvider(create: (_) => PlaylistNotifier()),
         ],
         child: Listen<MusThemeProvider>(builder: (context) {
           return MaterialApp.router(

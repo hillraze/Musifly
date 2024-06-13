@@ -30,7 +30,7 @@ class AlbumModel with _$AlbumModel {
         title: response.title,
         artist: response.artist,
         genre: response.genre,
-        cover: response.cover,
+        cover: response.coverUrl,
         tracks: response.tracks.map(TrackModel.fromResponse).toList(),
       );
 
