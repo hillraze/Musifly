@@ -23,6 +23,7 @@ mixin _$TrackModel {
   String get cover => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get artist => throw _privateConstructorUsedError;
+  Album? get album => throw _privateConstructorUsedError;
   String get genre => throw _privateConstructorUsedError;
   String get audioLink => throw _privateConstructorUsedError;
 
@@ -42,6 +43,7 @@ abstract class $TrackModelCopyWith<$Res> {
       {String cover,
       String title,
       String artist,
+      Album? album,
       String genre,
       String audioLink});
 }
@@ -62,6 +64,7 @@ class _$TrackModelCopyWithImpl<$Res, $Val extends TrackModel>
     Object? cover = null,
     Object? title = null,
     Object? artist = null,
+    Object? album = freezed,
     Object? genre = null,
     Object? audioLink = null,
   }) {
@@ -78,6 +81,10 @@ class _$TrackModelCopyWithImpl<$Res, $Val extends TrackModel>
           ? _value.artist
           : artist // ignore: cast_nullable_to_non_nullable
               as String,
+      album: freezed == album
+          ? _value.album
+          : album // ignore: cast_nullable_to_non_nullable
+              as Album?,
       genre: null == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
@@ -102,6 +109,7 @@ abstract class _$$TrackModelImplCopyWith<$Res>
       {String cover,
       String title,
       String artist,
+      Album? album,
       String genre,
       String audioLink});
 }
@@ -120,6 +128,7 @@ class __$$TrackModelImplCopyWithImpl<$Res>
     Object? cover = null,
     Object? title = null,
     Object? artist = null,
+    Object? album = freezed,
     Object? genre = null,
     Object? audioLink = null,
   }) {
@@ -136,6 +145,10 @@ class __$$TrackModelImplCopyWithImpl<$Res>
           ? _value.artist
           : artist // ignore: cast_nullable_to_non_nullable
               as String,
+      album: freezed == album
+          ? _value.album
+          : album // ignore: cast_nullable_to_non_nullable
+              as Album?,
       genre: null == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
@@ -155,6 +168,7 @@ class _$TrackModelImpl implements _TrackModel {
       {required this.cover,
       required this.title,
       required this.artist,
+      required this.album,
       required this.genre,
       required this.audioLink});
 
@@ -168,13 +182,15 @@ class _$TrackModelImpl implements _TrackModel {
   @override
   final String artist;
   @override
+  final Album? album;
+  @override
   final String genre;
   @override
   final String audioLink;
 
   @override
   String toString() {
-    return 'TrackModel(cover: $cover, title: $title, artist: $artist, genre: $genre, audioLink: $audioLink)';
+    return 'TrackModel(cover: $cover, title: $title, artist: $artist, album: $album, genre: $genre, audioLink: $audioLink)';
   }
 
   @override
@@ -185,6 +201,7 @@ class _$TrackModelImpl implements _TrackModel {
             (identical(other.cover, cover) || other.cover == cover) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.artist, artist) || other.artist == artist) &&
+            (identical(other.album, album) || other.album == album) &&
             (identical(other.genre, genre) || other.genre == genre) &&
             (identical(other.audioLink, audioLink) ||
                 other.audioLink == audioLink));
@@ -193,7 +210,7 @@ class _$TrackModelImpl implements _TrackModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, cover, title, artist, genre, audioLink);
+      Object.hash(runtimeType, cover, title, artist, album, genre, audioLink);
 
   @JsonKey(ignore: true)
   @override
@@ -214,6 +231,7 @@ abstract class _TrackModel implements TrackModel {
       {required final String cover,
       required final String title,
       required final String artist,
+      required final Album? album,
       required final String genre,
       required final String audioLink}) = _$TrackModelImpl;
 
@@ -226,6 +244,8 @@ abstract class _TrackModel implements TrackModel {
   String get title;
   @override
   String get artist;
+  @override
+  Album? get album;
   @override
   String get genre;
   @override

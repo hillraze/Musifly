@@ -3,7 +3,7 @@ import 'package:serverpod/serverpod.dart';
 
 import '../generated/playlist.dart';
 
-class PlaylistEndpoints extends Endpoint {
+class PlaylistEndpoint extends Endpoint {
   Future<Playlist> createPlaylist(Session session, Playlist playlist) async {
     return Playlist.db.insertRow(session, playlist);
   }

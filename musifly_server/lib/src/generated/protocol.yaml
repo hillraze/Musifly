@@ -12,7 +12,7 @@ artist:
   - getArtists:
   - updateArtist:
   - deleteArtist:
-playlistEndpoints:
+playlist:
   - createPlaylist:
   - getPlaylist:
   - getPlaylists:

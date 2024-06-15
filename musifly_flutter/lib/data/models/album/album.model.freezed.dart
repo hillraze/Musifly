@@ -22,8 +22,8 @@ AlbumModel _$AlbumModelFromJson(Map<String, dynamic> json) {
 mixin _$AlbumModel {
   String get cover => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  String get artist => throw _privateConstructorUsedError;
-  String get genre => throw _privateConstructorUsedError;
+  Artist? get artist => throw _privateConstructorUsedError;
+  String? get genre => throw _privateConstructorUsedError;
   List<TrackModel> get tracks => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,8 +41,8 @@ abstract class $AlbumModelCopyWith<$Res> {
   $Res call(
       {String cover,
       String title,
-      String artist,
-      String genre,
+      Artist? artist,
+      String? genre,
       List<TrackModel> tracks});
 }
 
@@ -61,8 +61,8 @@ class _$AlbumModelCopyWithImpl<$Res, $Val extends AlbumModel>
   $Res call({
     Object? cover = null,
     Object? title = null,
-    Object? artist = null,
-    Object? genre = null,
+    Object? artist = freezed,
+    Object? genre = freezed,
     Object? tracks = null,
   }) {
     return _then(_value.copyWith(
@@ -74,14 +74,14 @@ class _$AlbumModelCopyWithImpl<$Res, $Val extends AlbumModel>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      artist: null == artist
+      artist: freezed == artist
           ? _value.artist
           : artist // ignore: cast_nullable_to_non_nullable
-              as String,
-      genre: null == genre
+              as Artist?,
+      genre: freezed == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       tracks: null == tracks
           ? _value.tracks
           : tracks // ignore: cast_nullable_to_non_nullable
@@ -101,8 +101,8 @@ abstract class _$$AlbumModelImplCopyWith<$Res>
   $Res call(
       {String cover,
       String title,
-      String artist,
-      String genre,
+      Artist? artist,
+      String? genre,
       List<TrackModel> tracks});
 }
 
@@ -119,8 +119,8 @@ class __$$AlbumModelImplCopyWithImpl<$Res>
   $Res call({
     Object? cover = null,
     Object? title = null,
-    Object? artist = null,
-    Object? genre = null,
+    Object? artist = freezed,
+    Object? genre = freezed,
     Object? tracks = null,
   }) {
     return _then(_$AlbumModelImpl(
@@ -132,14 +132,14 @@ class __$$AlbumModelImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      artist: null == artist
+      artist: freezed == artist
           ? _value.artist
           : artist // ignore: cast_nullable_to_non_nullable
-              as String,
-      genre: null == genre
+              as Artist?,
+      genre: freezed == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       tracks: null == tracks
           ? _value._tracks
           : tracks // ignore: cast_nullable_to_non_nullable
@@ -167,9 +167,9 @@ class _$AlbumModelImpl implements _AlbumModel {
   @override
   final String title;
   @override
-  final String artist;
+  final Artist? artist;
   @override
-  final String genre;
+  final String? genre;
   final List<TrackModel> _tracks;
   @override
   List<TrackModel> get tracks {
@@ -218,8 +218,8 @@ abstract class _AlbumModel implements AlbumModel {
   const factory _AlbumModel(
       {required final String cover,
       required final String title,
-      required final String artist,
-      required final String genre,
+      required final Artist? artist,
+      required final String? genre,
       required final List<TrackModel> tracks}) = _$AlbumModelImpl;
 
   factory _AlbumModel.fromJson(Map<String, dynamic> json) =
@@ -230,9 +230,9 @@ abstract class _AlbumModel implements AlbumModel {
   @override
   String get title;
   @override
-  String get artist;
+  Artist? get artist;
   @override
-  String get genre;
+  String? get genre;
   @override
   List<TrackModel> get tracks;
   @override

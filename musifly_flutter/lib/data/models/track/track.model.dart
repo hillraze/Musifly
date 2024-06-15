@@ -10,6 +10,7 @@ class TrackModel with _$TrackModel {
     required String cover,
     required String title,
     required String artist,
+    required Album? album,
     required String genre,
     required String audioLink,
   }) = _TrackModel;
@@ -18,6 +19,7 @@ class TrackModel with _$TrackModel {
     return const TrackModel(
       cover: "",
       artist: "Billie Eilish",
+      album: null,
       title: "Bad Guy",
       genre: 'k-pop',
       audioLink: '',
@@ -25,11 +27,13 @@ class TrackModel with _$TrackModel {
   }
 
   factory TrackModel.fromResponse(Track response) => TrackModel(
-      title: response.title,
-      artist: response.artist,
-      genre: response.genre,
-      cover: response.coverUrl,
-      audioLink: response.audioUrl);
+        title: response.title,
+        artist: '',
+        album: response.album,
+        genre: '',
+        cover: '',
+        audioLink: response.audioUrl,
+      );
 
   factory TrackModel.fromJson(Map<String, dynamic> json) =>
       _$TrackModelFromJson(json);

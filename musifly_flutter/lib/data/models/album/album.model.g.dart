@@ -10,8 +10,10 @@ _$AlbumModelImpl _$$AlbumModelImplFromJson(Map<String, dynamic> json) =>
     _$AlbumModelImpl(
       cover: json['cover'] as String,
       title: json['title'] as String,
-      artist: json['artist'] as String,
-      genre: json['genre'] as String,
+      artist: json['artist'] == null
+          ? null
+          : Artist.fromJson(json['artist'] as Map<String, dynamic>),
+      genre: json['genre'] as String?,
       tracks: (json['tracks'] as List<dynamic>)
           .map((e) => TrackModel.fromJson(e as Map<String, dynamic>))
           .toList(),

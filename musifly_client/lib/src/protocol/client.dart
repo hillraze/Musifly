@@ -118,43 +118,43 @@ class EndpointArtist extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
-class EndpointPlaylistEndpoints extends _i1.EndpointRef {
-  EndpointPlaylistEndpoints(_i1.EndpointCaller caller) : super(caller);
+class EndpointPlaylist extends _i1.EndpointRef {
+  EndpointPlaylist(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'playlistEndpoints';
+  String get name => 'playlist';
 
   _i2.Future<_i5.Playlist> createPlaylist(_i5.Playlist playlist) =>
       caller.callServerEndpoint<_i5.Playlist>(
-        'playlistEndpoints',
+        'playlist',
         'createPlaylist',
         {'playlist': playlist},
       );
 
   _i2.Future<_i5.Playlist?> getPlaylist(int id) =>
       caller.callServerEndpoint<_i5.Playlist?>(
-        'playlistEndpoints',
+        'playlist',
         'getPlaylist',
         {'id': id},
       );
 
   _i2.Future<List<_i5.Playlist>> getPlaylists() =>
       caller.callServerEndpoint<List<_i5.Playlist>>(
-        'playlistEndpoints',
+        'playlist',
         'getPlaylists',
         {},
       );
 
   _i2.Future<_i5.Playlist> updatePlaylist(_i5.Playlist playlist) =>
       caller.callServerEndpoint<_i5.Playlist>(
-        'playlistEndpoints',
+        'playlist',
         'updatePlaylist',
         {'playlist': playlist},
       );
 
   _i2.Future<_i5.Playlist> deletePlaylist(int id) =>
       caller.callServerEndpoint<_i5.Playlist>(
-        'playlistEndpoints',
+        'playlist',
         'deletePlaylist',
         {'id': id},
       );
@@ -222,7 +222,7 @@ class Client extends _i1.ServerpodClient {
     admin = EndpointAdmin(this);
     album = EndpointAlbum(this);
     artist = EndpointArtist(this);
-    playlistEndpoints = EndpointPlaylistEndpoints(this);
+    playlist = EndpointPlaylist(this);
     track = EndpointTrack(this);
   }
 
@@ -232,7 +232,7 @@ class Client extends _i1.ServerpodClient {
 
   late final EndpointArtist artist;
 
-  late final EndpointPlaylistEndpoints playlistEndpoints;
+  late final EndpointPlaylist playlist;
 
   late final EndpointTrack track;
 
@@ -241,7 +241,7 @@ class Client extends _i1.ServerpodClient {
         'admin': admin,
         'album': album,
         'artist': artist,
-        'playlistEndpoints': playlistEndpoints,
+        'playlist': playlist,
         'track': track,
       };
 

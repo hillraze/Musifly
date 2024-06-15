@@ -12,7 +12,7 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/admin_endpoints.dart' as _i2;
 import '../endpoints/album_endpoints.dart' as _i3;
 import '../endpoints/artist_endpoint.dart' as _i4;
-import '../endpoints/playlist_endpoints.dart' as _i5;
+import '../endpoints/playlist_endpoint.dart' as _i5;
 import '../endpoints/track_endpoints.dart' as _i6;
 import 'package:musifly_server/src/generated/album.dart' as _i7;
 import 'package:musifly_server/src/generated/artist.dart' as _i8;
@@ -41,10 +41,10 @@ class Endpoints extends _i1.EndpointDispatch {
           'artist',
           null,
         ),
-      'playlistEndpoints': _i5.PlaylistEndpoints()
+      'playlist': _i5.PlaylistEndpoint()
         ..initialize(
           server,
-          'playlistEndpoints',
+          'playlist',
           null,
         ),
       'track': _i6.TrackEndpoint()
@@ -233,9 +233,9 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
-    connectors['playlistEndpoints'] = _i1.EndpointConnector(
-      name: 'playlistEndpoints',
-      endpoint: endpoints['playlistEndpoints']!,
+    connectors['playlist'] = _i1.EndpointConnector(
+      name: 'playlist',
+      endpoint: endpoints['playlist']!,
       methodConnectors: {
         'createPlaylist': _i1.MethodConnector(
           name: 'createPlaylist',
@@ -250,8 +250,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['playlistEndpoints'] as _i5.PlaylistEndpoints)
-                  .createPlaylist(
+              (endpoints['playlist'] as _i5.PlaylistEndpoint).createPlaylist(
             session,
             params['playlist'],
           ),
@@ -269,8 +268,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['playlistEndpoints'] as _i5.PlaylistEndpoints)
-                  .getPlaylist(
+              (endpoints['playlist'] as _i5.PlaylistEndpoint).getPlaylist(
             session,
             params['id'],
           ),
@@ -282,7 +280,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['playlistEndpoints'] as _i5.PlaylistEndpoints)
+              (endpoints['playlist'] as _i5.PlaylistEndpoint)
                   .getPlaylists(session),
         ),
         'updatePlaylist': _i1.MethodConnector(
@@ -298,8 +296,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['playlistEndpoints'] as _i5.PlaylistEndpoints)
-                  .updatePlaylist(
+              (endpoints['playlist'] as _i5.PlaylistEndpoint).updatePlaylist(
             session,
             params['playlist'],
           ),
@@ -317,8 +314,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['playlistEndpoints'] as _i5.PlaylistEndpoints)
-                  .deletePlaylist(
+              (endpoints['playlist'] as _i5.PlaylistEndpoint).deletePlaylist(
             session,
             params['id'],
           ),

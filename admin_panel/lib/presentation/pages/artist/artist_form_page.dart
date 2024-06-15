@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:musifly_client/musifly_client.dart';
 import 'package:provider/provider.dart';
+
 import '../../../services/api_service.dart';
 
 class ArtistFormScreen extends StatefulWidget {
@@ -36,7 +37,7 @@ class _ArtistFormScreenState extends State<ArtistFormScreen> {
 
       final apiService = Provider.of<ApiService>(context, listen: false);
       if (widget.artist == null) {
-        apiService.addArtist(artist).then((_) {
+        apiService.createArtist(artist).then((_) {
           Navigator.pop(context);
         });
       } else {

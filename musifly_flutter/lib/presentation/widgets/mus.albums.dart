@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter/widgets.dart";
 
 import "../../data/models/album/album.model.dart";
 
@@ -58,17 +57,17 @@ class MusAlbum extends StatelessWidget {
                     Container(
                       height: 160,
                       width: 160,
-                      decoration: data[index].cover != null
+                      decoration: data[index].cover.isNotEmpty
                           ? BoxDecoration(
                               image: DecorationImage(
-                              image: NetworkImage(data[index].cover!),
+                              image: NetworkImage(data[index].cover),
                             ))
                           : null,
                     ),
                     Text(data[index].title,
                         style:
                             const TextStyle(fontSize: 12, color: Colors.white)),
-                    Text(data[index].artist,
+                    Text(data[index].artist?.name ?? "Unknown",
                         style:
                             const TextStyle(fontSize: 10, color: Colors.grey)),
                   ],

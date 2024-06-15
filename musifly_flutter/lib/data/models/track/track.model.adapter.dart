@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+
 import 'track.model.dart';
 
 class TrackModelAdapter extends TypeAdapter<TrackModel> {
@@ -11,6 +12,7 @@ class TrackModelAdapter extends TypeAdapter<TrackModel> {
       cover: reader.readString(),
       title: reader.readString(),
       artist: reader.readString(),
+      album: null,
       genre: reader.readString(),
       audioLink: reader.readString(),
     );

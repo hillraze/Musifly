@@ -11,7 +11,7 @@ class AlbumModel with _$AlbumModel {
     return const AlbumModel(
       cover: '',
       title: "Billie Eilish",
-      artist: "dsddsd",
+      artist: null,
       genre: 'k-pop',
       tracks: [],
     );
@@ -20,8 +20,8 @@ class AlbumModel with _$AlbumModel {
   const factory AlbumModel({
     required String cover,
     required String title,
-    required String artist,
-    required String genre,
+    required Artist? artist,
+    required String? genre,
     required List<TrackModel> tracks,
   }) = _AlbumModel;
 
@@ -30,8 +30,9 @@ class AlbumModel with _$AlbumModel {
         title: response.title,
         artist: response.artist,
         genre: response.genre,
-        cover: response.coverUrl,
-        tracks: response.tracks.map(TrackModel.fromResponse).toList(),
+        cover: response.coverUrl ?? '',
+        // tracks: response.tracks.map(TrackModel.fromResponse).toList(),
+        tracks: [],
       );
 
   factory AlbumModel.fromJson(Map<String, dynamic> json) =>
