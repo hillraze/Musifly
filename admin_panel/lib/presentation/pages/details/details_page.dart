@@ -1,6 +1,7 @@
 import 'package:admin_panel/core/enums.dart';
 import 'package:admin_panel/presentation/presentation.dart';
 import 'package:flutter/material.dart';
+import 'package:musifly_client/musifly_client.dart';
 import 'package:provider/provider.dart';
 
 import 'form_modal.dart';
@@ -63,8 +64,18 @@ void _showAddDialog(BuildContext context, DashboardProvider provider) {
     MaterialPageRoute(
       builder: (context) => ModelForm(
         modelName: 'artist',
-        onSubmit: (map) {
-          print(map.toString());
+        onSubmit: (Map<String, dynamic> newModel) {
+          switch (newModel) {
+            case TableEnum.artist:
+              final artist = Artist.fromJson(newModel); 
+              provider.createByTable(TableEnum.artist, newModel);
+              provider.fetchByTable(TableEnum.artist);
+              
+              break;
+            default:
+            break;
+          }
+          
         },
       ),
     ),

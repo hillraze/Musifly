@@ -21,7 +21,7 @@ class _ModelFormState extends State<ModelForm> {
   }
 
   @override
-  Widget build(BuildContext context) {
+ Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Fill ${widget.modelName} Details'),
@@ -32,24 +32,7 @@ class _ModelFormState extends State<ModelForm> {
           key: _formKey,
           child: ListView(
             children: <Widget>[
-              // Generate fields based on modelName
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a name';
-                  }
-                  return null;
-                },
-                onSaved: (value) => formData['name'] = value,
-              ),
-              // Add more fields as per your model structure
-              // Example:
-              if (widget.modelName == 'album')
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Genre'),
-                  onSaved: (value) => formData['genre'] = value,
-                ),
+              _buildFormFields(context, widget.modelName),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -66,4 +49,45 @@ class _ModelFormState extends State<ModelForm> {
       ),
     );
   }
+
+  Widget _buildFormFields(BuildContext context, String tableName) {
+    switch (tableName) {
+      case 'artist':
+        return _buildArtistForm(context);
+      default:
+        return Container(); // Return an empty container or any other default form
+    }
+  }
+
+  Widget _buildArtistForm(BuildContext context) {
+    return Column(
+      children: [
+        TextFormField(
+          decoration: InputDecoration(hintText: 'Name'),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter a name';
+            }
+            return null;
+          },
+          onSaved: (value) => formData['name'] = value,
+        ),
+        TextFormField(
+          decoration: InputDecoration(hintText: 'Bio'),
+          onSaved: (value) => formData['bio'] = value,
+        ),
+        TextFormField(
+          decoration: InputDecoration(hintText: 'Created At'),
+          onSaved: (value) => formData['createdAt'] = value,
+        ),
+      ],
+    );
+  }
+
+
+  
+
+
+
+
 }
