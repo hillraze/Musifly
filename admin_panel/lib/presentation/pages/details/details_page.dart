@@ -1,34 +1,44 @@
 import 'package:admin_panel/core/enums.dart';
 import 'package:admin_panel/presentation/presentation.dart';
 import 'package:flutter/material.dart';
-import 'package:musifly_client/musifly_client.dart';
 import 'package:provider/provider.dart';
 
 import 'form_modal.dart';
 
-class DetailsPage extends StatelessWidget {
+class DetailsPage extends StatefulWidget {
   final TableEnum tableName;
 
   const DetailsPage({required this.tableName});
 
   @override
+  State<StatefulWidget> createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
+  @override
   Widget build(BuildContext context) {
     final dashboardProvider = Provider.of<DashboardProvider>(context);
-    final items = dashboardProvider.getItemsForTable(tableName);
+    final items = dashboardProvider.getItemsForTable(widget.tableName);
+    final tableName = widget.tableName;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${tableName.name.toUpperCase()}'),
+        title: Text('${widget.tableName.name.toUpperCase()}'),
         actions: [
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () => _showAddDialog(context, dashboardProvider),
+            onPressed: () => _showAddDialog(
+              context,
+              dashboardProvider,
+              widget.tableName,
+            ),
           ),
         ],
       ),
       body: RefreshIndicator(
         onRefresh: () => dashboardProvider.fetchByTable(tableName),
         child: ListView.builder(
+          physics: AlwaysScrollableScrollPhysics(),
           itemCount: items.length,
           itemBuilder: (context, index) {
             return ListTile(
@@ -51,72 +61,24 @@ class DetailsPage extends StatelessWidget {
 
   Future<void> _refreshItems(
       BuildContext context, DashboardProvider provider) async {
-    return provider.fetchByTable(tableName);
+    return provider.fetchByTable(widget.tableName);
   }
 }
 
-void _showAddDialog(BuildContext context, DashboardProvider provider) {
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-
+void _showAddDialog(
+    BuildContext context, DashboardProvider provider, TableEnum tableName) {
   Navigator.push(
     context,
     MaterialPageRoute(
       builder: (context) => ModelForm(
-        modelName: 'artist',
+        tableName: tableName,
         onSubmit: (Map<String, dynamic> newModel) {
-          switch (newModel) {
-            case TableEnum.artist:
-              final artist = Artist.fromJson(newModel); 
-              provider.createByTable(TableEnum.artist, newModel);
-              provider.fetchByTable(TableEnum.artist);
-              
-              break;
-            default:
-            break;
-          }
-          
+          print("FORM DATA >> ${newModel.toString()}");
+          provider.createByTable(tableName, newModel);
         },
       ),
     ),
   );
-
-  // showDialog(
-  //   context: context,
-  //   builder: (context) {
-  //     return AlertDialog(
-  //       title: Text('Add New Item'),
-  //       content: Form(
-  //         key: _formKey,
-  //         child: TextFormField(
-  //           controller: _nameController,
-  //           decoration: InputDecoration(labelText: 'Name'),
-  //           validator: (value) {
-  //             if (value == null || value.isEmpty) {
-  //               return 'Please enter a name';
-  //             }
-  //             return null;
-  //           },
-  //         ),
-  //       ),
-  //       actions: [
-  //         TextButton(
-  //           onPressed: () => Navigator.of(context).pop(),
-  //           child: Text('Cancel'),
-  //         ),
-  //         TextButton(
-  //           onPressed: () {
-  //             if (_formKey.currentState!.validate()) {
-  //               // _addItem(context, provider, _nameController.text);
-  //               Navigator.of(context).pop();
-  //             }
-  //           },
-  //           child: Text('Add'),
-  //         ),
-  //       ],
-  //     );
-  //   },
-  // );
 }
 
 void _deleteItem(

@@ -1,25 +1,21 @@
 import 'package:admin_panel/core/enums.dart';
 import 'package:admin_panel/services/api_service.dart';
 import 'package:flutter/material.dart';
+import 'package:musifly_client/musifly_client.dart';
 
 class DashboardProvider with ChangeNotifier {
   DashboardProvider({required this.apiService});
   final ApiService apiService;
-
-  int _albumsCount = 0;
-  int _artistsCount = 0;
-  int _tracksCount = 0;
-  int _playlistsCount = 0;
 
   List<dynamic> _albums = [];
   List<dynamic> _artists = [];
   List<dynamic> _tracks = [];
   List<dynamic> _playlists = [];
 
-  int get albumsCount => _albumsCount;
-  int get artistsCount => _artistsCount;
-  int get tracksCount => _tracksCount;
-  int get playlistsCount => _playlistsCount;
+  int get albumsCount => _albums.length;
+  int get artistsCount => _artists.length;
+  int get tracksCount => _tracks.length;
+  int get playlistsCount => _playlists.length;
 
   List<dynamic> getItemsForTable(TableEnum tableName) {
     switch (tableName) {
@@ -54,11 +50,6 @@ class DashboardProvider with ChangeNotifier {
     _tracks = res[2];
     _playlists = res[3];
 
-    _albumsCount = _albums.length;
-    _artistsCount = _artists.length;
-    _tracksCount = _tracks.length;
-    _playlistsCount = _playlists.length;
-
     notifyListeners();
   }
 
@@ -80,20 +71,32 @@ class DashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createByTable(TableEnum tableName, dynamic item) async {
+  Future<void> createByTable(
+    TableEnum tableName,
+    Map<String, dynamic> model,
+  ) async {
     switch (tableName) {
       case TableEnum.artist:
-        _artists.add(item);
+        final res = await apiService.createArtist(Artist.fromJson(model));
+        _artists.add(res);
         break;
+
       case TableEnum.album:
-        _albums.add(item);
+        final res = await apiService.createAlbum(Album.fromJson(model));
+        _albums.add(res);
         break;
+
       case TableEnum.track:
-        _tracks.add(item);
+        final res = await apiService.createTrack(Track.fromJson(model));
+        _tracks.add(res);
         break;
+
       case TableEnum.playlist:
-        _playlists.add(item);
+        final res = await apiService.createPlaylist(Playlist.fromJson(model));
+        _playlists.add(res);
         break;
+      default:
+        throw Exception('Table $tableName not found');
     }
     notifyListeners();
   }
@@ -101,16 +104,21 @@ class DashboardProvider with ChangeNotifier {
   Future<void> deleteByTable(TableEnum tableName, dynamic item) async {
     switch (tableName) {
       case TableEnum.artist:
-        _artists.remove(item);
+        final res = await apiService.deleteArtist(Artist.fromJson(item).id!);
+        _artists.remove(res);
         break;
       case TableEnum.album:
-        _albums.remove(item);
+        final res = await apiService.deleteAlbum(Album.fromJson(item).id!);
+        _albums.remove(res);
         break;
       case TableEnum.track:
-        _tracks.remove(item);
+        final res = await apiService.deleteTrack(Track.fromJson(item).id!);
+        _tracks.remove(res);
         break;
       case TableEnum.playlist:
-        _playlists.remove(item);
+        final res =
+            await apiService.deletePlaylist(Playlist.fromJson(item).id!);
+        _playlists.remove(res);
         break;
     }
     notifyListeners();
