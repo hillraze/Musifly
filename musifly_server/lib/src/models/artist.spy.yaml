@@ -3,4 +3,6 @@ table: artist
 fields:
   name: String
   bio: String
+  imageUrl: String?
+  albums: List<Album>?, relation(name=artist_albums)
   createdAt: DateTime

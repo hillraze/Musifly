@@ -19,7 +19,8 @@ abstract class Album implements _i1.SerializableModel {
     this.coverUrl,
     required this.artistId,
     this.artist,
-    required this.releasedAt,
+    this.tracks,
+    this.releasedAt,
   });
 
   factory Album({
@@ -29,7 +30,8 @@ abstract class Album implements _i1.SerializableModel {
     String? coverUrl,
     required int artistId,
     _i2.Artist? artist,
-    required DateTime releasedAt,
+    List<_i2.Track>? tracks,
+    DateTime? releasedAt,
   }) = _AlbumImpl;
 
   factory Album.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -43,8 +45,12 @@ abstract class Album implements _i1.SerializableModel {
           ? null
           : _i2.Artist.fromJson(
               (jsonSerialization['artist'] as Map<String, dynamic>)),
-      releasedAt:
-          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['releasedAt']),
+      tracks: (jsonSerialization['tracks'] as List?)
+          ?.map((e) => _i2.Track.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      releasedAt: jsonSerialization['releasedAt'] == null
+          ? null
+          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['releasedAt']),
     );
   }
 
@@ -63,7 +69,9 @@ abstract class Album implements _i1.SerializableModel {
 
   _i2.Artist? artist;
 
-  DateTime releasedAt;
+  List<_i2.Track>? tracks;
+
+  DateTime? releasedAt;
 
   Album copyWith({
     int? id,
@@ -72,6 +80,7 @@ abstract class Album implements _i1.SerializableModel {
     String? coverUrl,
     int? artistId,
     _i2.Artist? artist,
+    List<_i2.Track>? tracks,
     DateTime? releasedAt,
   });
   @override
@@ -83,7 +92,9 @@ abstract class Album implements _i1.SerializableModel {
       if (coverUrl != null) 'coverUrl': coverUrl,
       'artistId': artistId,
       if (artist != null) 'artist': artist?.toJson(),
-      'releasedAt': releasedAt.toJson(),
+      if (tracks != null)
+        'tracks': tracks?.toJson(valueToJson: (v) => v.toJson()),
+      if (releasedAt != null) 'releasedAt': releasedAt?.toJson(),
     };
   }
 
@@ -103,7 +114,8 @@ class _AlbumImpl extends Album {
     String? coverUrl,
     required int artistId,
     _i2.Artist? artist,
-    required DateTime releasedAt,
+    List<_i2.Track>? tracks,
+    DateTime? releasedAt,
   }) : super._(
           id: id,
           title: title,
@@ -111,6 +123,7 @@ class _AlbumImpl extends Album {
           coverUrl: coverUrl,
           artistId: artistId,
           artist: artist,
+          tracks: tracks,
           releasedAt: releasedAt,
         );
 
@@ -122,7 +135,8 @@ class _AlbumImpl extends Album {
     Object? coverUrl = _Undefined,
     int? artistId,
     Object? artist = _Undefined,
-    DateTime? releasedAt,
+    Object? tracks = _Undefined,
+    Object? releasedAt = _Undefined,
   }) {
     return Album(
       id: id is int? ? id : this.id,
@@ -131,7 +145,8 @@ class _AlbumImpl extends Album {
       coverUrl: coverUrl is String? ? coverUrl : this.coverUrl,
       artistId: artistId ?? this.artistId,
       artist: artist is _i2.Artist? ? artist : this.artist?.copyWith(),
-      releasedAt: releasedAt ?? this.releasedAt,
+      tracks: tracks is List<_i2.Track>? ? tracks : this.tracks?.clone(),
+      releasedAt: releasedAt is DateTime? ? releasedAt : this.releasedAt,
     );
   }
 }

@@ -20,7 +20,8 @@ import 'protocol.dart' as _i8;
 import 'package:musifly_server/src/generated/album.dart' as _i9;
 import 'package:musifly_server/src/generated/artist.dart' as _i10;
 import 'package:musifly_server/src/generated/playlist.dart' as _i11;
-import 'package:musifly_server/src/generated/track.dart' as _i12;
+import 'package:musifly_server/src/generated/playlist_track.dart' as _i12;
+import 'package:musifly_server/src/generated/track.dart' as _i13;
 export 'album.dart';
 export 'artist.dart';
 export 'playlist.dart';
@@ -75,8 +76,8 @@ class Protocol extends _i1.SerializationManagerServer {
         _i2.ColumnDefinition(
           name: 'releasedAt',
           columnType: _i2.ColumnType.timestampWithoutTimeZone,
-          isNullable: false,
-          dartType: 'DateTime',
+          isNullable: true,
+          dartType: 'DateTime?',
         ),
       ],
       foreignKeys: [
@@ -104,20 +105,7 @@ class Protocol extends _i1.SerializationManagerServer {
           type: 'btree',
           isUnique: true,
           isPrimary: true,
-        ),
-        _i2.IndexDefinition(
-          indexName: 'album_artist_unique_idx',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'artistId',
-            )
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: false,
-        ),
+        )
       ],
       managed: true,
     ),
@@ -145,6 +133,12 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'imageUrl',
+          columnType: _i2.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
         ),
         _i2.ColumnDefinition(
           name: 'createdAt',
@@ -191,25 +185,13 @@ class Protocol extends _i1.SerializationManagerServer {
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'isPublic',
-          columnType: _i2.ColumnType.boolean,
-          isNullable: false,
-          dartType: 'bool',
-        ),
-        _i2.ColumnDefinition(
-          name: 'tracks',
-          columnType: _i2.ColumnType.json,
-          isNullable: false,
-          dartType: 'List<protocol:Track>',
+          name: 'description',
+          columnType: _i2.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
         ),
         _i2.ColumnDefinition(
           name: 'createdAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
-          isNullable: false,
-          dartType: 'DateTime',
-        ),
-        _i2.ColumnDefinition(
-          name: 'updatedAt',
           columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
@@ -258,12 +240,6 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: false,
           dartType: 'int',
         ),
-        _i2.ColumnDefinition(
-          name: 'addedAt',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
-          isNullable: false,
-          dartType: 'DateTime',
-        ),
       ],
       foreignKeys: [
         _i2.ForeignKeyDefinition(
@@ -300,24 +276,7 @@ class Protocol extends _i1.SerializationManagerServer {
           type: 'btree',
           isUnique: true,
           isPrimary: true,
-        ),
-        _i2.IndexDefinition(
-          indexName: 'playlist_track_unique_idx',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'playlistId',
-            ),
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'trackId',
-            ),
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: false,
-        ),
+        )
       ],
       managed: true,
     ),
@@ -336,6 +295,12 @@ class Protocol extends _i1.SerializationManagerServer {
         ),
         _i2.ColumnDefinition(
           name: 'albumId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'artistId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
@@ -363,7 +328,17 @@ class Protocol extends _i1.SerializationManagerServer {
           onUpdate: _i2.ForeignKeyAction.noAction,
           onDelete: _i2.ForeignKeyAction.noAction,
           matchType: null,
-        )
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'track_fk_1',
+          columns: ['artistId'],
+          referenceTable: 'artist',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
       ],
       indexes: [
         _i2.IndexDefinition(
@@ -378,20 +353,7 @@ class Protocol extends _i1.SerializationManagerServer {
           type: 'btree',
           isUnique: true,
           isPrimary: true,
-        ),
-        _i2.IndexDefinition(
-          indexName: 'track_album_unique_idx',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'albumId',
-            )
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: false,
-        ),
+        )
       ],
       managed: true,
     ),
@@ -434,9 +396,22 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i7.Track?>()) {
       return (data != null ? _i7.Track.fromJson(data) : null) as T;
     }
-    if (t == List<_i8.Track>) {
-      return (data as List).map((e) => deserialize<_i8.Track>(e)).toList()
-          as dynamic;
+    if (t == _i1.getType<List<_i8.Track>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i8.Track>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i8.Album>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i8.Album>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i8.PlaylistTrack>?>()) {
+      return (data != null
+          ? (data as List)
+              .map((e) => deserialize<_i8.PlaylistTrack>(e))
+              .toList()
+          : null) as dynamic;
     }
     if (t == List<_i9.Album>) {
       return (data as List).map((e) => deserialize<_i9.Album>(e)).toList()
@@ -450,8 +425,13 @@ class Protocol extends _i1.SerializationManagerServer {
       return (data as List).map((e) => deserialize<_i11.Playlist>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i12.Track>) {
-      return (data as List).map((e) => deserialize<_i12.Track>(e)).toList()
+    if (t == List<_i12.PlaylistTrack>) {
+      return (data as List)
+          .map((e) => deserialize<_i12.PlaylistTrack>(e))
+          .toList() as dynamic;
+    }
+    if (t == List<_i13.Track>) {
+      return (data as List).map((e) => deserialize<_i13.Track>(e)).toList()
           as dynamic;
     }
     try {

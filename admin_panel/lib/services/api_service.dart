@@ -87,4 +87,27 @@ class ApiService {
     final response = await _client.playlist.deletePlaylist(id);
     return response;
   }
+
+  // PlaylistTracks
+  Future<PlaylistTrack> createPlaylistTrack(PlaylistTrack playlistTrack) async {
+    final response =
+        await _client.playlistTrack.createPlaylistTrack(playlistTrack);
+    return response;
+  }
+
+  Future<PlaylistTrack> updatePlaylistTrack(PlaylistTrack playlistTrack) async {
+    final response =
+        await _client.playlistTrack.updatePlaylistTrack(playlistTrack);
+    return response;
+  }
+
+  Future<List<PlaylistTrack>> getPlaylistTracks() async {
+    final response = await _client.playlistTrack.getPlaylistTracks();
+    return response;
+  }
+
+  Future<PlaylistTrack> deletePlaylistTrack(int id) async {
+    final response = await _client.playlistTrack.deletePlaylistTrack(id);
+    return response;
+  }
 }

@@ -20,7 +20,8 @@ abstract class Album extends _i1.TableRow implements _i1.ProtocolSerialization {
     this.coverUrl,
     required this.artistId,
     this.artist,
-    required this.releasedAt,
+    this.tracks,
+    this.releasedAt,
   }) : super(id);
 
   factory Album({
@@ -30,7 +31,8 @@ abstract class Album extends _i1.TableRow implements _i1.ProtocolSerialization {
     String? coverUrl,
     required int artistId,
     _i2.Artist? artist,
-    required DateTime releasedAt,
+    List<_i2.Track>? tracks,
+    DateTime? releasedAt,
   }) = _AlbumImpl;
 
   factory Album.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -44,8 +46,12 @@ abstract class Album extends _i1.TableRow implements _i1.ProtocolSerialization {
           ? null
           : _i2.Artist.fromJson(
               (jsonSerialization['artist'] as Map<String, dynamic>)),
-      releasedAt:
-          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['releasedAt']),
+      tracks: (jsonSerialization['tracks'] as List?)
+          ?.map((e) => _i2.Track.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      releasedAt: jsonSerialization['releasedAt'] == null
+          ? null
+          : _i1.DateTimeJsonExtension.fromJson(jsonSerialization['releasedAt']),
     );
   }
 
@@ -63,7 +69,9 @@ abstract class Album extends _i1.TableRow implements _i1.ProtocolSerialization {
 
   _i2.Artist? artist;
 
-  DateTime releasedAt;
+  List<_i2.Track>? tracks;
+
+  DateTime? releasedAt;
 
   @override
   _i1.Table get table => t;
@@ -75,6 +83,7 @@ abstract class Album extends _i1.TableRow implements _i1.ProtocolSerialization {
     String? coverUrl,
     int? artistId,
     _i2.Artist? artist,
+    List<_i2.Track>? tracks,
     DateTime? releasedAt,
   });
   @override
@@ -86,7 +95,9 @@ abstract class Album extends _i1.TableRow implements _i1.ProtocolSerialization {
       if (coverUrl != null) 'coverUrl': coverUrl,
       'artistId': artistId,
       if (artist != null) 'artist': artist?.toJson(),
-      'releasedAt': releasedAt.toJson(),
+      if (tracks != null)
+        'tracks': tracks?.toJson(valueToJson: (v) => v.toJson()),
+      if (releasedAt != null) 'releasedAt': releasedAt?.toJson(),
     };
   }
 
@@ -99,12 +110,20 @@ abstract class Album extends _i1.TableRow implements _i1.ProtocolSerialization {
       if (coverUrl != null) 'coverUrl': coverUrl,
       'artistId': artistId,
       if (artist != null) 'artist': artist?.toJsonForProtocol(),
-      'releasedAt': releasedAt.toJson(),
+      if (tracks != null)
+        'tracks': tracks?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
+      if (releasedAt != null) 'releasedAt': releasedAt?.toJson(),
     };
   }
 
-  static AlbumInclude include({_i2.ArtistInclude? artist}) {
-    return AlbumInclude._(artist: artist);
+  static AlbumInclude include({
+    _i2.ArtistInclude? artist,
+    _i2.TrackIncludeList? tracks,
+  }) {
+    return AlbumInclude._(
+      artist: artist,
+      tracks: tracks,
+    );
   }
 
   static AlbumIncludeList includeList({
@@ -143,7 +162,8 @@ class _AlbumImpl extends Album {
     String? coverUrl,
     required int artistId,
     _i2.Artist? artist,
-    required DateTime releasedAt,
+    List<_i2.Track>? tracks,
+    DateTime? releasedAt,
   }) : super._(
           id: id,
           title: title,
@@ -151,6 +171,7 @@ class _AlbumImpl extends Album {
           coverUrl: coverUrl,
           artistId: artistId,
           artist: artist,
+          tracks: tracks,
           releasedAt: releasedAt,
         );
 
@@ -162,7 +183,8 @@ class _AlbumImpl extends Album {
     Object? coverUrl = _Undefined,
     int? artistId,
     Object? artist = _Undefined,
-    DateTime? releasedAt,
+    Object? tracks = _Undefined,
+    Object? releasedAt = _Undefined,
   }) {
     return Album(
       id: id is int? ? id : this.id,
@@ -171,7 +193,8 @@ class _AlbumImpl extends Album {
       coverUrl: coverUrl is String? ? coverUrl : this.coverUrl,
       artistId: artistId ?? this.artistId,
       artist: artist is _i2.Artist? ? artist : this.artist?.copyWith(),
-      releasedAt: releasedAt ?? this.releasedAt,
+      tracks: tracks is List<_i2.Track>? ? tracks : this.tracks?.clone(),
+      releasedAt: releasedAt is DateTime? ? releasedAt : this.releasedAt,
     );
   }
 }
@@ -210,6 +233,10 @@ class AlbumTable extends _i1.Table {
 
   _i2.ArtistTable? _artist;
 
+  _i2.TrackTable? ___tracks;
+
+  _i1.ManyRelation<_i2.TrackTable>? _tracks;
+
   late final _i1.ColumnDateTime releasedAt;
 
   _i2.ArtistTable get artist {
@@ -223,6 +250,37 @@ class AlbumTable extends _i1.Table {
           _i2.ArtistTable(tableRelation: foreignTableRelation),
     );
     return _artist!;
+  }
+
+  _i2.TrackTable get __tracks {
+    if (___tracks != null) return ___tracks!;
+    ___tracks = _i1.createRelationTable(
+      relationFieldName: '__tracks',
+      field: Album.t.id,
+      foreignField: _i2.Track.t.albumId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.TrackTable(tableRelation: foreignTableRelation),
+    );
+    return ___tracks!;
+  }
+
+  _i1.ManyRelation<_i2.TrackTable> get tracks {
+    if (_tracks != null) return _tracks!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'tracks',
+      field: Album.t.id,
+      foreignField: _i2.Track.t.albumId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.TrackTable(tableRelation: foreignTableRelation),
+    );
+    _tracks = _i1.ManyRelation<_i2.TrackTable>(
+      tableWithRelations: relationTable,
+      table: _i2.TrackTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _tracks!;
   }
 
   @override
@@ -240,19 +298,31 @@ class AlbumTable extends _i1.Table {
     if (relationField == 'artist') {
       return artist;
     }
+    if (relationField == 'tracks') {
+      return __tracks;
+    }
     return null;
   }
 }
 
 class AlbumInclude extends _i1.IncludeObject {
-  AlbumInclude._({_i2.ArtistInclude? artist}) {
+  AlbumInclude._({
+    _i2.ArtistInclude? artist,
+    _i2.TrackIncludeList? tracks,
+  }) {
     _artist = artist;
+    _tracks = tracks;
   }
 
   _i2.ArtistInclude? _artist;
 
+  _i2.TrackIncludeList? _tracks;
+
   @override
-  Map<String, _i1.Include?> get includes => {'artist': _artist};
+  Map<String, _i1.Include?> get includes => {
+        'artist': _artist,
+        'tracks': _tracks,
+      };
 
   @override
   _i1.Table get table => Album.t;
@@ -281,7 +351,13 @@ class AlbumIncludeList extends _i1.IncludeList {
 class AlbumRepository {
   const AlbumRepository._();
 
+  final attach = const AlbumAttachRepository._();
+
   final attachRow = const AlbumAttachRowRepository._();
+
+  final detach = const AlbumDetachRepository._();
+
+  final detachRow = const AlbumDetachRowRepository._();
 
   Future<List<Album>> find(
     _i1.Session session, {
@@ -435,6 +511,29 @@ class AlbumRepository {
   }
 }
 
+class AlbumAttachRepository {
+  const AlbumAttachRepository._();
+
+  Future<void> tracks(
+    _i1.Session session,
+    Album album,
+    List<_i2.Track> track,
+  ) async {
+    if (track.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('track.id');
+    }
+    if (album.id == null) {
+      throw ArgumentError.notNull('album.id');
+    }
+
+    var $track = track.map((e) => e.copyWith(albumId: album.id)).toList();
+    await session.db.update<_i2.Track>(
+      $track,
+      columns: [_i2.Track.t.albumId],
+    );
+  }
+}
+
 class AlbumAttachRowRepository {
   const AlbumAttachRowRepository._();
 
@@ -454,6 +553,63 @@ class AlbumAttachRowRepository {
     await session.db.updateRow<Album>(
       $album,
       columns: [Album.t.artistId],
+    );
+  }
+
+  Future<void> tracks(
+    _i1.Session session,
+    Album album,
+    _i2.Track track,
+  ) async {
+    if (track.id == null) {
+      throw ArgumentError.notNull('track.id');
+    }
+    if (album.id == null) {
+      throw ArgumentError.notNull('album.id');
+    }
+
+    var $track = track.copyWith(albumId: album.id);
+    await session.db.updateRow<_i2.Track>(
+      $track,
+      columns: [_i2.Track.t.albumId],
+    );
+  }
+}
+
+class AlbumDetachRepository {
+  const AlbumDetachRepository._();
+
+  Future<void> tracks(
+    _i1.Session session,
+    List<_i2.Track> track,
+  ) async {
+    if (track.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('track.id');
+    }
+
+    var $track = track.map((e) => e.copyWith(albumId: null)).toList();
+    await session.db.update<_i2.Track>(
+      $track,
+      columns: [_i2.Track.t.albumId],
+    );
+  }
+}
+
+class AlbumDetachRowRepository {
+  const AlbumDetachRowRepository._();
+
+  Future<void> tracks(
+    _i1.Session session,
+    _i2.Track track,
+  ) async {
+    if (track.id == null) {
+      throw ArgumentError.notNull('track.id');
+    }
+
+    var $track = track.copyWith(albumId: null);
+    await session.db.updateRow<_i2.Track>(
+      $track,
+      columns: [_i2.Track.t.albumId],
     );
   }
 }

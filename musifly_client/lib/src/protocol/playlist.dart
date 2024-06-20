@@ -15,33 +15,29 @@ abstract class Playlist implements _i1.SerializableModel {
   Playlist._({
     this.id,
     required this.name,
-    required this.isPublic,
-    required this.tracks,
+    this.description,
+    this.playlistTracks,
     required this.createdAt,
-    required this.updatedAt,
   });
 
   factory Playlist({
     int? id,
     required String name,
-    required bool isPublic,
-    required List<_i2.Track> tracks,
+    String? description,
+    List<_i2.PlaylistTrack>? playlistTracks,
     required DateTime createdAt,
-    required DateTime updatedAt,
   }) = _PlaylistImpl;
 
   factory Playlist.fromJson(Map<String, dynamic> jsonSerialization) {
     return Playlist(
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
-      isPublic: jsonSerialization['isPublic'] as bool,
-      tracks: (jsonSerialization['tracks'] as List)
-          .map((e) => _i2.Track.fromJson((e as Map<String, dynamic>)))
+      description: jsonSerialization['description'] as String?,
+      playlistTracks: (jsonSerialization['playlistTracks'] as List?)
+          ?.map((e) => _i2.PlaylistTrack.fromJson((e as Map<String, dynamic>)))
           .toList(),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
-      updatedAt:
-          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -52,31 +48,29 @@ abstract class Playlist implements _i1.SerializableModel {
 
   String name;
 
-  bool isPublic;
+  String? description;
 
-  List<_i2.Track> tracks;
+  List<_i2.PlaylistTrack>? playlistTracks;
 
   DateTime createdAt;
-
-  DateTime updatedAt;
 
   Playlist copyWith({
     int? id,
     String? name,
-    bool? isPublic,
-    List<_i2.Track>? tracks,
+    String? description,
+    List<_i2.PlaylistTrack>? playlistTracks,
     DateTime? createdAt,
-    DateTime? updatedAt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'name': name,
-      'isPublic': isPublic,
-      'tracks': tracks.toJson(valueToJson: (v) => v.toJson()),
+      if (description != null) 'description': description,
+      if (playlistTracks != null)
+        'playlistTracks':
+            playlistTracks?.toJson(valueToJson: (v) => v.toJson()),
       'createdAt': createdAt.toJson(),
-      'updatedAt': updatedAt.toJson(),
     };
   }
 
@@ -92,35 +86,33 @@ class _PlaylistImpl extends Playlist {
   _PlaylistImpl({
     int? id,
     required String name,
-    required bool isPublic,
-    required List<_i2.Track> tracks,
+    String? description,
+    List<_i2.PlaylistTrack>? playlistTracks,
     required DateTime createdAt,
-    required DateTime updatedAt,
   }) : super._(
           id: id,
           name: name,
-          isPublic: isPublic,
-          tracks: tracks,
+          description: description,
+          playlistTracks: playlistTracks,
           createdAt: createdAt,
-          updatedAt: updatedAt,
         );
 
   @override
   Playlist copyWith({
     Object? id = _Undefined,
     String? name,
-    bool? isPublic,
-    List<_i2.Track>? tracks,
+    Object? description = _Undefined,
+    Object? playlistTracks = _Undefined,
     DateTime? createdAt,
-    DateTime? updatedAt,
   }) {
     return Playlist(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
-      isPublic: isPublic ?? this.isPublic,
-      tracks: tracks ?? this.tracks.clone(),
+      description: description is String? ? description : this.description,
+      playlistTracks: playlistTracks is List<_i2.PlaylistTrack>?
+          ? playlistTracks
+          : this.playlistTracks?.clone(),
       createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 }

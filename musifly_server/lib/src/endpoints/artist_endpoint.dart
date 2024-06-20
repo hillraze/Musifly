@@ -9,12 +9,21 @@ class ArtistEndpoint extends Endpoint {
     return result;
   }
 
-  Future<List<Artist>> getArtists(Session session) async {
-    return await Artist.db.find(session);
+  Future<List<Artist>> getArtists(Session session) {
+    return Artist.db.find(
+      session,
+      include: Artist.include(
+        albums: Album.includeList(
+          include: Album.include(
+            tracks: Track.includeList(),
+          ),
+        ),
+      ),
+    );
   }
 
-  Future<Artist> updateArtist(Session session, Artist artist) async {
-    return await Artist.db.updateRow(session, artist);
+  Future<Artist> updateArtist(Session session, Artist artist) {
+    return Artist.db.updateRow(session, artist);
   }
 
   Future<Artist> deleteArtist(Session session, int id) async {

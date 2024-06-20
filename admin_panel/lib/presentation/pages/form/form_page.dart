@@ -1,17 +1,17 @@
 import 'package:admin_panel/core/enums.dart';
 import 'package:flutter/material.dart';
 
-class ModelForm extends StatefulWidget {
-  const ModelForm({required this.onSubmit, required this.tableName});
+class FormPage extends StatefulWidget {
+  const FormPage({super.key, required this.onSubmit, required this.tableName});
 
   final Function(Map<String, dynamic>) onSubmit;
   final TableEnum tableName;
 
   @override
-  _ModelFormState createState() => _ModelFormState();
+  _FormPageState createState() => _FormPageState();
 }
 
-class _ModelFormState extends State<ModelForm> {
+class _FormPageState extends State<FormPage> {
   final _formKey = GlobalKey<FormState>();
   Map<String, dynamic> formData = {
     "createdAt": DateTime.now(),
@@ -61,6 +61,8 @@ class _ModelFormState extends State<ModelForm> {
         return _buildTrackForm(context);
       case TableEnum.playlist:
         return _buildPlaylistForm(context);
+      case TableEnum.playlistTrack:
+        return _buildPlaylistTrackForm(context);
       default:
         return Container(); // Return an empty container or any other default form
     }
@@ -87,16 +89,6 @@ class _ModelFormState extends State<ModelForm> {
     );
   }
 
-//       title: jsonSerialization['title'] as String,
-//       genre: jsonSerialization['genre'] as String?,
-//       coverUrl: jsonSerialization['coverUrl'] as String?,
-//       artistId: jsonSerialization['artistId'] as int,
-//       artist: jsonSerialization['artist'] == null
-//           ? null
-//           : _i2.Artist.fromJson(
-//               (jsonSerialization['artist'] as Map<String, dynamic>)),
-//       releasedAt:
-//           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['releasedAt']),
   Widget _buildAlbumForm(BuildContext context) {
     return Column(
       children: [
@@ -120,11 +112,12 @@ class _ModelFormState extends State<ModelForm> {
         ),
         TextFormField(
           decoration: const InputDecoration(hintText: 'Artist ID'),
-          onSaved: (value) => formData['artistId'] = value,
+          onSaved: (value) => formData['artistId'] = int.parse(value ?? ''),
         ),
         TextFormField(
           decoration: const InputDecoration(hintText: 'Released At'),
-          onSaved: (value) => formData['releasedAt'] = value,
+          onSaved: (value) => formData['releasedAt'] =
+              DateTime.tryParse(value ?? "00.00.2000") ?? DateTime.now(),
           keyboardType: TextInputType.datetime,
         ),
       ],
@@ -145,21 +138,16 @@ class _ModelFormState extends State<ModelForm> {
           onSaved: (value) => formData['title'] = value,
         ),
         TextFormField(
-          decoration: const InputDecoration(hintText: 'Genre'),
-          onSaved: (value) => formData['genre'] = value,
-        ),
-        TextFormField(
-          decoration: const InputDecoration(hintText: 'Cover URL'),
-          onSaved: (value) => formData['coverUrl'] = value,
+          decoration: const InputDecoration(hintText: 'Audio URL'),
+          onSaved: (value) => formData['audioUrl'] = value,
         ),
         TextFormField(
           decoration: const InputDecoration(hintText: 'Artist ID'),
-          onSaved: (value) => formData['artistId'] = value,
+          onSaved: (value) => formData['artistId'] = int.parse(value ?? ''),
         ),
         TextFormField(
-          decoration: const InputDecoration(hintText: 'Released At'),
-          onSaved: (value) => formData['releasedAt'] = value,
-          keyboardType: TextInputType.datetime,
+          decoration: const InputDecoration(hintText: 'Album ID'),
+          onSaved: (value) => formData['albumId'] = int.parse(value ?? ''),
         ),
       ],
     );
@@ -181,6 +169,27 @@ class _ModelFormState extends State<ModelForm> {
         TextFormField(
           decoration: const InputDecoration(hintText: 'Is Public'),
           onSaved: (value) => formData['isPublic'] = value,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPlaylistTrackForm(BuildContext context) {
+    return Column(
+      children: [
+        TextFormField(
+          decoration: const InputDecoration(hintText: 'Playlist ID'),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter a playlist ID';
+            }
+            return null;
+          },
+          onSaved: (value) => formData['playlistId'] = int.parse(value ?? ''),
+        ),
+        TextFormField(
+          decoration: const InputDecoration(hintText: 'Track ID'),
+          onSaved: (value) => formData['trackId'] = int.parse(value ?? ""),
         ),
       ],
     );

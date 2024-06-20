@@ -9,12 +9,15 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'protocol.dart' as _i2;
 
 abstract class Artist implements _i1.SerializableModel {
   Artist._({
     this.id,
     required this.name,
     required this.bio,
+    this.imageUrl,
+    this.albums,
     required this.createdAt,
   });
 
@@ -22,6 +25,8 @@ abstract class Artist implements _i1.SerializableModel {
     int? id,
     required String name,
     required String bio,
+    String? imageUrl,
+    List<_i2.Album>? albums,
     required DateTime createdAt,
   }) = _ArtistImpl;
 
@@ -30,6 +35,10 @@ abstract class Artist implements _i1.SerializableModel {
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
       bio: jsonSerialization['bio'] as String,
+      imageUrl: jsonSerialization['imageUrl'] as String?,
+      albums: (jsonSerialization['albums'] as List?)
+          ?.map((e) => _i2.Album.fromJson((e as Map<String, dynamic>)))
+          .toList(),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
     );
@@ -44,12 +53,18 @@ abstract class Artist implements _i1.SerializableModel {
 
   String bio;
 
+  String? imageUrl;
+
+  List<_i2.Album>? albums;
+
   DateTime createdAt;
 
   Artist copyWith({
     int? id,
     String? name,
     String? bio,
+    String? imageUrl,
+    List<_i2.Album>? albums,
     DateTime? createdAt,
   });
   @override
@@ -58,6 +73,9 @@ abstract class Artist implements _i1.SerializableModel {
       if (id != null) 'id': id,
       'name': name,
       'bio': bio,
+      if (imageUrl != null) 'imageUrl': imageUrl,
+      if (albums != null)
+        'albums': albums?.toJson(valueToJson: (v) => v.toJson()),
       'createdAt': createdAt.toJson(),
     };
   }
@@ -75,11 +93,15 @@ class _ArtistImpl extends Artist {
     int? id,
     required String name,
     required String bio,
+    String? imageUrl,
+    List<_i2.Album>? albums,
     required DateTime createdAt,
   }) : super._(
           id: id,
           name: name,
           bio: bio,
+          imageUrl: imageUrl,
+          albums: albums,
           createdAt: createdAt,
         );
 
@@ -88,12 +110,16 @@ class _ArtistImpl extends Artist {
     Object? id = _Undefined,
     String? name,
     String? bio,
+    Object? imageUrl = _Undefined,
+    Object? albums = _Undefined,
     DateTime? createdAt,
   }) {
     return Artist(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
       bio: bio ?? this.bio,
+      imageUrl: imageUrl is String? ? imageUrl : this.imageUrl,
+      albums: albums is List<_i2.Album>? ? albums : this.albums?.clone(),
       createdAt: createdAt ?? this.createdAt,
     );
   }

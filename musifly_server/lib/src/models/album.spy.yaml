@@ -4,10 +4,7 @@ fields:
   title: String
   genre: String?
   coverUrl: String?
-  artist: Artist?, relation
-  releasedAt: DateTime
-indexes:
-  album_artist_unique_idx:
-    fields: artistId
-    unique: true
+  artist: Artist?, relation(name=artist_albums)
+  tracks: List<Track>?, relation(name=album_tracks)
+  releasedAt: DateTime?
  

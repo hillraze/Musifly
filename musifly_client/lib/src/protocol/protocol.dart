@@ -19,7 +19,8 @@ import 'protocol.dart' as _i7;
 import 'package:musifly_client/src/protocol/album.dart' as _i8;
 import 'package:musifly_client/src/protocol/artist.dart' as _i9;
 import 'package:musifly_client/src/protocol/playlist.dart' as _i10;
-import 'package:musifly_client/src/protocol/track.dart' as _i11;
+import 'package:musifly_client/src/protocol/playlist_track.dart' as _i11;
+import 'package:musifly_client/src/protocol/track.dart' as _i12;
 export 'album.dart';
 export 'artist.dart';
 export 'playlist.dart';
@@ -70,9 +71,22 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i6.Track?>()) {
       return (data != null ? _i6.Track.fromJson(data) : null) as T;
     }
-    if (t == List<_i7.Track>) {
-      return (data as List).map((e) => deserialize<_i7.Track>(e)).toList()
-          as dynamic;
+    if (t == _i1.getType<List<_i7.Track>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i7.Track>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i7.Album>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i7.Album>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i7.PlaylistTrack>?>()) {
+      return (data != null
+          ? (data as List)
+              .map((e) => deserialize<_i7.PlaylistTrack>(e))
+              .toList()
+          : null) as dynamic;
     }
     if (t == List<_i8.Album>) {
       return (data as List).map((e) => deserialize<_i8.Album>(e)).toList()
@@ -86,8 +100,13 @@ class Protocol extends _i1.SerializationManager {
       return (data as List).map((e) => deserialize<_i10.Playlist>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i11.Track>) {
-      return (data as List).map((e) => deserialize<_i11.Track>(e)).toList()
+    if (t == List<_i11.PlaylistTrack>) {
+      return (data as List)
+          .map((e) => deserialize<_i11.PlaylistTrack>(e))
+          .toList() as dynamic;
+    }
+    if (t == List<_i12.Track>) {
+      return (data as List).map((e) => deserialize<_i12.Track>(e)).toList()
           as dynamic;
     }
     return super.deserialize<T>(data, t);

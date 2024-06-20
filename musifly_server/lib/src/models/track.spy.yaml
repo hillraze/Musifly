@@ -2,10 +2,7 @@
 class: Track
 table: track
 fields:
-  album: Album?, relation
+  album: Album?, relation(name=album_tracks)
+  artist: Artist?, relation
   title: String
   audioUrl: String
-indexes:
-  track_album_unique_idx:
-    fields: albumId
-    unique: true

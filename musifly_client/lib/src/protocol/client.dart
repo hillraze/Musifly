@@ -13,8 +13,9 @@ import 'dart:async' as _i2;
 import 'package:musifly_client/src/protocol/album.dart' as _i3;
 import 'package:musifly_client/src/protocol/artist.dart' as _i4;
 import 'package:musifly_client/src/protocol/playlist.dart' as _i5;
-import 'package:musifly_client/src/protocol/track.dart' as _i6;
-import 'protocol.dart' as _i7;
+import 'package:musifly_client/src/protocol/playlist_track.dart' as _i6;
+import 'package:musifly_client/src/protocol/track.dart' as _i7;
+import 'protocol.dart' as _i8;
 
 /// {@category Endpoint}
 class EndpointAdmin extends _i1.EndpointRef {
@@ -161,35 +162,80 @@ class EndpointPlaylist extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointPlaylistTrack extends _i1.EndpointRef {
+  EndpointPlaylistTrack(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'playlistTrack';
+
+  _i2.Future<_i6.PlaylistTrack> createPlaylistTrack(
+          _i6.PlaylistTrack playlist) =>
+      caller.callServerEndpoint<_i6.PlaylistTrack>(
+        'playlistTrack',
+        'createPlaylistTrack',
+        {'playlist': playlist},
+      );
+
+  _i2.Future<_i6.PlaylistTrack?> getPlaylistTrack(int id) =>
+      caller.callServerEndpoint<_i6.PlaylistTrack?>(
+        'playlistTrack',
+        'getPlaylistTrack',
+        {'id': id},
+      );
+
+  _i2.Future<List<_i6.PlaylistTrack>> getPlaylistTracks() =>
+      caller.callServerEndpoint<List<_i6.PlaylistTrack>>(
+        'playlistTrack',
+        'getPlaylistTracks',
+        {},
+      );
+
+  _i2.Future<_i6.PlaylistTrack> updatePlaylistTrack(
+          _i6.PlaylistTrack playlist) =>
+      caller.callServerEndpoint<_i6.PlaylistTrack>(
+        'playlistTrack',
+        'updatePlaylistTrack',
+        {'playlist': playlist},
+      );
+
+  _i2.Future<_i6.PlaylistTrack> deletePlaylistTrack(int id) =>
+      caller.callServerEndpoint<_i6.PlaylistTrack>(
+        'playlistTrack',
+        'deletePlaylistTrack',
+        {'id': id},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointTrack extends _i1.EndpointRef {
   EndpointTrack(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'track';
 
-  _i2.Future<_i6.Track> createTrack(_i6.Track track) =>
-      caller.callServerEndpoint<_i6.Track>(
+  _i2.Future<_i7.Track> createTrack(_i7.Track track) =>
+      caller.callServerEndpoint<_i7.Track>(
         'track',
         'createTrack',
         {'track': track},
       );
 
-  _i2.Future<_i6.Track> updateTrack(_i6.Track track) =>
-      caller.callServerEndpoint<_i6.Track>(
+  _i2.Future<_i7.Track> updateTrack(_i7.Track track) =>
+      caller.callServerEndpoint<_i7.Track>(
         'track',
         'updateTrack',
         {'track': track},
       );
 
-  _i2.Future<_i6.Track> deleteTrack(int id) =>
-      caller.callServerEndpoint<_i6.Track>(
+  _i2.Future<_i7.Track> deleteTrack(int id) =>
+      caller.callServerEndpoint<_i7.Track>(
         'track',
         'deleteTrack',
         {'id': id},
       );
 
-  _i2.Future<List<_i6.Track>> getTracks() =>
-      caller.callServerEndpoint<List<_i6.Track>>(
+  _i2.Future<List<_i7.Track>> getTracks() =>
+      caller.callServerEndpoint<List<_i7.Track>>(
         'track',
         'getTracks',
         {},
@@ -211,7 +257,7 @@ class Client extends _i1.ServerpodClient {
     Function(_i1.MethodCallContext)? onSucceededCall,
   }) : super(
           host,
-          _i7.Protocol(),
+          _i8.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -223,6 +269,7 @@ class Client extends _i1.ServerpodClient {
     album = EndpointAlbum(this);
     artist = EndpointArtist(this);
     playlist = EndpointPlaylist(this);
+    playlistTrack = EndpointPlaylistTrack(this);
     track = EndpointTrack(this);
   }
 
@@ -234,6 +281,8 @@ class Client extends _i1.ServerpodClient {
 
   late final EndpointPlaylist playlist;
 
+  late final EndpointPlaylistTrack playlistTrack;
+
   late final EndpointTrack track;
 
   @override
@@ -242,6 +291,7 @@ class Client extends _i1.ServerpodClient {
         'album': album,
         'artist': artist,
         'playlist': playlist,
+        'playlistTrack': playlistTrack,
         'track': track,
       };
 

@@ -16,6 +16,8 @@ abstract class Track implements _i1.SerializableModel {
     this.id,
     required this.albumId,
     this.album,
+    required this.artistId,
+    this.artist,
     required this.title,
     required this.audioUrl,
   });
@@ -24,6 +26,8 @@ abstract class Track implements _i1.SerializableModel {
     int? id,
     required int albumId,
     _i2.Album? album,
+    required int artistId,
+    _i2.Artist? artist,
     required String title,
     required String audioUrl,
   }) = _TrackImpl;
@@ -36,6 +40,11 @@ abstract class Track implements _i1.SerializableModel {
           ? null
           : _i2.Album.fromJson(
               (jsonSerialization['album'] as Map<String, dynamic>)),
+      artistId: jsonSerialization['artistId'] as int,
+      artist: jsonSerialization['artist'] == null
+          ? null
+          : _i2.Artist.fromJson(
+              (jsonSerialization['artist'] as Map<String, dynamic>)),
       title: jsonSerialization['title'] as String,
       audioUrl: jsonSerialization['audioUrl'] as String,
     );
@@ -50,6 +59,10 @@ abstract class Track implements _i1.SerializableModel {
 
   _i2.Album? album;
 
+  int artistId;
+
+  _i2.Artist? artist;
+
   String title;
 
   String audioUrl;
@@ -58,6 +71,8 @@ abstract class Track implements _i1.SerializableModel {
     int? id,
     int? albumId,
     _i2.Album? album,
+    int? artistId,
+    _i2.Artist? artist,
     String? title,
     String? audioUrl,
   });
@@ -67,6 +82,8 @@ abstract class Track implements _i1.SerializableModel {
       if (id != null) 'id': id,
       'albumId': albumId,
       if (album != null) 'album': album?.toJson(),
+      'artistId': artistId,
+      if (artist != null) 'artist': artist?.toJson(),
       'title': title,
       'audioUrl': audioUrl,
     };
@@ -85,12 +102,16 @@ class _TrackImpl extends Track {
     int? id,
     required int albumId,
     _i2.Album? album,
+    required int artistId,
+    _i2.Artist? artist,
     required String title,
     required String audioUrl,
   }) : super._(
           id: id,
           albumId: albumId,
           album: album,
+          artistId: artistId,
+          artist: artist,
           title: title,
           audioUrl: audioUrl,
         );
@@ -100,6 +121,8 @@ class _TrackImpl extends Track {
     Object? id = _Undefined,
     int? albumId,
     Object? album = _Undefined,
+    int? artistId,
+    Object? artist = _Undefined,
     String? title,
     String? audioUrl,
   }) {
@@ -107,6 +130,8 @@ class _TrackImpl extends Track {
       id: id is int? ? id : this.id,
       albumId: albumId ?? this.albumId,
       album: album is _i2.Album? ? album : this.album?.copyWith(),
+      artistId: artistId ?? this.artistId,
+      artist: artist is _i2.Artist? ? artist : this.artist?.copyWith(),
       title: title ?? this.title,
       audioUrl: audioUrl ?? this.audioUrl,
     );

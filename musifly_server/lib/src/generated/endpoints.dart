@@ -13,11 +13,13 @@ import '../endpoints/admin_endpoints.dart' as _i2;
 import '../endpoints/album_endpoints.dart' as _i3;
 import '../endpoints/artist_endpoint.dart' as _i4;
 import '../endpoints/playlist_endpoint.dart' as _i5;
-import '../endpoints/track_endpoints.dart' as _i6;
-import 'package:musifly_server/src/generated/album.dart' as _i7;
-import 'package:musifly_server/src/generated/artist.dart' as _i8;
-import 'package:musifly_server/src/generated/playlist.dart' as _i9;
-import 'package:musifly_server/src/generated/track.dart' as _i10;
+import '../endpoints/playlist_track_endpoint.dart' as _i6;
+import '../endpoints/track_endpoints.dart' as _i7;
+import 'package:musifly_server/src/generated/album.dart' as _i8;
+import 'package:musifly_server/src/generated/artist.dart' as _i9;
+import 'package:musifly_server/src/generated/playlist.dart' as _i10;
+import 'package:musifly_server/src/generated/playlist_track.dart' as _i11;
+import 'package:musifly_server/src/generated/track.dart' as _i12;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -47,7 +49,13 @@ class Endpoints extends _i1.EndpointDispatch {
           'playlist',
           null,
         ),
-      'track': _i6.TrackEndpoint()
+      'playlistTrack': _i6.PlaylistTrackEndpoint()
+        ..initialize(
+          server,
+          'playlistTrack',
+          null,
+        ),
+      'track': _i7.TrackEndpoint()
         ..initialize(
           server,
           'track',
@@ -68,7 +76,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'album': _i1.ParameterDescription(
               name: 'album',
-              type: _i1.getType<_i7.Album>(),
+              type: _i1.getType<_i8.Album>(),
               nullable: false,
             )
           },
@@ -86,7 +94,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'album': _i1.ParameterDescription(
               name: 'album',
-              type: _i1.getType<_i7.Album>(),
+              type: _i1.getType<_i8.Album>(),
               nullable: false,
             )
           },
@@ -173,7 +181,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'artist': _i1.ParameterDescription(
               name: 'artist',
-              type: _i1.getType<_i8.Artist>(),
+              type: _i1.getType<_i9.Artist>(),
               nullable: false,
             )
           },
@@ -200,7 +208,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'artist': _i1.ParameterDescription(
               name: 'artist',
-              type: _i1.getType<_i8.Artist>(),
+              type: _i1.getType<_i9.Artist>(),
               nullable: false,
             )
           },
@@ -242,7 +250,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'playlist': _i1.ParameterDescription(
               name: 'playlist',
-              type: _i1.getType<_i9.Playlist>(),
+              type: _i1.getType<_i10.Playlist>(),
               nullable: false,
             )
           },
@@ -288,7 +296,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'playlist': _i1.ParameterDescription(
               name: 'playlist',
-              type: _i1.getType<_i9.Playlist>(),
+              type: _i1.getType<_i10.Playlist>(),
               nullable: false,
             )
           },
@@ -321,6 +329,98 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
+    connectors['playlistTrack'] = _i1.EndpointConnector(
+      name: 'playlistTrack',
+      endpoint: endpoints['playlistTrack']!,
+      methodConnectors: {
+        'createPlaylistTrack': _i1.MethodConnector(
+          name: 'createPlaylistTrack',
+          params: {
+            'playlist': _i1.ParameterDescription(
+              name: 'playlist',
+              type: _i1.getType<_i11.PlaylistTrack>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['playlistTrack'] as _i6.PlaylistTrackEndpoint)
+                  .createPlaylistTrack(
+            session,
+            params['playlist'],
+          ),
+        ),
+        'getPlaylistTrack': _i1.MethodConnector(
+          name: 'getPlaylistTrack',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['playlistTrack'] as _i6.PlaylistTrackEndpoint)
+                  .getPlaylistTrack(
+            session,
+            params['id'],
+          ),
+        ),
+        'getPlaylistTracks': _i1.MethodConnector(
+          name: 'getPlaylistTracks',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['playlistTrack'] as _i6.PlaylistTrackEndpoint)
+                  .getPlaylistTracks(session),
+        ),
+        'updatePlaylistTrack': _i1.MethodConnector(
+          name: 'updatePlaylistTrack',
+          params: {
+            'playlist': _i1.ParameterDescription(
+              name: 'playlist',
+              type: _i1.getType<_i11.PlaylistTrack>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['playlistTrack'] as _i6.PlaylistTrackEndpoint)
+                  .updatePlaylistTrack(
+            session,
+            params['playlist'],
+          ),
+        ),
+        'deletePlaylistTrack': _i1.MethodConnector(
+          name: 'deletePlaylistTrack',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['playlistTrack'] as _i6.PlaylistTrackEndpoint)
+                  .deletePlaylistTrack(
+            session,
+            params['id'],
+          ),
+        ),
+      },
+    );
     connectors['track'] = _i1.EndpointConnector(
       name: 'track',
       endpoint: endpoints['track']!,
@@ -330,7 +430,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'track': _i1.ParameterDescription(
               name: 'track',
-              type: _i1.getType<_i10.Track>(),
+              type: _i1.getType<_i12.Track>(),
               nullable: false,
             )
           },
@@ -338,7 +438,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['track'] as _i6.TrackEndpoint).createTrack(
+              (endpoints['track'] as _i7.TrackEndpoint).createTrack(
             session,
             params['track'],
           ),
@@ -348,7 +448,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'track': _i1.ParameterDescription(
               name: 'track',
-              type: _i1.getType<_i10.Track>(),
+              type: _i1.getType<_i12.Track>(),
               nullable: false,
             )
           },
@@ -356,7 +456,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['track'] as _i6.TrackEndpoint).updateTrack(
+              (endpoints['track'] as _i7.TrackEndpoint).updateTrack(
             session,
             params['track'],
           ),
@@ -374,7 +474,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['track'] as _i6.TrackEndpoint).deleteTrack(
+              (endpoints['track'] as _i7.TrackEndpoint).deleteTrack(
             session,
             params['id'],
           ),
@@ -386,7 +486,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['track'] as _i6.TrackEndpoint).getTracks(session),
+              (endpoints['track'] as _i7.TrackEndpoint).getTracks(session),
         ),
       },
     );

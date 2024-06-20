@@ -1,11 +1,7 @@
 class: PlaylistTrack
 table: playlist_track
 fields:
-  playlist: Playlist?, relation
+  playlist: Playlist?, relation(name=playlist_playlistTracks)
   track: Track?, relation
-  addedAt: DateTime
-indexes:
-    playlist_track_unique_idx:
-        fields: playlistId, trackId
-        unique: true
+
 

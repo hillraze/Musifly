@@ -18,6 +18,12 @@ playlist:
   - getPlaylists:
   - updatePlaylist:
   - deletePlaylist:
+playlistTrack:
+  - createPlaylistTrack:
+  - getPlaylistTrack:
+  - getPlaylistTracks:
+  - updatePlaylistTrack:
+  - deletePlaylistTrack:
 track:
   - createTrack:
   - updateTrack:

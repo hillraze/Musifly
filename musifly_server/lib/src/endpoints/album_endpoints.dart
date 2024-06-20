@@ -1,4 +1,5 @@
 import 'package:serverpod/serverpod.dart';
+
 import '../generated/protocol.dart';
 
 class AlbumEndpoint extends Endpoint {
@@ -11,11 +12,30 @@ class AlbumEndpoint extends Endpoint {
   }
 
   Future<List<Album>> getAlbums(Session session) async {
-    return await Album.db.find(session);
+    return Album.db.find(
+      session,
+      include: Album.include(
+        tracks: Track.includeList(
+          include: Track.include(
+            artist: Artist.include(),
+          ),
+        ),
+      ),
+    );
   }
 
   Future<Album?> getAlbum(Session session, int id) async {
-    return await Album.db.findById(session, id);
+    return await Album.db.findById(
+      session,
+      id,
+      include: Album.include(
+        tracks: Track.includeList(
+          include: Track.include(
+            artist: Artist.include(),
+          ),
+        ),
+      ),
+    );
   }
 
   Future<Album> deleteAlbum(Session session, int id) async {

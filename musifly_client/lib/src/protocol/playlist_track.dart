@@ -18,7 +18,6 @@ abstract class PlaylistTrack implements _i1.SerializableModel {
     this.playlist,
     required this.trackId,
     this.track,
-    required this.addedAt,
   });
 
   factory PlaylistTrack({
@@ -27,7 +26,6 @@ abstract class PlaylistTrack implements _i1.SerializableModel {
     _i2.Playlist? playlist,
     required int trackId,
     _i2.Track? track,
-    required DateTime addedAt,
   }) = _PlaylistTrackImpl;
 
   factory PlaylistTrack.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -43,7 +41,6 @@ abstract class PlaylistTrack implements _i1.SerializableModel {
           ? null
           : _i2.Track.fromJson(
               (jsonSerialization['track'] as Map<String, dynamic>)),
-      addedAt: _i1.DateTimeJsonExtension.fromJson(jsonSerialization['addedAt']),
     );
   }
 
@@ -60,15 +57,12 @@ abstract class PlaylistTrack implements _i1.SerializableModel {
 
   _i2.Track? track;
 
-  DateTime addedAt;
-
   PlaylistTrack copyWith({
     int? id,
     int? playlistId,
     _i2.Playlist? playlist,
     int? trackId,
     _i2.Track? track,
-    DateTime? addedAt,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -78,7 +72,6 @@ abstract class PlaylistTrack implements _i1.SerializableModel {
       if (playlist != null) 'playlist': playlist?.toJson(),
       'trackId': trackId,
       if (track != null) 'track': track?.toJson(),
-      'addedAt': addedAt.toJson(),
     };
   }
 
@@ -97,14 +90,12 @@ class _PlaylistTrackImpl extends PlaylistTrack {
     _i2.Playlist? playlist,
     required int trackId,
     _i2.Track? track,
-    required DateTime addedAt,
   }) : super._(
           id: id,
           playlistId: playlistId,
           playlist: playlist,
           trackId: trackId,
           track: track,
-          addedAt: addedAt,
         );
 
   @override
@@ -114,7 +105,6 @@ class _PlaylistTrackImpl extends PlaylistTrack {
     Object? playlist = _Undefined,
     int? trackId,
     Object? track = _Undefined,
-    DateTime? addedAt,
   }) {
     return PlaylistTrack(
       id: id is int? ? id : this.id,
@@ -123,7 +113,6 @@ class _PlaylistTrackImpl extends PlaylistTrack {
           playlist is _i2.Playlist? ? playlist : this.playlist?.copyWith(),
       trackId: trackId ?? this.trackId,
       track: track is _i2.Track? ? track : this.track?.copyWith(),
-      addedAt: addedAt ?? this.addedAt,
     );
   }
 }

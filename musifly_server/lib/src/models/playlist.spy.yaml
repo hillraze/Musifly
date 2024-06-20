@@ -2,7 +2,6 @@ class: Playlist
 table: playlist
 fields:
   name: String
-  isPublic: bool
-  tracks: List<Track>
+  description: String?
+  playlistTracks: List<PlaylistTrack>?, relation(name=playlist_playlistTracks)
   createdAt: DateTime
-  updatedAt: DateTime 

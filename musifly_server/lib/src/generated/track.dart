@@ -16,6 +16,8 @@ abstract class Track extends _i1.TableRow implements _i1.ProtocolSerialization {
     int? id,
     required this.albumId,
     this.album,
+    required this.artistId,
+    this.artist,
     required this.title,
     required this.audioUrl,
   }) : super(id);
@@ -24,6 +26,8 @@ abstract class Track extends _i1.TableRow implements _i1.ProtocolSerialization {
     int? id,
     required int albumId,
     _i2.Album? album,
+    required int artistId,
+    _i2.Artist? artist,
     required String title,
     required String audioUrl,
   }) = _TrackImpl;
@@ -36,6 +40,11 @@ abstract class Track extends _i1.TableRow implements _i1.ProtocolSerialization {
           ? null
           : _i2.Album.fromJson(
               (jsonSerialization['album'] as Map<String, dynamic>)),
+      artistId: jsonSerialization['artistId'] as int,
+      artist: jsonSerialization['artist'] == null
+          ? null
+          : _i2.Artist.fromJson(
+              (jsonSerialization['artist'] as Map<String, dynamic>)),
       title: jsonSerialization['title'] as String,
       audioUrl: jsonSerialization['audioUrl'] as String,
     );
@@ -49,6 +58,10 @@ abstract class Track extends _i1.TableRow implements _i1.ProtocolSerialization {
 
   _i2.Album? album;
 
+  int artistId;
+
+  _i2.Artist? artist;
+
   String title;
 
   String audioUrl;
@@ -60,6 +73,8 @@ abstract class Track extends _i1.TableRow implements _i1.ProtocolSerialization {
     int? id,
     int? albumId,
     _i2.Album? album,
+    int? artistId,
+    _i2.Artist? artist,
     String? title,
     String? audioUrl,
   });
@@ -69,6 +84,8 @@ abstract class Track extends _i1.TableRow implements _i1.ProtocolSerialization {
       if (id != null) 'id': id,
       'albumId': albumId,
       if (album != null) 'album': album?.toJson(),
+      'artistId': artistId,
+      if (artist != null) 'artist': artist?.toJson(),
       'title': title,
       'audioUrl': audioUrl,
     };
@@ -80,13 +97,21 @@ abstract class Track extends _i1.TableRow implements _i1.ProtocolSerialization {
       if (id != null) 'id': id,
       'albumId': albumId,
       if (album != null) 'album': album?.toJsonForProtocol(),
+      'artistId': artistId,
+      if (artist != null) 'artist': artist?.toJsonForProtocol(),
       'title': title,
       'audioUrl': audioUrl,
     };
   }
 
-  static TrackInclude include({_i2.AlbumInclude? album}) {
-    return TrackInclude._(album: album);
+  static TrackInclude include({
+    _i2.AlbumInclude? album,
+    _i2.ArtistInclude? artist,
+  }) {
+    return TrackInclude._(
+      album: album,
+      artist: artist,
+    );
   }
 
   static TrackIncludeList includeList({
@@ -122,12 +147,16 @@ class _TrackImpl extends Track {
     int? id,
     required int albumId,
     _i2.Album? album,
+    required int artistId,
+    _i2.Artist? artist,
     required String title,
     required String audioUrl,
   }) : super._(
           id: id,
           albumId: albumId,
           album: album,
+          artistId: artistId,
+          artist: artist,
           title: title,
           audioUrl: audioUrl,
         );
@@ -137,6 +166,8 @@ class _TrackImpl extends Track {
     Object? id = _Undefined,
     int? albumId,
     Object? album = _Undefined,
+    int? artistId,
+    Object? artist = _Undefined,
     String? title,
     String? audioUrl,
   }) {
@@ -144,6 +175,8 @@ class _TrackImpl extends Track {
       id: id is int? ? id : this.id,
       albumId: albumId ?? this.albumId,
       album: album is _i2.Album? ? album : this.album?.copyWith(),
+      artistId: artistId ?? this.artistId,
+      artist: artist is _i2.Artist? ? artist : this.artist?.copyWith(),
       title: title ?? this.title,
       audioUrl: audioUrl ?? this.audioUrl,
     );
@@ -154,6 +187,10 @@ class TrackTable extends _i1.Table {
   TrackTable({super.tableRelation}) : super(tableName: 'track') {
     albumId = _i1.ColumnInt(
       'albumId',
+      this,
+    );
+    artistId = _i1.ColumnInt(
+      'artistId',
       this,
     );
     title = _i1.ColumnString(
@@ -169,6 +206,10 @@ class TrackTable extends _i1.Table {
   late final _i1.ColumnInt albumId;
 
   _i2.AlbumTable? _album;
+
+  late final _i1.ColumnInt artistId;
+
+  _i2.ArtistTable? _artist;
 
   late final _i1.ColumnString title;
 
@@ -187,10 +228,24 @@ class TrackTable extends _i1.Table {
     return _album!;
   }
 
+  _i2.ArtistTable get artist {
+    if (_artist != null) return _artist!;
+    _artist = _i1.createRelationTable(
+      relationFieldName: 'artist',
+      field: Track.t.artistId,
+      foreignField: _i2.Artist.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.ArtistTable(tableRelation: foreignTableRelation),
+    );
+    return _artist!;
+  }
+
   @override
   List<_i1.Column> get columns => [
         id,
         albumId,
+        artistId,
         title,
         audioUrl,
       ];
@@ -200,19 +255,31 @@ class TrackTable extends _i1.Table {
     if (relationField == 'album') {
       return album;
     }
+    if (relationField == 'artist') {
+      return artist;
+    }
     return null;
   }
 }
 
 class TrackInclude extends _i1.IncludeObject {
-  TrackInclude._({_i2.AlbumInclude? album}) {
+  TrackInclude._({
+    _i2.AlbumInclude? album,
+    _i2.ArtistInclude? artist,
+  }) {
     _album = album;
+    _artist = artist;
   }
 
   _i2.AlbumInclude? _album;
 
+  _i2.ArtistInclude? _artist;
+
   @override
-  Map<String, _i1.Include?> get includes => {'album': _album};
+  Map<String, _i1.Include?> get includes => {
+        'album': _album,
+        'artist': _artist,
+      };
 
   @override
   _i1.Table get table => Track.t;
@@ -414,6 +481,25 @@ class TrackAttachRowRepository {
     await session.db.updateRow<Track>(
       $track,
       columns: [Track.t.albumId],
+    );
+  }
+
+  Future<void> artist(
+    _i1.Session session,
+    Track track,
+    _i2.Artist artist,
+  ) async {
+    if (track.id == null) {
+      throw ArgumentError.notNull('track.id');
+    }
+    if (artist.id == null) {
+      throw ArgumentError.notNull('artist.id');
+    }
+
+    var $track = track.copyWith(artistId: artist.id);
+    await session.db.updateRow<Track>(
+      $track,
+      columns: [Track.t.artistId],
     );
   }
 }

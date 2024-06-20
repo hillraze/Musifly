@@ -5,9 +5,9 @@ BEGIN;
 -- MIGRATION VERSION FOR musifly
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('musifly', '20240614100323204', now())
+    VALUES ('musifly', '20240620054627067', now())
     ON CONFLICT ("module")
-    DO UPDATE SET "version" = '20240614100323204', "timestamp" = now();
+    DO UPDATE SET "version" = '20240620054627067', "timestamp" = now();
 
 --
 -- MIGRATION VERSION FOR serverpod

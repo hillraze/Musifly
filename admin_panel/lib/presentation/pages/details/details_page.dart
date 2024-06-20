@@ -3,7 +3,7 @@ import 'package:admin_panel/presentation/presentation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'form_modal.dart';
+import '../form/form_page.dart';
 
 class DetailsPage extends StatefulWidget {
   final TableEnum tableName;
@@ -26,7 +26,7 @@ class _DetailsPageState extends State<DetailsPage> {
         title: Text('${widget.tableName.name.toUpperCase()}'),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () => _showAddDialog(
               context,
               dashboardProvider,
@@ -35,27 +35,41 @@ class _DetailsPageState extends State<DetailsPage> {
           ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: () => dashboardProvider.fetchByTable(tableName),
-        child: ListView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(items[index].toString()),
-              trailing: IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () => _deleteItem(
-                  context,
-                  dashboardProvider,
-                  items[index].id,
-                  tableName,
-                ),
+      body: items.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.hourglass_empty_rounded, size: 100),
+                  Text('No ${widget.tableName.name} found',
+                      style: const TextStyle(
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ],
               ),
-            );
-          },
-        ),
-      ),
+            )
+          : RefreshIndicator(
+              onRefresh: () => dashboardProvider.fetchByTable(tableName),
+              child: ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(items[index].toString()),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () => _deleteItem(
+                        context,
+                        dashboardProvider,
+                        items[index].id,
+                        tableName,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
     );
   }
 
@@ -70,7 +84,7 @@ void _showAddDialog(
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => ModelForm(
+      builder: (context) => FormPage(
         tableName: tableName,
         onSubmit: (Map<String, dynamic> newModel) {
           print("FORM DATA >> ${newModel.toString()}");

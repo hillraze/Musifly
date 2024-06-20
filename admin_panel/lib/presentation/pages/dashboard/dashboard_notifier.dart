@@ -7,15 +7,17 @@ class DashboardProvider with ChangeNotifier {
   DashboardProvider({required this.apiService});
   final ApiService apiService;
 
-  List<dynamic> _albums = [];
-  List<dynamic> _artists = [];
-  List<dynamic> _tracks = [];
-  List<dynamic> _playlists = [];
+  List<Album> _albums = [];
+  List<Artist> _artists = [];
+  List<Track> _tracks = [];
+  List<Playlist> _playlists = [];
+  List<PlaylistTrack> _playlistTracks = [];
 
   int get albumsCount => _albums.length;
   int get artistsCount => _artists.length;
   int get tracksCount => _tracks.length;
   int get playlistsCount => _playlists.length;
+  int get playlistTracksCount => _playlistTracks.length;
 
   List<dynamic> getItemsForTable(TableEnum tableName) {
     switch (tableName) {
@@ -27,6 +29,8 @@ class DashboardProvider with ChangeNotifier {
         return _tracks;
       case TableEnum.playlist:
         return _playlists;
+      case TableEnum.playlistTrack:
+        return _playlistTracks;
       default:
         return [];
     }
@@ -37,18 +41,21 @@ class DashboardProvider with ChangeNotifier {
     _artists = await apiService.getArtists();
     _tracks = await apiService.getTracks();
     _playlists = await apiService.getPlaylists();
+    _playlistTracks = await apiService.getPlaylistTracks();
 
     final res = await Future.wait([
       apiService.getAlbums(),
       apiService.getArtists(),
       apiService.getTracks(),
       apiService.getPlaylists(),
+      apiService.getPlaylistTracks(),
     ]);
 
-    _albums = res[0];
-    _artists = res[1];
-    _tracks = res[2];
-    _playlists = res[3];
+    _albums = res[0] as List<Album>;
+    _artists = res[1] as List<Artist>;
+    _tracks = res[2] as List<Track>;
+    _playlists = res[3] as List<Playlist>;
+    _playlistTracks = res[4] as List<PlaylistTrack>;
 
     notifyListeners();
   }
@@ -67,6 +74,11 @@ class DashboardProvider with ChangeNotifier {
       case TableEnum.playlist:
         _playlists = await apiService.getPlaylists();
         break;
+      case TableEnum.playlistTrack:
+        _playlistTracks = await apiService.getPlaylistTracks();
+        break;
+      default:
+        throw Exception('Table $tableName not found');
     }
     notifyListeners();
   }
@@ -95,6 +107,11 @@ class DashboardProvider with ChangeNotifier {
         final res = await apiService.createPlaylist(Playlist.fromJson(model));
         _playlists.add(res);
         break;
+      case TableEnum.playlistTrack:
+        final res =
+            await apiService.createPlaylistTrack(PlaylistTrack.fromJson(model));
+        _playlistTracks.add(res);
+        break;
       default:
         throw Exception('Table $tableName not found');
     }
@@ -120,6 +137,13 @@ class DashboardProvider with ChangeNotifier {
             await apiService.deletePlaylist(Playlist.fromJson(item).id!);
         _playlists.remove(res);
         break;
+      case TableEnum.playlistTrack:
+        final res = await apiService
+            .deletePlaylistTrack(PlaylistTrack.fromJson(item).id!);
+        _playlistTracks.remove(res);
+        break;
+      default:
+        throw Exception('Table $tableName not found');
     }
     notifyListeners();
   }

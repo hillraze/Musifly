@@ -41,8 +41,8 @@
         {
           "name": "releasedAt",
           "columnType": 4,
-          "isNullable": false,
-          "dartType": "DateTime"
+          "isNullable": true,
+          "dartType": "DateTime?"
         }
       ],
       "foreignKeys": [
@@ -72,18 +72,6 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
-        },
-        {
-          "indexName": "album_artist_unique_idx",
-          "elements": [
-            {
-              "type": 0,
-              "definition": "artistId"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": false
         }
       ],
       "managed": true
@@ -112,6 +100,12 @@
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
+        },
+        {
+          "name": "imageUrl",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
         },
         {
           "name": "createdAt",
@@ -157,25 +151,13 @@
           "dartType": "String"
         },
         {
-          "name": "isPublic",
-          "columnType": 1,
-          "isNullable": false,
-          "dartType": "bool"
-        },
-        {
-          "name": "tracks",
-          "columnType": 8,
-          "isNullable": false,
-          "dartType": "List<protocol:Track>"
+          "name": "description",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
         },
         {
           "name": "createdAt",
-          "columnType": 4,
-          "isNullable": false,
-          "dartType": "DateTime"
-        },
-        {
-          "name": "updatedAt",
           "columnType": 4,
           "isNullable": false,
           "dartType": "DateTime"
@@ -222,12 +204,6 @@
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
-        },
-        {
-          "name": "addedAt",
-          "columnType": 4,
-          "isNullable": false,
-          "dartType": "DateTime"
         }
       ],
       "foreignKeys": [
@@ -270,22 +246,6 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
-        },
-        {
-          "indexName": "playlist_track_unique_idx",
-          "elements": [
-            {
-              "type": 0,
-              "definition": "playlistId"
-            },
-            {
-              "type": 0,
-              "definition": "trackId"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": false
         }
       ],
       "managed": true
@@ -305,6 +265,12 @@
         },
         {
           "name": "albumId",
+          "columnType": 6,
+          "isNullable": false,
+          "dartType": "int"
+        },
+        {
+          "name": "artistId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -335,6 +301,19 @@
           ],
           "onUpdate": 3,
           "onDelete": 3
+        },
+        {
+          "constraintName": "track_fk_1",
+          "columns": [
+            "artistId"
+          ],
+          "referenceTable": "artist",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 3
         }
       ],
       "indexes": [
@@ -349,18 +328,6 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
-        },
-        {
-          "indexName": "track_album_unique_idx",
-          "elements": [
-            {
-              "type": 0,
-              "definition": "albumId"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": false
         }
       ],
       "managed": true
@@ -370,6 +337,10 @@
     {
       "module": "serverpod",
       "version": "20240516151843329"
+    },
+    {
+      "module": "musifly",
+      "version": "20240620054425062"
     }
   ],
   "migrationApiVersion": 1

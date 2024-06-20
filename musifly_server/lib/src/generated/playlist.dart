@@ -17,33 +17,29 @@ abstract class Playlist extends _i1.TableRow
   Playlist._({
     int? id,
     required this.name,
-    required this.isPublic,
-    required this.tracks,
+    this.description,
+    this.playlistTracks,
     required this.createdAt,
-    required this.updatedAt,
   }) : super(id);
 
   factory Playlist({
     int? id,
     required String name,
-    required bool isPublic,
-    required List<_i2.Track> tracks,
+    String? description,
+    List<_i2.PlaylistTrack>? playlistTracks,
     required DateTime createdAt,
-    required DateTime updatedAt,
   }) = _PlaylistImpl;
 
   factory Playlist.fromJson(Map<String, dynamic> jsonSerialization) {
     return Playlist(
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
-      isPublic: jsonSerialization['isPublic'] as bool,
-      tracks: (jsonSerialization['tracks'] as List)
-          .map((e) => _i2.Track.fromJson((e as Map<String, dynamic>)))
+      description: jsonSerialization['description'] as String?,
+      playlistTracks: (jsonSerialization['playlistTracks'] as List?)
+          ?.map((e) => _i2.PlaylistTrack.fromJson((e as Map<String, dynamic>)))
           .toList(),
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
-      updatedAt:
-          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
     );
   }
 
@@ -53,13 +49,11 @@ abstract class Playlist extends _i1.TableRow
 
   String name;
 
-  bool isPublic;
+  String? description;
 
-  List<_i2.Track> tracks;
+  List<_i2.PlaylistTrack>? playlistTracks;
 
   DateTime createdAt;
-
-  DateTime updatedAt;
 
   @override
   _i1.Table get table => t;
@@ -67,20 +61,20 @@ abstract class Playlist extends _i1.TableRow
   Playlist copyWith({
     int? id,
     String? name,
-    bool? isPublic,
-    List<_i2.Track>? tracks,
+    String? description,
+    List<_i2.PlaylistTrack>? playlistTracks,
     DateTime? createdAt,
-    DateTime? updatedAt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'name': name,
-      'isPublic': isPublic,
-      'tracks': tracks.toJson(valueToJson: (v) => v.toJson()),
+      if (description != null) 'description': description,
+      if (playlistTracks != null)
+        'playlistTracks':
+            playlistTracks?.toJson(valueToJson: (v) => v.toJson()),
       'createdAt': createdAt.toJson(),
-      'updatedAt': updatedAt.toJson(),
     };
   }
 
@@ -89,15 +83,17 @@ abstract class Playlist extends _i1.TableRow
     return {
       if (id != null) 'id': id,
       'name': name,
-      'isPublic': isPublic,
-      'tracks': tracks.toJson(valueToJson: (v) => v.toJsonForProtocol()),
+      if (description != null) 'description': description,
+      if (playlistTracks != null)
+        'playlistTracks':
+            playlistTracks?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
       'createdAt': createdAt.toJson(),
-      'updatedAt': updatedAt.toJson(),
     };
   }
 
-  static PlaylistInclude include() {
-    return PlaylistInclude._();
+  static PlaylistInclude include(
+      {_i2.PlaylistTrackIncludeList? playlistTracks}) {
+    return PlaylistInclude._(playlistTracks: playlistTracks);
   }
 
   static PlaylistIncludeList includeList({
@@ -132,35 +128,33 @@ class _PlaylistImpl extends Playlist {
   _PlaylistImpl({
     int? id,
     required String name,
-    required bool isPublic,
-    required List<_i2.Track> tracks,
+    String? description,
+    List<_i2.PlaylistTrack>? playlistTracks,
     required DateTime createdAt,
-    required DateTime updatedAt,
   }) : super._(
           id: id,
           name: name,
-          isPublic: isPublic,
-          tracks: tracks,
+          description: description,
+          playlistTracks: playlistTracks,
           createdAt: createdAt,
-          updatedAt: updatedAt,
         );
 
   @override
   Playlist copyWith({
     Object? id = _Undefined,
     String? name,
-    bool? isPublic,
-    List<_i2.Track>? tracks,
+    Object? description = _Undefined,
+    Object? playlistTracks = _Undefined,
     DateTime? createdAt,
-    DateTime? updatedAt,
   }) {
     return Playlist(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
-      isPublic: isPublic ?? this.isPublic,
-      tracks: tracks ?? this.tracks.clone(),
+      description: description is String? ? description : this.description,
+      playlistTracks: playlistTracks is List<_i2.PlaylistTrack>?
+          ? playlistTracks
+          : this.playlistTracks?.clone(),
       createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 }
@@ -171,50 +165,83 @@ class PlaylistTable extends _i1.Table {
       'name',
       this,
     );
-    isPublic = _i1.ColumnBool(
-      'isPublic',
-      this,
-    );
-    tracks = _i1.ColumnSerializable(
-      'tracks',
+    description = _i1.ColumnString(
+      'description',
       this,
     );
     createdAt = _i1.ColumnDateTime(
       'createdAt',
       this,
     );
-    updatedAt = _i1.ColumnDateTime(
-      'updatedAt',
-      this,
-    );
   }
 
   late final _i1.ColumnString name;
 
-  late final _i1.ColumnBool isPublic;
+  late final _i1.ColumnString description;
 
-  late final _i1.ColumnSerializable tracks;
+  _i2.PlaylistTrackTable? ___playlistTracks;
+
+  _i1.ManyRelation<_i2.PlaylistTrackTable>? _playlistTracks;
 
   late final _i1.ColumnDateTime createdAt;
 
-  late final _i1.ColumnDateTime updatedAt;
+  _i2.PlaylistTrackTable get __playlistTracks {
+    if (___playlistTracks != null) return ___playlistTracks!;
+    ___playlistTracks = _i1.createRelationTable(
+      relationFieldName: '__playlistTracks',
+      field: Playlist.t.id,
+      foreignField: _i2.PlaylistTrack.t.playlistId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.PlaylistTrackTable(tableRelation: foreignTableRelation),
+    );
+    return ___playlistTracks!;
+  }
+
+  _i1.ManyRelation<_i2.PlaylistTrackTable> get playlistTracks {
+    if (_playlistTracks != null) return _playlistTracks!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'playlistTracks',
+      field: Playlist.t.id,
+      foreignField: _i2.PlaylistTrack.t.playlistId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.PlaylistTrackTable(tableRelation: foreignTableRelation),
+    );
+    _playlistTracks = _i1.ManyRelation<_i2.PlaylistTrackTable>(
+      tableWithRelations: relationTable,
+      table: _i2.PlaylistTrackTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _playlistTracks!;
+  }
 
   @override
   List<_i1.Column> get columns => [
         id,
         name,
-        isPublic,
-        tracks,
+        description,
         createdAt,
-        updatedAt,
       ];
+
+  @override
+  _i1.Table? getRelationTable(String relationField) {
+    if (relationField == 'playlistTracks') {
+      return __playlistTracks;
+    }
+    return null;
+  }
 }
 
 class PlaylistInclude extends _i1.IncludeObject {
-  PlaylistInclude._();
+  PlaylistInclude._({_i2.PlaylistTrackIncludeList? playlistTracks}) {
+    _playlistTracks = playlistTracks;
+  }
+
+  _i2.PlaylistTrackIncludeList? _playlistTracks;
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {'playlistTracks': _playlistTracks};
 
   @override
   _i1.Table get table => Playlist.t;
@@ -243,6 +270,14 @@ class PlaylistIncludeList extends _i1.IncludeList {
 class PlaylistRepository {
   const PlaylistRepository._();
 
+  final attach = const PlaylistAttachRepository._();
+
+  final attachRow = const PlaylistAttachRowRepository._();
+
+  final detach = const PlaylistDetachRepository._();
+
+  final detachRow = const PlaylistDetachRowRepository._();
+
   Future<List<Playlist>> find(
     _i1.Session session, {
     _i1.WhereExpressionBuilder<PlaylistTable>? where,
@@ -252,6 +287,7 @@ class PlaylistRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<PlaylistTable>? orderByList,
     _i1.Transaction? transaction,
+    PlaylistInclude? include,
   }) async {
     return session.db.find<Playlist>(
       where: where?.call(Playlist.t),
@@ -261,6 +297,7 @@ class PlaylistRepository {
       limit: limit,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -272,6 +309,7 @@ class PlaylistRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<PlaylistTable>? orderByList,
     _i1.Transaction? transaction,
+    PlaylistInclude? include,
   }) async {
     return session.db.findFirstRow<Playlist>(
       where: where?.call(Playlist.t),
@@ -280,6 +318,7 @@ class PlaylistRepository {
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -287,10 +326,12 @@ class PlaylistRepository {
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
+    PlaylistInclude? include,
   }) async {
     return session.db.findById<Playlist>(
       id,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -385,6 +426,92 @@ class PlaylistRepository {
       where: where?.call(Playlist.t),
       limit: limit,
       transaction: transaction,
+    );
+  }
+}
+
+class PlaylistAttachRepository {
+  const PlaylistAttachRepository._();
+
+  Future<void> playlistTracks(
+    _i1.Session session,
+    Playlist playlist,
+    List<_i2.PlaylistTrack> playlistTrack,
+  ) async {
+    if (playlistTrack.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('playlistTrack.id');
+    }
+    if (playlist.id == null) {
+      throw ArgumentError.notNull('playlist.id');
+    }
+
+    var $playlistTrack =
+        playlistTrack.map((e) => e.copyWith(playlistId: playlist.id)).toList();
+    await session.db.update<_i2.PlaylistTrack>(
+      $playlistTrack,
+      columns: [_i2.PlaylistTrack.t.playlistId],
+    );
+  }
+}
+
+class PlaylistAttachRowRepository {
+  const PlaylistAttachRowRepository._();
+
+  Future<void> playlistTracks(
+    _i1.Session session,
+    Playlist playlist,
+    _i2.PlaylistTrack playlistTrack,
+  ) async {
+    if (playlistTrack.id == null) {
+      throw ArgumentError.notNull('playlistTrack.id');
+    }
+    if (playlist.id == null) {
+      throw ArgumentError.notNull('playlist.id');
+    }
+
+    var $playlistTrack = playlistTrack.copyWith(playlistId: playlist.id);
+    await session.db.updateRow<_i2.PlaylistTrack>(
+      $playlistTrack,
+      columns: [_i2.PlaylistTrack.t.playlistId],
+    );
+  }
+}
+
+class PlaylistDetachRepository {
+  const PlaylistDetachRepository._();
+
+  Future<void> playlistTracks(
+    _i1.Session session,
+    List<_i2.PlaylistTrack> playlistTrack,
+  ) async {
+    if (playlistTrack.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('playlistTrack.id');
+    }
+
+    var $playlistTrack =
+        playlistTrack.map((e) => e.copyWith(playlistId: null)).toList();
+    await session.db.update<_i2.PlaylistTrack>(
+      $playlistTrack,
+      columns: [_i2.PlaylistTrack.t.playlistId],
+    );
+  }
+}
+
+class PlaylistDetachRowRepository {
+  const PlaylistDetachRowRepository._();
+
+  Future<void> playlistTracks(
+    _i1.Session session,
+    _i2.PlaylistTrack playlistTrack,
+  ) async {
+    if (playlistTrack.id == null) {
+      throw ArgumentError.notNull('playlistTrack.id');
+    }
+
+    var $playlistTrack = playlistTrack.copyWith(playlistId: null);
+    await session.db.updateRow<_i2.PlaylistTrack>(
+      $playlistTrack,
+      columns: [_i2.PlaylistTrack.t.playlistId],
     );
   }
 }

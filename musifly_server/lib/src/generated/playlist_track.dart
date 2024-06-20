@@ -10,7 +10,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'protocol.dart' as _i2;
-import 'package:serverpod_serialization/serverpod_serialization.dart';
 
 abstract class PlaylistTrack extends _i1.TableRow
     implements _i1.ProtocolSerialization {
@@ -20,7 +19,6 @@ abstract class PlaylistTrack extends _i1.TableRow
     this.playlist,
     required this.trackId,
     this.track,
-    required this.addedAt,
   }) : super(id);
 
   factory PlaylistTrack({
@@ -29,7 +27,6 @@ abstract class PlaylistTrack extends _i1.TableRow
     _i2.Playlist? playlist,
     required int trackId,
     _i2.Track? track,
-    required DateTime addedAt,
   }) = _PlaylistTrackImpl;
 
   factory PlaylistTrack.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -45,7 +42,6 @@ abstract class PlaylistTrack extends _i1.TableRow
           ? null
           : _i2.Track.fromJson(
               (jsonSerialization['track'] as Map<String, dynamic>)),
-      addedAt: _i1.DateTimeJsonExtension.fromJson(jsonSerialization['addedAt']),
     );
   }
 
@@ -61,8 +57,6 @@ abstract class PlaylistTrack extends _i1.TableRow
 
   _i2.Track? track;
 
-  DateTime addedAt;
-
   @override
   _i1.Table get table => t;
 
@@ -72,7 +66,6 @@ abstract class PlaylistTrack extends _i1.TableRow
     _i2.Playlist? playlist,
     int? trackId,
     _i2.Track? track,
-    DateTime? addedAt,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -82,7 +75,6 @@ abstract class PlaylistTrack extends _i1.TableRow
       if (playlist != null) 'playlist': playlist?.toJson(),
       'trackId': trackId,
       if (track != null) 'track': track?.toJson(),
-      'addedAt': addedAt.toJson(),
     };
   }
 
@@ -94,7 +86,6 @@ abstract class PlaylistTrack extends _i1.TableRow
       if (playlist != null) 'playlist': playlist?.toJsonForProtocol(),
       'trackId': trackId,
       if (track != null) 'track': track?.toJsonForProtocol(),
-      'addedAt': addedAt.toJson(),
     };
   }
 
@@ -143,14 +134,12 @@ class _PlaylistTrackImpl extends PlaylistTrack {
     _i2.Playlist? playlist,
     required int trackId,
     _i2.Track? track,
-    required DateTime addedAt,
   }) : super._(
           id: id,
           playlistId: playlistId,
           playlist: playlist,
           trackId: trackId,
           track: track,
-          addedAt: addedAt,
         );
 
   @override
@@ -160,7 +149,6 @@ class _PlaylistTrackImpl extends PlaylistTrack {
     Object? playlist = _Undefined,
     int? trackId,
     Object? track = _Undefined,
-    DateTime? addedAt,
   }) {
     return PlaylistTrack(
       id: id is int? ? id : this.id,
@@ -169,7 +157,6 @@ class _PlaylistTrackImpl extends PlaylistTrack {
           playlist is _i2.Playlist? ? playlist : this.playlist?.copyWith(),
       trackId: trackId ?? this.trackId,
       track: track is _i2.Track? ? track : this.track?.copyWith(),
-      addedAt: addedAt ?? this.addedAt,
     );
   }
 }
@@ -185,10 +172,6 @@ class PlaylistTrackTable extends _i1.Table {
       'trackId',
       this,
     );
-    addedAt = _i1.ColumnDateTime(
-      'addedAt',
-      this,
-    );
   }
 
   late final _i1.ColumnInt playlistId;
@@ -198,8 +181,6 @@ class PlaylistTrackTable extends _i1.Table {
   late final _i1.ColumnInt trackId;
 
   _i2.TrackTable? _track;
-
-  late final _i1.ColumnDateTime addedAt;
 
   _i2.PlaylistTable get playlist {
     if (_playlist != null) return _playlist!;
@@ -232,7 +213,6 @@ class PlaylistTrackTable extends _i1.Table {
         id,
         playlistId,
         trackId,
-        addedAt,
       ];
 
   @override

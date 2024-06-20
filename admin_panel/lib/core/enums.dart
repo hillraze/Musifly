@@ -3,4 +3,5 @@ enum TableEnum {
   artist,
   playlist,
   track,
+  playlistTrack,
 }

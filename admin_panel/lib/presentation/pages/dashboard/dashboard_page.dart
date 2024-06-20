@@ -59,6 +59,11 @@ class _DashboardState extends State<DashboardPage> {
               count: dashboardProvider.playlistsCount,
               onTap: () => goToDetailsPage(context, TableEnum.playlist),
             ),
+            OverviewTile(
+              title: 'PlaylistTracks',
+              count: dashboardProvider.playlistTracksCount,
+              onTap: () => goToDetailsPage(context, TableEnum.playlistTrack),
+            ),
           ],
         ),
       ),
