@@ -118,7 +118,8 @@ class DashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteByTable(TableEnum tableName, dynamic item) async {
+  Future<void> deleteByTable(
+      TableEnum tableName, Map<String, dynamic> item) async {
     switch (tableName) {
       case TableEnum.artist:
         final res = await apiService.deleteArtist(Artist.fromJson(item).id!);

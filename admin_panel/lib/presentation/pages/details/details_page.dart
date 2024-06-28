@@ -1,6 +1,7 @@
 import 'package:admin_panel/core/enums.dart';
 import 'package:admin_panel/presentation/presentation.dart';
 import 'package:flutter/material.dart';
+import 'package:musifly_client/musifly_client.dart';
 import 'package:provider/provider.dart';
 
 import '../form/form_page.dart';
@@ -59,12 +60,8 @@ class _DetailsPageState extends State<DetailsPage> {
                     title: Text(items[index].toString()),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete),
-                      onPressed: () => _deleteItem(
-                        context,
-                        dashboardProvider,
-                        items[index].id,
-                        tableName,
-                      ),
+                      onPressed: () =>
+                          _deleteItem(context, items[index], tableName),
                     ),
                   );
                 },
@@ -97,9 +94,11 @@ void _showAddDialog(
 
 void _deleteItem(
   BuildContext context,
-  DashboardProvider provider,
-  int id,
+  PlaylistTrack playlistTrack,
   TableEnum tableName,
-) {
-  provider.deleteByTable(tableName, id);
+) async {
+  await context
+      .read<DashboardProvider>()
+      .deleteByTable(tableName, playlistTrack.toJson());
+  await context.read<DashboardProvider>().fetchByTable(tableName);
 }
