@@ -336,8 +336,8 @@ class Endpoints extends _i1.EndpointDispatch {
         'createPlaylistTrack': _i1.MethodConnector(
           name: 'createPlaylistTrack',
           params: {
-            'playlist': _i1.ParameterDescription(
-              name: 'playlist',
+            'playlistTrack': _i1.ParameterDescription(
+              name: 'playlistTrack',
               type: _i1.getType<_i11.PlaylistTrack>(),
               nullable: false,
             )
@@ -349,7 +349,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (endpoints['playlistTrack'] as _i6.PlaylistTrackEndpoint)
                   .createPlaylistTrack(
             session,
-            params['playlist'],
+            params['playlistTrack'],
           ),
         ),
         'getPlaylistTrack': _i1.MethodConnector(

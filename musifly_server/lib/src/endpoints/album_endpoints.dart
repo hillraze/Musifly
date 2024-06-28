@@ -15,9 +15,10 @@ class AlbumEndpoint extends Endpoint {
     return Album.db.find(
       session,
       include: Album.include(
+        artist: Artist.include(),
         tracks: Track.includeList(
           include: Track.include(
-            artist: Artist.include(),
+            
           ),
         ),
       ),

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:musifly/data/models/track/track.model.dart';
+import 'package:musifly_client/musifly_client.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PositionData {
@@ -19,17 +19,17 @@ class PlayerNotifier extends ChangeNotifier {
 
   AudioPlayer get player => _player;
 
-  TrackModel? _track;
-  TrackModel? get track => _track;
+  Track? _track;
+  Track? get track => _track;
 
-  // set track(TrackModel? newTrack) {
+  // set track(Track? newTrack) {
   //   _track = newTrack;
   //   notifyListeners();
   // }
 
-  void setTrack(TrackModel newTrack) {
+  void setTrack(Track newTrack) {
     _track = newTrack;
-    prepareSource(newTrack.audioLink);
+    prepareSource(newTrack.audioUrl);
     // notifyListeners();
   }
 

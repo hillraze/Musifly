@@ -169,11 +169,11 @@ class EndpointPlaylistTrack extends _i1.EndpointRef {
   String get name => 'playlistTrack';
 
   _i2.Future<_i6.PlaylistTrack> createPlaylistTrack(
-          _i6.PlaylistTrack playlist) =>
+          _i6.PlaylistTrack playlistTrack) =>
       caller.callServerEndpoint<_i6.PlaylistTrack>(
         'playlistTrack',
         'createPlaylistTrack',
-        {'playlist': playlist},
+        {'playlistTrack': playlistTrack},
       );
 
   _i2.Future<_i6.PlaylistTrack?> getPlaylistTrack(int id) =>

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:musifly/analytics/events/core/dependency_squirrel.dart';
-import 'package:musifly/data/models/track/track.model.adapter.dart';
 import 'package:musifly/presentation/navigation/router.dart';
 import 'package:musifly/presentation/providers/home_screen_notifier.dart';
 import 'package:musifly/presentation/providers/player_notifier.dart';
@@ -22,10 +21,10 @@ GlobalKey<NavigatorState> shellKey = GlobalKey();
 
 void main() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(TrackModelAdapter());
+  // Hive.registerAdapter(TrackAdapter());
   await Hive.openBox('storage');
-  await Hive.openBox('playlistName');
-  await Hive.openBox('playlist');
+  // await Hive.openBox('playlistName');
+  // await Hive.openBox('playlist');
   RouterService.init(screenNavigatorKey, shellKey);
 
   await initLocator();

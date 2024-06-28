@@ -24,7 +24,7 @@ class PlaylistEndpoint extends Endpoint {
       include: Playlist.include(
         playlistTracks: PlaylistTrack.includeList(
           include: PlaylistTrack.include(
-            track: Track.include(),
+            track: Track.include(artist: Artist.include()),
           ),
         ),
       ),

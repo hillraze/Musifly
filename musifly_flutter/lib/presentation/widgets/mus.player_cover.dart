@@ -13,17 +13,17 @@ class PlayerCover extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
-    if (notifier.track!.audioLink == Null) {
+    if (notifier.track!.audioUrl == Null) {
       return Skeletonizer(
           containersColor: Colors.grey,
           child: Image.network(
-            notifier.track!.cover,
+            notifier.track!.album?.coverUrl ?? '',
             fit: BoxFit.contain,
             height: context.mediaQuery.size.height * 0.7,
           ));
     } else
       return Image.network(
-        notifier.track!.cover,
+        notifier.track!.album?.coverUrl ?? '',
         fit: BoxFit.contain,
         height: context.mediaQuery.size.height * 0.7,
       );

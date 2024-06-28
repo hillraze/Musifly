@@ -337,10 +337,6 @@
     {
       "module": "serverpod",
       "version": "20240516151843329"
-    },
-    {
-      "module": "musifly",
-      "version": "20240620054425062"
     }
   ],
   "migrationApiVersion": 1

@@ -1,17 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musifly/analytics/events/screen_names.dart';
 import 'package:musifly/core/mus.assets/export.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
-import 'package:musifly/data/models/track/track.model.dart';
+import 'package:musifly_client/musifly_client.dart';
 
 class MusTracks extends StatelessWidget {
   const MusTracks({super.key, required this.data});
 
-  final List<TrackModel> data;
+  final List<Track> data;
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +70,10 @@ class MusTracks extends StatelessWidget {
                           child: Container(
                             height: 50,
                             width: 50,
-                            decoration: track.cover != null
+                            decoration: track.album?.coverUrl != null
                                 ? BoxDecoration(
                                     image: DecorationImage(
-                                    image: NetworkImage(track.cover!),
+                                    image: NetworkImage(track.album!.coverUrl!),
                                   ))
                                 : null,
                           ),
@@ -94,7 +92,7 @@ class MusTracks extends StatelessWidget {
                               ),
                               Flexible(
                                 child: Text(
-                                  track.artist,
+                                  track.artist?.name ?? '',
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: Colors.grey, fontSize: 10),

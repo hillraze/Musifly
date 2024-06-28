@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musifly/analytics/events/screen_names.dart';
-import 'package:musifly/data/models/track/track.model.dart';
 import 'package:musifly/presentation/screens/player/player_screen.dart';
 import 'package:musifly/presentation/screens/playlist/playlist_create.dart';
 import 'package:musifly/presentation/screens/playlist/playlist_screen.dart';
+import 'package:musifly_client/musifly_client.dart';
 
 import '../screens/bottom_bar/bottom_bar_shell.dart';
 import '../screens/favourites/favourites_screen.dart';
@@ -26,7 +26,7 @@ class RouterService {
   late final GoRouter _goRouter;
   GoRouter get goRouter => _goRouter;
 
-  late final List<TrackModel> data;
+  late final List<Track> data;
 
   RouterService._(GlobalKey<NavigatorState> screenNavigatorKey,
       GlobalKey<NavigatorState> shellKey) {

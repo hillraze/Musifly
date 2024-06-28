@@ -36,6 +36,10 @@ class MusAssets {
   static const loop = MusAsset.vector('assets/svg/loop.svg');
   static const addPlaylist = MusAsset.vector('assets/svg/add-playlist.svg');
   static const addSong = MusAsset.vector('assets/svg/add-song.svg');
+  static const defaultCover = MusAsset.vector('assets/svg/defalut-cover.svg');
+  static const addSongFilled =
+      MusAsset.vector('assets/svg/add-song-pressed.svg');
+  static const deleteButton = MusAsset.vector('assets/svg/delete-from.svg');
 
   static const playLoading = MusAsset.vector('assets/svg/play-loading.svg');
 

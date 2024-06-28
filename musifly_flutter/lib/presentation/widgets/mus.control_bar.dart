@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:musifly/analytics/events/core/extentions/context_extentions.dart';
 import 'package:musifly/core/mus.assets/mus.assets.dart';
@@ -64,7 +62,7 @@ class _ControlBarState extends State<ControlBar> {
                               ),
                               Gap(3),
                               Flexible(
-                                child: Text(notifier.track!.artist,
+                                child: Text(notifier.track?.artist?.name ?? '',
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: 16, color: Colors.white)),

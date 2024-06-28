@@ -1,11 +1,10 @@
 import "package:flutter/material.dart";
-
-import "../../data/models/album/album.model.dart";
+import "package:musifly_client/musifly_client.dart";
 
 class MusAlbum extends StatelessWidget {
   const MusAlbum({super.key, required this.data});
 
-  final List<AlbumModel> data;
+  final List<Album> data;
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +56,10 @@ class MusAlbum extends StatelessWidget {
                     Container(
                       height: 160,
                       width: 160,
-                      decoration: data[index].cover.isNotEmpty
+                      decoration: data[index].coverUrl!.isNotEmpty
                           ? BoxDecoration(
                               image: DecorationImage(
-                              image: NetworkImage(data[index].cover),
+                              image: NetworkImage(data[index].coverUrl!),
                             ))
                           : null,
                     ),

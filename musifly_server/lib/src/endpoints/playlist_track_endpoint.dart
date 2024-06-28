@@ -4,7 +4,20 @@ import 'package:serverpod/serverpod.dart';
 class PlaylistTrackEndpoint extends Endpoint {
   Future<PlaylistTrack> createPlaylistTrack(
       Session session, PlaylistTrack playlistTrack) async {
-    return PlaylistTrack.db.insertRow(session, playlistTrack);
+    final result = await PlaylistTrack.db.insertRow(session, playlistTrack);
+    final findResult = await PlaylistTrack.db.findById(
+      session,
+      result.id!,
+      include: PlaylistTrack.include(
+        track: Track.include(
+          artist: Artist.include(),
+        ),
+      ),
+    );
+    if (findResult == null) {
+      return result;
+    }
+    return findResult;
   }
 
   Future<PlaylistTrack?> getPlaylistTrack(Session session, int id) async {
