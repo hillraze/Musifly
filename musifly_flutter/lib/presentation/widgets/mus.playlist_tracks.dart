@@ -128,8 +128,7 @@ class PlaylistTracks extends StatelessWidget {
                                                               GestureDetector(
                                                             onTap: () => {
                                                               notifier.deleteTracks(
-                                                                  playlistTrack
-                                                                      .trackId)
+                                                                  playlistTrack)
                                                             },
                                                             child: const Row(
                                                               children: [

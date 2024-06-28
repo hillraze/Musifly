@@ -138,8 +138,8 @@ class DashboardProvider with ChangeNotifier {
         _playlists.remove(res);
         break;
       case TableEnum.playlistTrack:
-        final res = await apiService
-            .deletePlaylistTrack(PlaylistTrack.fromJson(item).id!);
+        final res =
+            await apiService.deletePlaylistTrack(PlaylistTrack.fromJson(item));
         _playlistTracks.remove(res);
         break;
       default:

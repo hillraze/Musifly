@@ -191,18 +191,19 @@ class EndpointPlaylistTrack extends _i1.EndpointRef {
       );
 
   _i2.Future<_i6.PlaylistTrack> updatePlaylistTrack(
-          _i6.PlaylistTrack playlist) =>
+          _i6.PlaylistTrack playlistTrack) =>
       caller.callServerEndpoint<_i6.PlaylistTrack>(
         'playlistTrack',
         'updatePlaylistTrack',
-        {'playlist': playlist},
+        {'playlistTrack': playlistTrack},
       );
 
-  _i2.Future<_i6.PlaylistTrack> deletePlaylistTrack(int id) =>
+  _i2.Future<_i6.PlaylistTrack> deletePlaylistTrack(
+          _i6.PlaylistTrack playlistTrack) =>
       caller.callServerEndpoint<_i6.PlaylistTrack>(
         'playlistTrack',
         'deletePlaylistTrack',
-        {'id': id},
+        {'playlistTrack': playlistTrack},
       );
 }
 

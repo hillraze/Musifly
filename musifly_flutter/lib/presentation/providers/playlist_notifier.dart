@@ -81,10 +81,10 @@ class PlaylistNotifier extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteTracks(int trackId) async {
+  Future<void> deleteTracks(PlaylistTrack playlistTrack) async {
     try {
       PlaylistTrack deletedTrack =
-          await getIt<ServerpodApi>().deletePlaylistTrack(trackId);
+          await getIt<ServerpodApi>().deletePlaylistTrack(playlistTrack);
       _currentPlaylist!.playlistTracks
           ?.removeWhere((track) => track.id == deletedTrack.id);
       notifyListeners();

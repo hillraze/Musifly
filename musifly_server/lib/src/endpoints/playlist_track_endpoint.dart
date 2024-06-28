@@ -3,7 +3,9 @@ import 'package:serverpod/serverpod.dart';
 
 class PlaylistTrackEndpoint extends Endpoint {
   Future<PlaylistTrack> createPlaylistTrack(
-      Session session, PlaylistTrack playlistTrack) async {
+    Session session,
+    PlaylistTrack playlistTrack,
+  ) async {
     final result = await PlaylistTrack.db.insertRow(session, playlistTrack);
     final findResult = await PlaylistTrack.db.findById(
       session,
@@ -14,10 +16,8 @@ class PlaylistTrackEndpoint extends Endpoint {
         ),
       ),
     );
-    if (findResult == null) {
-      return result;
-    }
-    return findResult;
+
+    return findResult ?? result;
   }
 
   Future<PlaylistTrack?> getPlaylistTrack(Session session, int id) async {
@@ -44,16 +44,16 @@ class PlaylistTrackEndpoint extends Endpoint {
   }
 
   Future<PlaylistTrack> updatePlaylistTrack(
-      Session session, PlaylistTrack playlist) async {
-    return PlaylistTrack.db.updateRow(session, playlist);
+    Session session,
+    PlaylistTrack playlistTrack,
+  ) async {
+    return PlaylistTrack.db.updateRow(session, playlistTrack);
   }
 
-  Future<PlaylistTrack> deletePlaylistTrack(Session session, int id) async {
-    var playlist = await PlaylistTrack.db.findById(session, id);
-    if (playlist == null) {
-      throw Exception('PlaylistTrack not found');
-    }
-    var playlistDeleted = await PlaylistTrack.db.deleteRow(session, playlist);
-    return playlistDeleted;
+  Future<PlaylistTrack> deletePlaylistTrack(
+    Session session,
+    PlaylistTrack playlistTrack,
+  ) {
+    return PlaylistTrack.db.deleteRow(session, playlistTrack);
   }
 }

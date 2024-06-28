@@ -384,8 +384,8 @@ class Endpoints extends _i1.EndpointDispatch {
         'updatePlaylistTrack': _i1.MethodConnector(
           name: 'updatePlaylistTrack',
           params: {
-            'playlist': _i1.ParameterDescription(
-              name: 'playlist',
+            'playlistTrack': _i1.ParameterDescription(
+              name: 'playlistTrack',
               type: _i1.getType<_i11.PlaylistTrack>(),
               nullable: false,
             )
@@ -397,15 +397,15 @@ class Endpoints extends _i1.EndpointDispatch {
               (endpoints['playlistTrack'] as _i6.PlaylistTrackEndpoint)
                   .updatePlaylistTrack(
             session,
-            params['playlist'],
+            params['playlistTrack'],
           ),
         ),
         'deletePlaylistTrack': _i1.MethodConnector(
           name: 'deletePlaylistTrack',
           params: {
-            'id': _i1.ParameterDescription(
-              name: 'id',
-              type: _i1.getType<int>(),
+            'playlistTrack': _i1.ParameterDescription(
+              name: 'playlistTrack',
+              type: _i1.getType<_i11.PlaylistTrack>(),
               nullable: false,
             )
           },
@@ -416,7 +416,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (endpoints['playlistTrack'] as _i6.PlaylistTrackEndpoint)
                   .deletePlaylistTrack(
             session,
-            params['id'],
+            params['playlistTrack'],
           ),
         ),
       },
