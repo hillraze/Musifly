@@ -122,20 +122,19 @@ class DashboardProvider with ChangeNotifier {
       TableEnum tableName, Map<String, dynamic> item) async {
     switch (tableName) {
       case TableEnum.artist:
-        final res = await apiService.deleteArtist(Artist.fromJson(item).id!);
+        final res = await apiService.deleteArtist(Artist.fromJson(item));
         _artists.remove(res);
         break;
       case TableEnum.album:
-        final res = await apiService.deleteAlbum(Album.fromJson(item).id!);
+        final res = await apiService.deleteAlbum(Album.fromJson(item));
         _albums.remove(res);
         break;
       case TableEnum.track:
-        final res = await apiService.deleteTrack(Track.fromJson(item).id!);
+        final res = await apiService.deleteTrack(Track.fromJson(item));
         _tracks.remove(res);
         break;
       case TableEnum.playlist:
-        final res =
-            await apiService.deletePlaylist(Playlist.fromJson(item).id!);
+        final res = await apiService.deletePlaylist(Playlist.fromJson(item));
         _playlists.remove(res);
         break;
       case TableEnum.playlistTrack:

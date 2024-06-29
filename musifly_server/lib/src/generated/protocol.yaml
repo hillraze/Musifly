@@ -1,12 +1,10 @@
-admin:
 album:
   - createAlbum:
   - updateAlbum:
+  - deleteAlbum:
   - getAlbums:
   - getAlbum:
-  - deleteAlbum:
   - getTopAlbums:
-  - getNewAlbums:
 artist:
   - addArtist:
   - getArtists:
@@ -26,6 +24,6 @@ playlistTrack:
   - deletePlaylistTrack:
 track:
   - createTrack:
+  - getTracks:
   - updateTrack:
   - deleteTrack:
-  - getTracks:

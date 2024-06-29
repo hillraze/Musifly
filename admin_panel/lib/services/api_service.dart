@@ -20,8 +20,8 @@ class ApiService {
     return response;
   }
 
-  Future<Artist> deleteArtist(int id) async {
-    final response = await _client.artist.deleteArtist(id);
+  Future<Artist> deleteArtist(Artist artist) async {
+    final response = await _client.artist.deleteArtist(artist);
     return response;
   }
 
@@ -41,8 +41,8 @@ class ApiService {
     return response;
   }
 
-  Future<Album> deleteAlbum(int id) async {
-    final response = await _client.album.deleteAlbum(id);
+  Future<Album> deleteAlbum(Album album) async {
+    final response = await _client.album.deleteAlbum(album);
     return response;
   }
 
@@ -62,8 +62,8 @@ class ApiService {
     return response;
   }
 
-  Future<Track> deleteTrack(int id) async {
-    final response = await _client.track.deleteTrack(id);
+  Future<Track> deleteTrack(Track track) async {
+    final response = await _client.track.deleteTrack(track);
     return response;
   }
 
@@ -83,8 +83,8 @@ class ApiService {
     return response;
   }
 
-  Future<Playlist> deletePlaylist(int id) async {
-    final response = await _client.playlist.deletePlaylist(id);
+  Future<Playlist> deletePlaylist(Playlist playlist) async {
+    final response = await _client.playlist.deletePlaylist(playlist);
     return response;
   }
 

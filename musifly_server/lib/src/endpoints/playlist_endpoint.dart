@@ -31,16 +31,11 @@ class PlaylistEndpoint extends Endpoint {
     );
   }
 
-  Future<Playlist> updatePlaylist(Session session, Playlist playlist) async {
+  Future<Playlist> updatePlaylist(Session session, Playlist playlist) {
     return Playlist.db.updateRow(session, playlist);
   }
 
-  Future<Playlist> deletePlaylist(Session session, int id) async {
-    var playlist = await Playlist.db.findById(session, id);
-    if (playlist == null) {
-      throw Exception('Playlist not found');
-    }
-    var playlistDeleted = await Playlist.db.deleteRow(session, playlist);
-    return playlistDeleted;
+  Future<Playlist> deletePlaylist(Session session, Playlist playlist) {
+    return Playlist.db.deleteRow(session, playlist);
   }
 }

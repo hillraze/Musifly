@@ -1,7 +1,6 @@
 import 'package:admin_panel/core/enums.dart';
 import 'package:admin_panel/presentation/presentation.dart';
 import 'package:flutter/material.dart';
-import 'package:musifly_client/musifly_client.dart';
 import 'package:provider/provider.dart';
 
 import '../form/form_page.dart';
@@ -84,7 +83,6 @@ void _showAddDialog(
       builder: (context) => FormPage(
         tableName: tableName,
         onSubmit: (Map<String, dynamic> newModel) {
-          print("FORM DATA >> ${newModel.toString()}");
           provider.createByTable(tableName, newModel);
         },
       ),
@@ -92,13 +90,10 @@ void _showAddDialog(
   );
 }
 
-void _deleteItem(
-  BuildContext context,
-  PlaylistTrack playlistTrack,
-  TableEnum tableName,
-) async {
+Future<void> _deleteItem(
+    BuildContext context, dynamic item, TableEnum tableName) async {
   await context
       .read<DashboardProvider>()
-      .deleteByTable(tableName, playlistTrack.toJson());
+      .deleteByTable(tableName, item.toJson());
   await context.read<DashboardProvider>().fetchByTable(tableName);
 }

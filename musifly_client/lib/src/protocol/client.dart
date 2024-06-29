@@ -18,14 +18,6 @@ import 'package:musifly_client/src/protocol/track.dart' as _i7;
 import 'protocol.dart' as _i8;
 
 /// {@category Endpoint}
-class EndpointAdmin extends _i1.EndpointRef {
-  EndpointAdmin(_i1.EndpointCaller caller) : super(caller);
-
-  @override
-  String get name => 'admin';
-}
-
-/// {@category Endpoint}
 class EndpointAlbum extends _i1.EndpointRef {
   EndpointAlbum(_i1.EndpointCaller caller) : super(caller);
 
@@ -46,6 +38,13 @@ class EndpointAlbum extends _i1.EndpointRef {
         {'album': album},
       );
 
+  _i2.Future<_i3.Album> deleteAlbum(_i3.Album album) =>
+      caller.callServerEndpoint<_i3.Album>(
+        'album',
+        'deleteAlbum',
+        {'album': album},
+      );
+
   _i2.Future<List<_i3.Album>> getAlbums() =>
       caller.callServerEndpoint<List<_i3.Album>>(
         'album',
@@ -60,24 +59,10 @@ class EndpointAlbum extends _i1.EndpointRef {
         {'id': id},
       );
 
-  _i2.Future<_i3.Album> deleteAlbum(int id) =>
-      caller.callServerEndpoint<_i3.Album>(
-        'album',
-        'deleteAlbum',
-        {'id': id},
-      );
-
   _i2.Future<List<_i3.Album>> getTopAlbums() =>
       caller.callServerEndpoint<List<_i3.Album>>(
         'album',
         'getTopAlbums',
-        {},
-      );
-
-  _i2.Future<List<_i3.Album>> getNewAlbums() =>
-      caller.callServerEndpoint<List<_i3.Album>>(
-        'album',
-        'getNewAlbums',
         {},
       );
 }
@@ -110,11 +95,11 @@ class EndpointArtist extends _i1.EndpointRef {
         {'artist': artist},
       );
 
-  _i2.Future<_i4.Artist> deleteArtist(int id) =>
+  _i2.Future<_i4.Artist> deleteArtist(_i4.Artist artist) =>
       caller.callServerEndpoint<_i4.Artist>(
         'artist',
         'deleteArtist',
-        {'id': id},
+        {'artist': artist},
       );
 }
 
@@ -153,11 +138,11 @@ class EndpointPlaylist extends _i1.EndpointRef {
         {'playlist': playlist},
       );
 
-  _i2.Future<_i5.Playlist> deletePlaylist(int id) =>
+  _i2.Future<_i5.Playlist> deletePlaylist(_i5.Playlist playlist) =>
       caller.callServerEndpoint<_i5.Playlist>(
         'playlist',
         'deletePlaylist',
-        {'id': id},
+        {'playlist': playlist},
       );
 }
 
@@ -221,6 +206,13 @@ class EndpointTrack extends _i1.EndpointRef {
         {'track': track},
       );
 
+  _i2.Future<List<_i7.Track>> getTracks() =>
+      caller.callServerEndpoint<List<_i7.Track>>(
+        'track',
+        'getTracks',
+        {},
+      );
+
   _i2.Future<_i7.Track> updateTrack(_i7.Track track) =>
       caller.callServerEndpoint<_i7.Track>(
         'track',
@@ -228,18 +220,11 @@ class EndpointTrack extends _i1.EndpointRef {
         {'track': track},
       );
 
-  _i2.Future<_i7.Track> deleteTrack(int id) =>
+  _i2.Future<_i7.Track> deleteTrack(_i7.Track track) =>
       caller.callServerEndpoint<_i7.Track>(
         'track',
         'deleteTrack',
-        {'id': id},
-      );
-
-  _i2.Future<List<_i7.Track>> getTracks() =>
-      caller.callServerEndpoint<List<_i7.Track>>(
-        'track',
-        'getTracks',
-        {},
+        {'track': track},
       );
 }
 
@@ -266,15 +251,12 @@ class Client extends _i1.ServerpodClient {
           onFailedCall: onFailedCall,
           onSucceededCall: onSucceededCall,
         ) {
-    admin = EndpointAdmin(this);
     album = EndpointAlbum(this);
     artist = EndpointArtist(this);
     playlist = EndpointPlaylist(this);
     playlistTrack = EndpointPlaylistTrack(this);
     track = EndpointTrack(this);
   }
-
-  late final EndpointAdmin admin;
 
   late final EndpointAlbum album;
 
@@ -288,7 +270,6 @@ class Client extends _i1.ServerpodClient {
 
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
-        'admin': admin,
         'album': album,
         'artist': artist,
         'playlist': playlist,

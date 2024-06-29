@@ -26,12 +26,7 @@ class ArtistEndpoint extends Endpoint {
     return Artist.db.updateRow(session, artist);
   }
 
-  Future<Artist> deleteArtist(Session session, int id) async {
-    var artist = await Artist.db.findById(session, id);
-    if (artist == null) {
-      throw Exception('Artist not found');
-    }
-    var artistDeleted = await Artist.db.deleteRow(session, artist);
-    return artistDeleted;
+  Future<Artist> deleteArtist(Session session, Artist artist) {
+    return Artist.db.deleteRow(session, artist);
   }
 }
