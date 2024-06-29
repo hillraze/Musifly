@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:musifly/analytics/events/screen_names.dart';
 import 'package:musifly/core/core.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
 import 'package:musifly/presentation/providers/playlist_notifier.dart';
@@ -34,8 +36,8 @@ class PlaylistTracks extends StatelessWidget {
                           return GestureDetector(
                             behavior: HitTestBehavior.translucent,
                             onTap: () {
-                              // context.push(ScreenNames.player,
-                              //     extra: {'track': playlistTrack});
+                              context.push(ScreenNames.player,
+                                  extra: {'track': playlistTrack.track});
                             },
                             child: Row(
                               children: [
@@ -127,8 +129,12 @@ class PlaylistTracks extends StatelessWidget {
                                                           child:
                                                               GestureDetector(
                                                             onTap: () => {
-                                                              notifier.deleteTracks(
-                                                                  playlistTrack)
+                                                              context
+                                                                  .read<
+                                                                      PlaylistNotifier>()
+                                                                  .deleteTracks(
+                                                                      playlistTrack),
+                                                              context.pop()
                                                             },
                                                             child: const Row(
                                                               children: [

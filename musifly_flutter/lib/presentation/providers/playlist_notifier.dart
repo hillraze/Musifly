@@ -50,15 +50,15 @@ class PlaylistNotifier extends ChangeNotifier {
     }
   }
 
-  // Future<void> getMyPlaylistTracks() async {
-  //   try {
-  //     _playlist?.playlistTracks =
-  //         await getIt<ServerpodApi>().getPlaylistTracks();
-  //     _logger.info('notifier playlistsTracks is succeful');
-  //   } catch (e) {
-  //     _logger.error("Can't pull playlistTracks");
-  //   }
-  // }
+  Future<void> getMyPlaylistTracks() async {
+    try {
+      _currentPlaylist?.playlistTracks =
+          await getIt<ServerpodApi>().getPlaylistTracks();
+      _logger.info('notifier playlistsTracks is succeful');
+    } catch (e) {
+      _logger.error("Can't pull playlistTracks");
+    }
+  }
 
   Future<void> addTracks(
     int trackId,
@@ -88,6 +88,7 @@ class PlaylistNotifier extends ChangeNotifier {
       _currentPlaylist!.playlistTracks
           ?.removeWhere((track) => track.id == deletedTrack.id);
       notifyListeners();
+      // await getMyPlaylistTracks();
       _logger.info('Delete playlistTrack is successful');
       print('notifier delete');
     } catch (e) {
