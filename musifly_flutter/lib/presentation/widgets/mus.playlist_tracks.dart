@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:musifly/analytics/events/screen_names.dart';
 import 'package:musifly/core/core.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
-import 'package:musifly/presentation/providers/playlist_notifier.dart';
+import 'package:musifly/presentation/screens/playlist/playlist_notifier.dart';
 import 'package:musifly_client/musifly_client.dart';
 import 'package:provider/provider.dart';
 
@@ -46,19 +46,19 @@ class PlaylistTracks extends StatelessWidget {
                                   child: Container(
                                     height: 60,
                                     width: 60,
-                                    // decoration: playlistTrack
-                                    //             .track!.album!.coverUrl !=
-                                    //         null
-                                    //     ? BoxDecoration(
-                                    //         image: DecorationImage(
-                                    //         image: NetworkImage(playlistTrack
-                                    //                 .track!.album!.coverUrl ??
-                                    //             ''),
-                                    //       ))
-                                    //     : null,
-                                    child: const MusAssetImage(
-                                      MusAssets.defaultCover,
-                                    ),
+                                    decoration: playlistTrack
+                                                .track?.album?.coverUrl !=
+                                            null
+                                        ? BoxDecoration(
+                                            image: DecorationImage(
+                                            image: NetworkImage(playlistTrack
+                                                    .track!.album!.coverUrl ??
+                                                ''),
+                                          ))
+                                        : null,
+                                    // child: const MusAssetImage(
+                                    //   MusAssets.defaultCover,
+                                    // ),
                                   ),
                                 ),
                                 const Gap(7),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:musifly/core/mus.assets/export.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
-import 'package:musifly/presentation/providers/playlist_notifier.dart';
+import 'package:musifly/presentation/screens/playlist/playlist_notifier.dart';
 import 'package:musifly_client/musifly_client.dart';
 import 'package:provider/provider.dart';
 

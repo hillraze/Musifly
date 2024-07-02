@@ -37,10 +37,11 @@ class MusBottomBar extends StatelessWidget {
       color: const Color(0xFF192352),
       child: DecoratedBox(
         decoration: const BoxDecoration(
-            // border: Border(top: BorderSide(color: Color(0xFF192352))),
-            // color: Color(0xFF2c3658),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+          border: Border(top: BorderSide(color: Color(0xFF192352))),
+          color: Color(0xFF2c3658),
+          // borderRadius: BorderRadius.only(
+          //     topLeft: Radius.circular(30), topRight: Radius.circular(30))
+        ),
         child: SafeArea(
           child: Padding(
               padding: const EdgeInsets.only(
@@ -81,7 +82,18 @@ class MusBottomBar extends StatelessWidget {
               Column(
                 // mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
+                  Container(
+                    decoration: isSelected
+                        ? const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            boxShadow: [
+                                BoxShadow(
+                                  color: Colors.purple,
+                                  spreadRadius: 10,
+                                  blurRadius: 12,
+                                )
+                              ])
+                        : null,
                     width: 24,
                     height: 24,
                     child: MusAssetImage(

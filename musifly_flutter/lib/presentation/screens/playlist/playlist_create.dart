@@ -4,7 +4,7 @@ import "package:go_router/go_router.dart";
 import "package:musifly/analytics/events/core/extentions/context_extentions.dart";
 import "package:musifly/core/mus.assets/mus.asset_image.dart";
 import "package:musifly/core/mus.assets/mus.assets.dart";
-import "package:musifly/presentation/providers/playlist_notifier.dart";
+import "package:musifly/presentation/screens/playlist/playlist_notifier.dart";
 import "package:provider/provider.dart";
 
 class PlaylistCreate extends StatefulWidget {

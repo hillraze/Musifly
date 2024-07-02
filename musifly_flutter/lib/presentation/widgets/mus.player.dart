@@ -1,16 +1,12 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:musifly/core/mus.assets/mus.asset.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
 import 'package:musifly/core/mus.assets/mus.assets.dart';
-import 'package:musifly/presentation/providers/player_notifier.dart';
+import 'package:musifly/presentation/screens/player/player_notifier.dart';
 import 'package:musifly/presentation/widgets/mus.seekbar.dart';
 import 'package:musifly/utils/show_feature_notification.dart';
 import 'package:provider/provider.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PlayerWidget extends StatefulWidget {
   const PlayerWidget({Key? key}) : super(key: key);

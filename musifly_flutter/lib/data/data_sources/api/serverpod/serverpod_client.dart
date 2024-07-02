@@ -28,6 +28,17 @@ class ServerpodApi {
     }
   }
 
+  Future<List<Artist>> getNewArtists() async {
+    try {
+      final res = await _client.artist.getArtists();
+      _logger.info('client getNewArtists is succeful');
+      return res;
+    } catch (e) {
+      _logger.error(e);
+      rethrow;
+    }
+  }
+
   Future<List<PlaylistTrack>> getPlaylistTracks() async {
     try {
       final res = await _client.playlistTrack.getPlaylistTracks();

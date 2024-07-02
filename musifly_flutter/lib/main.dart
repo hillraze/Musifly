@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:musifly/analytics/events/core/dependency_squirrel.dart';
 import 'package:musifly/presentation/navigation/router.dart';
-import 'package:musifly/presentation/providers/home_screen_notifier.dart';
-import 'package:musifly/presentation/providers/player_notifier.dart';
-import 'package:musifly/presentation/providers/playlist_notifier.dart';
+import 'package:musifly/presentation/screens/home/home_screen_notifier.dart';
+import 'package:musifly/presentation/screens/player/player_notifier.dart';
+import 'package:musifly/presentation/screens/playlist/playlist_notifier.dart';
+import 'package:musifly/presentation/screens/search/search_notifier.dart';
 import 'package:musifly/service_locator.dart';
 import 'package:musifly/utils/theme/mus.theme.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
               create: (_) => musThemeProvider, lazy: false),
           ChangeNotifierProvider(create: (_) => PlayerNotifier()),
           ChangeNotifierProvider(create: (_) => PlaylistNotifier()),
+          ChangeNotifierProvider(create: (_) => SearchNotifier())
         ],
         child: Listen<MusThemeProvider>(builder: (context) {
           return MaterialApp.router(

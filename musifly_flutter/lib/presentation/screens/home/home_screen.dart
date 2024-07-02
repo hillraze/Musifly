@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:gap/gap.dart";
-import "package:musifly/presentation/providers/home_screen_notifier.dart";
+import "package:musifly/presentation/screens/home/home_screen_notifier.dart";
 import "package:provider/provider.dart";
 
 import "../../../core/mus.assets/mus.assets.dart";

@@ -37,7 +37,9 @@ class PlaylistTrackEndpoint extends Endpoint {
       session,
       include: PlaylistTrack.include(
         track: Track.include(
-          artist: Artist.include(),
+          artist: Artist.include(
+            albums: Album.includeList(),
+          ),
         ),
       ),
     );

@@ -3,7 +3,7 @@ import "package:gap/gap.dart";
 import "package:go_router/go_router.dart";
 import "package:musifly/analytics/events/core/extentions/context_extentions.dart";
 import "package:musifly/core/core.dart";
-import "package:musifly/presentation/providers/player_notifier.dart";
+import "package:musifly/presentation/screens/player/player_notifier.dart";
 import "package:musifly/presentation/widgets/mus.player_cover.dart";
 import "package:musifly/utils/show_feature_notification.dart";
 import "package:musifly_client/musifly_client.dart";

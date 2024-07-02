@@ -4,7 +4,7 @@ import "package:go_router/go_router.dart";
 import "package:musifly/core/core.dart";
 import "package:musifly/core/mus.assets/mus.asset_image.dart";
 import "package:musifly/core/mus.assets/mus.assets.dart";
-import "package:musifly/presentation/providers/playlist_notifier.dart";
+import "package:musifly/presentation/screens/playlist/playlist_notifier.dart";
 import "package:musifly/presentation/widgets/mus.add_tracks.dart";
 import "package:musifly/presentation/widgets/mus.playlist_tracks.dart";
 import "package:musifly/utils/show_feature_notification.dart";

@@ -5,7 +5,7 @@ import "package:musifly/analytics/events/screen_names.dart";
 import "package:musifly/core/mus.assets/export.dart";
 import "package:musifly/core/mus.assets/mus.asset_image.dart";
 import "package:musifly/core/mus.assets/mus.assets.dart";
-import "package:musifly/presentation/providers/playlist_notifier.dart";
+import "package:musifly/presentation/screens/playlist/playlist_notifier.dart";
 import "package:musifly/presentation/widgets/mus.my_playlists.dart";
 import "package:provider/provider.dart";
 
@@ -55,9 +55,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
             Consumer<PlaylistNotifier>(builder: (context, notifier, _) {
               return Consumer<PlaylistNotifier>(
                 builder: (context, state, child) {
-                  if (state.playlists.isEmpty) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
                   return MyPlaylists(data: state.playlists);
                 },
               );

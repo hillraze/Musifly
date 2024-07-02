@@ -3,7 +3,7 @@ import 'package:musifly/analytics/mus.logger.dart';
 import 'package:musifly/data/data_sources/api/serverpod/serverpod_client.dart';
 import 'package:musifly_client/musifly_client.dart';
 
-import '../../service_locator.dart';
+import '../../../service_locator.dart';
 
 class HomeProvider extends ChangeNotifier {
   List<Album> _newAlbums = []; // State to store new albums
