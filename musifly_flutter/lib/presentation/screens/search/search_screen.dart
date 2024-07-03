@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:musifly/analytics/events/screen_names.dart';
 import 'package:musifly/core/core.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
 import 'package:musifly/presentation/screens/search/search_notifier.dart';
@@ -88,19 +90,24 @@ class _SearchScreenState extends State<SearchScreen> {
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold)),
                             ),
-                            ...notifier.tracks.map((track) => ListTile(
-                                  contentPadding: EdgeInsets.only(left: 10),
-                                  leading: MusAssetImage(
-                                    MusAssets.defaultCover,
-                                    width: 60,
-                                  ),
-                                  title: Text(track.title,
-                                      style: const TextStyle(
-                                          color: Colors.white, fontSize: 16)),
-                                  subtitle: Text(
-                                    'Artist name',
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 12),
+                            ...notifier.tracks.map((track) => GestureDetector(
+                                  onTap: () => context.push(ScreenNames.player,
+                                      extra: {'track': track}),
+                                  child: ListTile(
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 10),
+                                    leading: const MusAssetImage(
+                                      MusAssets.defaultCover,
+                                      width: 60,
+                                    ),
+                                    title: Text(track.title,
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 16)),
+                                    subtitle: const Text(
+                                      'Artist name',
+                                      style: TextStyle(
+                                          color: Colors.grey, fontSize: 12),
+                                    ),
                                   ),
                                 )),
                           ],
@@ -113,18 +120,26 @@ class _SearchScreenState extends State<SearchScreen> {
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold)),
                             ),
-                            ...notifier.albums.map((album) => ListTile(
-                                  contentPadding:
-                                      EdgeInsets.only(bottom: 10, left: 10),
-                                  leading: Image(
-                                      image: NetworkImage(album.coverUrl!)),
-                                  title: Text(album.title,
+                            ...notifier.albums.map((album) => GestureDetector(
+                                  onTap: () => {
+                                    context.push(ScreenNames.album),
+                                    context
+                                        .read<SearchNotifier>()
+                                        .setAlbum(album)
+                                  },
+                                  child: ListTile(
+                                    contentPadding: const EdgeInsets.only(
+                                        bottom: 10, left: 10),
+                                    leading: Image(
+                                        image: NetworkImage(album.coverUrl!)),
+                                    title: Text(album.title,
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 16)),
+                                    subtitle: Text(
+                                      album.artist!.name,
                                       style: const TextStyle(
-                                          color: Colors.white, fontSize: 16)),
-                                  subtitle: Text(
-                                    album.artist!.name,
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 12),
+                                          color: Colors.grey, fontSize: 12),
+                                    ),
                                   ),
                                 )),
                           ],
@@ -137,20 +152,28 @@ class _SearchScreenState extends State<SearchScreen> {
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold)),
                             ),
-                            ...notifier.artists.map((artist) => ListTile(
-                                  contentPadding:
-                                      EdgeInsets.only(bottom: 10, left: 10),
-                                  leading: MusAssetImage(
-                                    MusAssets.defaultCover,
-                                    width: 60,
-                                  ),
-                                  title: Text(artist.name,
-                                      style:
-                                          const TextStyle(color: Colors.white)),
-                                  subtitle: Text(
-                                    artist.bio,
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 12),
+                            ...notifier.artists.map((artist) => GestureDetector(
+                                  onTap: () => {
+                                    context.push(ScreenNames.artist),
+                                    context
+                                        .read<SearchNotifier>()
+                                        .setArtist(artist)
+                                  },
+                                  child: ListTile(
+                                    contentPadding: const EdgeInsets.only(
+                                        bottom: 10, left: 10),
+                                    leading: const MusAssetImage(
+                                      MusAssets.defaultCover,
+                                      width: 60,
+                                    ),
+                                    title: Text(artist.name,
+                                        style: const TextStyle(
+                                            color: Colors.white)),
+                                    subtitle: Text(
+                                      artist.bio,
+                                      style: const TextStyle(
+                                          color: Colors.grey, fontSize: 12),
+                                    ),
                                   ),
                                 )),
                           ],

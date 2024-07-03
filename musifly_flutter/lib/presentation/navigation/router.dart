@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musifly/analytics/events/screen_names.dart';
+import 'package:musifly/presentation/screens/album/album_screen.dart';
+import 'package:musifly/presentation/screens/artist/artist_screen.dart';
 import 'package:musifly/presentation/screens/player/player_screen.dart';
 import 'package:musifly/presentation/screens/playlist/playlist_create.dart';
 import 'package:musifly/presentation/screens/playlist/playlist_screen.dart';
@@ -81,6 +83,16 @@ class RouterService {
           },
         ),
         GoRoute(
+          path: ScreenNames.album,
+          name: ScreenNames.album,
+          pageBuilder: (ctx, state) {
+            return _rootMaterialPage(
+              AlbumScreen(),
+              ScreenNames.album,
+            );
+          },
+        ),
+        GoRoute(
           path: ScreenNames.playlistCreate,
           name: ScreenNames.playlistCreate,
           pageBuilder: (ctx, state) {
@@ -97,6 +109,16 @@ class RouterService {
             return _rootMaterialPage(
               PlaylistScreen(),
               ScreenNames.playlist,
+            );
+          },
+        ),
+        GoRoute(
+          path: ScreenNames.artist,
+          name: ScreenNames.artist,
+          pageBuilder: (ctx, state) {
+            return _rootMaterialPage(
+              ArtistScreen(),
+              ScreenNames.artist,
             );
           },
         ),

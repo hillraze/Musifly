@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:musifly/analytics/events/core/dependency_squirrel.dart';
 import 'package:musifly/presentation/navigation/router.dart';
+import 'package:musifly/presentation/screens/album/album_notifier.dart';
 import 'package:musifly/presentation/screens/home/home_screen_notifier.dart';
 import 'package:musifly/presentation/screens/player/player_notifier.dart';
 import 'package:musifly/presentation/screens/playlist/playlist_notifier.dart';
@@ -49,7 +50,8 @@ class MyApp extends StatelessWidget {
               create: (_) => musThemeProvider, lazy: false),
           ChangeNotifierProvider(create: (_) => PlayerNotifier()),
           ChangeNotifierProvider(create: (_) => PlaylistNotifier()),
-          ChangeNotifierProvider(create: (_) => SearchNotifier())
+          ChangeNotifierProvider(create: (_) => SearchNotifier()),
+          ChangeNotifierProvider(create: (_) => AlbumNotifier()),
         ],
         child: Listen<MusThemeProvider>(builder: (context) {
           return MaterialApp.router(

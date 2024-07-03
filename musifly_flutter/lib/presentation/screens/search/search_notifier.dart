@@ -17,6 +17,22 @@ class SearchNotifier extends ChangeNotifier {
   List<Artist> _artists = []; // State to store filtered artists
   List<Artist> get artists => _artists;
 
+  Artist? _currentArtist;
+  Artist? get currentArtist => _currentArtist;
+
+  void setArtist(Artist artist) {
+    _currentArtist = artist;
+    notifyListeners();
+  }
+
+  Album? _currentAlbum;
+  Album? get currentAlbum => _currentAlbum;
+
+  void setAlbum(Album album) {
+    _currentAlbum = album;
+    notifyListeners();
+  }
+
   static final _logger = MusLogger("HomeProvider");
 
   Future<void> getNewTracks() async {

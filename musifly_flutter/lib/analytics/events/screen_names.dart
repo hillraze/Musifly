@@ -9,7 +9,19 @@ class ScreenNames {
   static const player = '/player-screen';
   static const playlistCreate = '/create-playlist';
   static const playlist = '/playlist-screen';
+  static const album = '/album-screen';
+  static const artist = '/artist-screen';
 
-  static List<String> get all =>
-      [splash, home, onboard, favourites, search, player, playlistCreate, playlist];
+  static List<String> get all => [
+        splash,
+        home,
+        onboard,
+        favourites,
+        search,
+        player,
+        playlistCreate,
+        playlist,
+        album,
+        artist,
+      ];
 }
