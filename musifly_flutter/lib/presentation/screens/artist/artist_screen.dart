@@ -5,6 +5,8 @@ import 'package:musifly/core/mus.assets/mus.asset_image.dart';
 import 'package:musifly/core/mus.assets/mus.assets.dart';
 import 'package:musifly/presentation/screens/playlist/playlist_notifier.dart';
 import 'package:musifly/presentation/screens/search/search_notifier.dart';
+import 'package:musifly/presentation/widgets/mus.artist_tracks.dart';
+import 'package:musifly/utils/show_feature_notification.dart';
 import 'package:provider/provider.dart';
 
 class ArtistScreen extends StatefulWidget {
@@ -50,7 +52,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
             Center(
               child: Container(
                 width: double.infinity,
-                height: 450,
+                height: 300,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(MusAssets.noteCover.path),
@@ -79,70 +81,106 @@ class _ArtistScreenState extends State<ArtistScreen> {
                               )
                             ],
                             color: Colors.white,
-                            fontSize: 25,
+                            fontSize: 50,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       );
                     }),
-                    const Gap(30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          width: 200,
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: const Text(
-                            '70.5m monthly listeners',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              shadows: [
-                                Shadow(
-                                  color: Color.fromARGB(130, 0, 0, 0),
-                                  blurRadius: 10,
-                                  offset: Offset(0, 1),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
+                    const Gap(15),
                   ],
                 ),
               ),
             ),
             SizedBox(
               width: double.infinity,
-              height: 400,
+              height: 550,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 250,
+                            // height: 100,
+                            padding:
+                                const EdgeInsets.only(bottom: 15, left: 10),
+                            child: const Text(
+                              '70.5m monthly listeners',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                shadows: [
+                                  Shadow(
+                                    color: Color.fromARGB(130, 0, 0, 0),
+                                    blurRadius: 10,
+                                    offset: Offset(0, 1),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Container(
+                              width: 85,
+                              height: 30,
+                              decoration: const BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
+                              child: Center(
+                                child: GestureDetector(
+                                  onTap: () => {
+                                    showFeatureNotification(context),
+                                  },
+                                  child: const Text(
+                                    'Follow',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 14),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                              onTap: () => showFeatureNotification(context),
+                              child: MusAssetImage(MusAssets.shuffle)),
+                          Gap(10),
+                          GestureDetector(
+                            onTap: () => showFeatureNotification(context),
+                            child: MusAssetImage(
+                              MusAssets.play,
+                              width: 70,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const Gap(20),
+                  const Center(
+                      child: Text(
+                    'Popular Songs',
+                    style: TextStyle(fontSize: 30, color: Colors.white),
+                  )),
                   Consumer<SearchNotifier>(builder: (context, notifier, _) {
                     if (notifier.currentArtist == null) {
                       return const CircularProgressIndicator();
                     }
+                    final artist = notifier.currentArtist;
                     // final artistTracks = notifier.currentArtist?.albums.;
-                    return Column(
-                      children: [
-                        const Text(
-                          'Let`s start building your playlist',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                        const Gap(15),
-                        Container(
-                          width: 200,
-                          height: 50,
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(25)),
-                          ),
-                          child: const Text('Add to this playlist'),
-                        ),
-                        const Gap(25),
-                      ],
+                    return ArtistTracks(
+                      tracks: artist!.albums!.single.tracks!,
+                      artistName: artist.name,
                     );
                   }),
                 ],
