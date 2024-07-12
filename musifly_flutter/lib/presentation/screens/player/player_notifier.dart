@@ -54,6 +54,8 @@ class PlayerNotifier extends ChangeNotifier {
     // Try to load audio from a source and catch any errors.
     try {
       // AAC example: https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.aac
+
+      //TAG HERE:
       await _player.setAudioSource(AudioSource.uri(Uri.parse(newTrackUrl)));
       print(_player.audioSource.toString());
 

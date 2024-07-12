@@ -73,6 +73,19 @@ class ServerpodApi {
     }
   }
 
+  Future<Playlist> deletePlaylist(Playlist playlist) async {
+    try {
+      final res = await _client.playlist.deletePlaylist(playlist);
+      _logger.info('client deletePlaylist is succeful');
+      print('playlistTrack deleted');
+      return res;
+    } catch (e) {
+      _logger.error(e);
+      print('ERROR DELETE');
+      rethrow;
+    }
+  }
+
   Future<PlaylistTrack> createPlaylistTrack(PlaylistTrack playlistTrack) async {
     try {
       final res =

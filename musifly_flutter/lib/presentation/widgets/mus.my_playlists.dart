@@ -78,6 +78,75 @@ class MyPlaylists extends StatelessWidget {
                               ],
                             ),
                           ),
+                          GestureDetector(
+                              onTap: () => showModalBottomSheet<void>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.5,
+                                      decoration: const BoxDecoration(
+                                          color: Color.fromARGB(255, 31, 31,
+                                              31), // Darker grey color
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(25),
+                                            topRight: Radius.circular(25),
+                                          )),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 20, left: 20),
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Consumer<PlaylistNotifier>(
+                                                  builder:
+                                                      (context, notifier, _) {
+                                                return Container(
+                                                  // height: 20,
+                                                  // width: 100,
+                                                  child: GestureDetector(
+                                                    onTap: () => {
+                                                      context
+                                                          .read<
+                                                              PlaylistNotifier>()
+                                                          .deletePlaylist(
+                                                              playlist),
+                                                      context.pop()
+                                                    },
+                                                    child: const Row(
+                                                      children: [
+                                                        MusAssetImage(MusAssets
+                                                            .deleteButton),
+                                                        Gap(15),
+                                                        Text(
+                                                          'Delete from this playlist',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 16),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: const MusAssetImage(
+                                  MusAssets.vdots,
+                                  width: 5,
+                                ),
+                              ))
+
                           // Spacer(),
                           // const Gap(5),
                           // Consumer<PlaylistNotifier>(

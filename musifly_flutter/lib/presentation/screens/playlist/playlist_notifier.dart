@@ -96,6 +96,20 @@ class PlaylistNotifier extends ChangeNotifier {
     }
   }
 
+  Future<void> deletePlaylist(Playlist playlist) async {
+    try {
+      Playlist deletedPlaylist =
+          await getIt<ServerpodApi>().deletePlaylist(playlist);
+      _currentPlaylist = deletedPlaylist;
+      notifyListeners();
+      _logger.info('Delete playlist is successful');
+      print('notifier delete');
+    } catch (e) {
+      _logger.error("Can't delete playlist: $e");
+      // print('$e');
+    }
+  }
+
   Future<void> createPlaylist(String name, DateTime createdAt) async {
     try {
       final playlist = Playlist(name: name, createdAt: createdAt);
