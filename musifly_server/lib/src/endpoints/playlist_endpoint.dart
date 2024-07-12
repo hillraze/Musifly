@@ -35,7 +35,20 @@ class PlaylistEndpoint extends Endpoint {
     return Playlist.db.updateRow(session, playlist);
   }
 
-  Future<Playlist> deletePlaylist(Session session, Playlist playlist) {
-    return Playlist.db.deleteRow(session, playlist);
+  Future<Playlist> deletePlaylist(Session session, Playlist playlist) async {
+    return await session.db.transaction((transaction) async {
+      try {
+        // First, delete all associated playlist tracks
+        await PlaylistTrack.db.deleteWhere(session,
+            where: (t) => t.playlistId.equals(playlist.id));
+
+        // Then, delete the playlist
+        return await Playlist.db.deleteRow(session, playlist);
+      } catch (e) {
+        print('Error deleting playlist: $e');
+        transaction.cancel(); // Cancel the transaction if an error occurs
+        rethrow;
+      }
+    });
   }
 }

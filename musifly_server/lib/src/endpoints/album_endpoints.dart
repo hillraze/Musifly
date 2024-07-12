@@ -12,7 +12,20 @@ class AlbumEndpoint extends Endpoint {
   }
 
   Future<Album> deleteAlbum(Session session, Album album) {
-    return Album.db.deleteRow(session, album);
+    return session.db.transaction((transaction) async {
+      try {
+        // First, delete all associated album tracks
+        await Track.db
+            .deleteWhere(session, where: (t) => t.albumId.equals(album.id));
+
+        // Then, delete the album
+        return await Album.db.deleteRow(session, album);
+      } catch (e) {
+        print('Error deleting playlist: $e');
+        transaction.cancel(); // Cancel the transaction if an error occurs
+        rethrow;
+      }
+    });
   }
 
   Future<List<Album>> getAlbums(Session session) async {

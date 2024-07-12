@@ -27,6 +27,19 @@ class ArtistEndpoint extends Endpoint {
   }
 
   Future<Artist> deleteArtist(Session session, Artist artist) {
-    return Artist.db.deleteRow(session, artist);
+    return session.db.transaction((transaction) async {
+      try {
+        // First, delete all associated albums
+        await Album.db
+            .deleteWhere(session, where: (a) => a.artistId.equals(artist.id));
+        // Then, delete the artist
+        await Artist.db.deleteRow(session, artist);
+        return artist;
+      } catch (e) {
+        print('Error deleting playlist: $e');
+        transaction.cancel(); // Cancel the transaction if an error occurs
+        rethrow;
+      }
+    });
   }
 }
