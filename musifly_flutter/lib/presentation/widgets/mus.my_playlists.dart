@@ -8,11 +8,16 @@ import 'package:musifly/presentation/screens/playlist/playlist_notifier.dart';
 import 'package:musifly_client/musifly_client.dart';
 import 'package:provider/provider.dart';
 
-class MyPlaylists extends StatelessWidget {
+class MyPlaylists extends StatefulWidget {
   const MyPlaylists({super.key, required this.data});
 
   final List<Playlist> data;
 
+  @override
+  State<MyPlaylists> createState() => _MyPlaylistsState();
+}
+
+class _MyPlaylistsState extends State<MyPlaylists> {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -25,13 +30,13 @@ class MyPlaylists extends StatelessWidget {
             return GridView.builder(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
-                itemCount: data.length,
+                itemCount: widget.data.length,
                 padding: const EdgeInsets.only(left: 11),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 1,
                     mainAxisExtent: constraints.maxWidth * 0.2),
                 itemBuilder: (BuildContext context, int index) {
-                  final playlist = data[index];
+                  final playlist = widget.data[index];
                   final playlistLength = playlist.playlistTracks?.length;
                   return Consumer<PlaylistNotifier>(
                       builder: (context, notifier, _) {

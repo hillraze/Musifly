@@ -77,7 +77,7 @@ class ServerpodApi {
     try {
       final res = await _client.playlist.deletePlaylist(playlist);
       _logger.info('client deletePlaylist is succeful');
-      print('playlistTrack deleted');
+      print('playlist deleted');
       return res;
     } catch (e) {
       _logger.error(e);

@@ -22,10 +22,53 @@ class PlayerNotifier extends ChangeNotifier {
   Track? _track;
   Track? get track => _track;
 
+  Track? _nextTrack;
+  Track? get nextTrack => _nextTrack;
+
+  List<Track>? _trackList;
+  List<Track>? get trackList => _trackList;
+
   // set track(Track? newTrack) {
   //   _track = newTrack;
   //   notifyListeners();
   // }
+
+  void setTrackList(List<PlaylistTrack> playlistTracks, Track thisTrack) {
+    _trackList = playlistTracks
+        .map((pt) => Track(
+            audioUrl: pt.track!.audioUrl,
+            title: pt.track!.title,
+            albumId: pt.track!.albumId,
+            artist: pt.track!.artist,
+            album: pt.track!.album,
+            artistId: pt.track!.artistId))
+        .toList();
+    setTrack(thisTrack);
+  }
+
+  void skipToNextTrack() {
+    if (_trackList != null && _track != null) {
+      int currentIndex = _trackList!.indexOf(_track!);
+      if (currentIndex + 1 < _trackList!.length) {
+        setTrack(_trackList![currentIndex + 1]);
+      } else {
+        setTrack(_trackList![0]); // Loop back to the first track
+      }
+      notifyListeners();
+    }
+  }
+
+  void skipToPreviousTrack() {
+    if (_trackList != null && _track != null) {
+      int currentIndex = _trackList!.indexOf(_track!);
+      if (currentIndex - 1 >= 0) {
+        setTrack(_trackList![currentIndex - 1]);
+      } else {
+        setTrack(_trackList!.last); // Loop back to the last track
+      }
+      notifyListeners();
+    }
+  }
 
   void setTrack(Track newTrack) {
     _track = newTrack;

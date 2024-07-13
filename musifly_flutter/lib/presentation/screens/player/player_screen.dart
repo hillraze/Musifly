@@ -1,17 +1,18 @@
 import "package:flutter/material.dart";
 import "package:gap/gap.dart";
 import "package:go_router/go_router.dart";
+import "package:just_audio/just_audio.dart";
 import "package:musifly/analytics/events/core/extentions/context_extentions.dart";
 import "package:musifly/core/core.dart";
 import "package:musifly/presentation/screens/player/player_notifier.dart";
 import "package:musifly/presentation/widgets/mus.player_cover.dart";
+import "package:musifly/presentation/widgets/mus.seekbar.dart";
 import "package:musifly/utils/show_feature_notification.dart";
 import "package:musifly_client/musifly_client.dart";
 import "package:provider/provider.dart";
 
 import "../../../core/mus.assets/mus.asset_image.dart";
 import "../../../core/mus.assets/mus.assets.dart";
-import "../../widgets/mus.control_bar.dart";
 
 class PlayerScreen extends StatefulWidget {
   const PlayerScreen({required this.extra, super.key});
@@ -26,7 +27,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
   void initState() {
     super.initState();
     Track track = widget.extra['track'];
-    context.read<PlayerNotifier>().setTrack(track);
+    List<PlaylistTrack> playlistTracks = widget.extra['tracks'];
+    context.read<PlayerNotifier>().setTrackList(playlistTracks, track);
   }
 
   @override
@@ -106,15 +108,199 @@ class _PlayerScreenState extends State<PlayerScreen> {
               alignment: Alignment.center,
               children: [
                 // MusAssetImage(MusAssets.playerBackground, fit: BoxFit.fill),
+
+                //COVER:
                 Positioned(top: 0, child: PlayerCover(notifier: notifier)),
-                const Positioned(bottom: 0, child: ControlBar()),
-                // Positioned(
-                //     bottom: 0,
-                //     child: Container(
-                //       width: 200,
-                //       height: 200,
-                //       color: Colors.yellow,
-                //     ))
+
+                // CONTROL BAR:
+                Positioned(
+                    bottom: 0,
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            topRight: Radius.circular(50)),
+                        color: Color(0xFF1A2447),
+                      ),
+                      width: context.mediaQuery.size.width,
+                      height: 361,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(
+                                  top: 30, left: 20, right: 20),
+                              child: Center(
+                                child: SizedBox(
+                                  height: 57,
+                                  // width: 327,
+
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Consumer<PlayerNotifier>(
+                                          builder: (context, notifier, _) {
+                                        if (notifier.track == null) {
+                                          return Center(
+                                              child:
+                                                  CircularProgressIndicator());
+                                        }
+                                        return Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Flexible(
+                                                child: Text(
+                                                  notifier.track!.title,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                      fontSize: 22,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              Gap(3),
+                                              Flexible(
+                                                child: Text(
+                                                    notifier.track?.artist
+                                                            ?.name ??
+                                                        '',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.white)),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }),
+                                      Spacer(),
+                                      GestureDetector(
+                                          onTap: () =>
+                                              showFeatureNotification(context),
+                                          child: MusAssetImage(
+                                            MusAssets.favouritesFilled,
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Gap(35),
+
+                            //PLAYER CONTROLS:
+                            Consumer<PlayerNotifier>(
+                                builder: (context, notifier, _) {
+                              // final color = Theme.of(context).primaryColor;
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  StreamBuilder<PositionData>(
+                                      stream: notifier.positionDataStream,
+                                      builder: (context, snapshot) {
+                                        final positionData = snapshot.data;
+                                        return SeekBar(
+                                          duration: positionData?.duration ??
+                                              Duration.zero,
+                                          position: positionData?.position ??
+                                              Duration.zero,
+                                          bufferedPosition:
+                                              positionData?.bufferedPosition ??
+                                                  Duration.zero,
+                                          onChangeEnd: notifier.player.seek,
+                                        );
+                                      }),
+                                  Gap(35),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        icon: MusAssetImage(MusAssets.repeat),
+                                        iconSize: 64.0,
+                                        onPressed: () =>
+                                            showFeatureNotification(context),
+                                      ),
+                                      IconButton(
+                                        onPressed: () =>
+                                            // showFeatureNotification(context),
+                                            context
+                                                .read<PlayerNotifier>()
+                                                .skipToPreviousTrack(),
+                                        icon: MusAssetImage(MusAssets.backward),
+                                        iconSize: 64.0,
+                                      ),
+                                      StreamBuilder<PlayerState>(
+                                        stream:
+                                            notifier.player.playerStateStream,
+                                        builder: (context, snapshot) {
+                                          final playerState = snapshot.data;
+                                          final processingState =
+                                              playerState?.processingState;
+                                          final playing = playerState?.playing;
+
+                                          if (processingState ==
+                                              ProcessingState.completed) {
+                                            notifier.player.seek(Duration.zero);
+                                            notifier.player.play();
+                                          }
+
+                                          if (processingState ==
+                                                  ProcessingState.loading ||
+                                              processingState ==
+                                                  ProcessingState.buffering) {
+                                            return IconButton(
+                                              icon: const MusAssetImage(
+                                                  MusAssets.playLoading),
+                                              iconSize: 64.0,
+                                              onPressed: () => null,
+                                            );
+                                          } else if (playing != true) {
+                                            return IconButton(
+                                              icon: const MusAssetImage(
+                                                  MusAssets.play),
+                                              iconSize: 64.0,
+                                              onPressed: notifier.playTrack,
+                                            );
+                                          } else {
+                                            return IconButton(
+                                              icon: const MusAssetImage(
+                                                  MusAssets.pause),
+                                              iconSize: 64.0,
+                                              onPressed: notifier.pauseTrack,
+                                            );
+                                          }
+                                        },
+                                      ),
+                                      IconButton(
+                                          onPressed: () =>
+                                              // showFeatureNotification(context),
+                                              context
+                                                  .read<PlayerNotifier>()
+                                                  .skipToNextTrack(),
+                                          icon:
+                                              MusAssetImage(MusAssets.forward),
+                                          iconSize: 64.0),
+                                      IconButton(
+                                          onPressed: () =>
+                                              showFeatureNotification(context),
+                                          icon:
+                                              MusAssetImage(MusAssets.shuffle))
+                                    ],
+                                  ),
+                                ],
+                              );
+                            })
+                          ],
+                        ),
+                      ),
+                    )),
               ],
             ),
           ),

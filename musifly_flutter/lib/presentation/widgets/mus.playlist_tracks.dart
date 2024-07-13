@@ -36,8 +36,10 @@ class PlaylistTracks extends StatelessWidget {
                           return GestureDetector(
                             behavior: HitTestBehavior.translucent,
                             onTap: () {
-                              context.push(ScreenNames.player,
-                                  extra: {'track': playlistTrack.track});
+                              context.push(ScreenNames.player, extra: {
+                                'track': playlistTrack.track,
+                                'tracks': data
+                              });
                             },
                             child: Row(
                               children: [
