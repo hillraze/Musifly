@@ -1,160 +1,76 @@
 import 'dart:async';
 
-import 'package:audio_session/audio_session.dart';
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:musifly_client/musifly_client.dart';
-import 'package:rxdart/rxdart.dart';
-
-class PositionData {
-  final Duration position;
-  final Duration bufferedPosition;
-  final Duration duration;
-
-  PositionData(this.position, this.bufferedPosition, this.duration);
-}
 
 class PlayerNotifier extends ChangeNotifier {
-  final _player = AudioPlayer();
+  final AudioHandler _audioHandler;
+  Timer? _positionTimer;
+  Duration _currentPosition = Duration.zero;
 
-  AudioPlayer get player => _player;
+  PlayerNotifier(this._audioHandler) {
+    _positionTimer = Timer.periodic(Duration(seconds: 1), (_) {
+      _updatePosition();
+    });
+  }
 
-  Track? _track;
-  Track? get track => _track;
+  AudioHandler get audioHandler => _audioHandler;
 
-  Track? _nextTrack;
-  Track? get nextTrack => _nextTrack;
+  MediaItem? get currentTrack => _audioHandler.mediaItem.value;
 
-  List<Track>? _trackList;
-  List<Track>? get trackList => _trackList;
+  Duration get currentPosition => _currentPosition;
 
-  // set track(Track? newTrack) {
-  //   _track = newTrack;
-  //   notifyListeners();
-  // }
+  void _updatePosition() {
+    _audioHandler.playbackState.first.then((playbackState) {
+      _currentPosition = playbackState.position;
+      notifyListeners();
+    });
+  }
 
   void setTrackList(List<PlaylistTrack> playlistTracks, Track thisTrack) {
-    _trackList = playlistTracks
-        .map((pt) => Track(
-            audioUrl: pt.track!.audioUrl,
-            title: pt.track!.title,
-            albumId: pt.track!.albumId,
-            artist: pt.track!.artist,
-            album: pt.track!.album,
-            artistId: pt.track!.artistId))
+    final mediaItems = playlistTracks
+        .map((pt) => MediaItem(
+              id: pt.track!.id.toString(),
+              album: pt.track!.album?.title ?? '',
+              title: pt.track!.title,
+              artist: pt.track!.artist?.name ?? '',
+              artUri: Uri.parse(
+                  'https://static.mp3xa.me/album_images/400x400/bianca-tilici-sincer.jpg'),
+              extras: {'url': pt.track!.audioUrl},
+            ))
         .toList();
+
+    _audioHandler.addQueueItems(mediaItems);
     setTrack(thisTrack);
   }
 
-  void skipToNextTrack() {
-    if (_trackList != null && _track != null) {
-      int currentIndex = _trackList!.indexOf(_track!);
-      if (currentIndex + 1 < _trackList!.length) {
-        setTrack(_trackList![currentIndex + 1]);
-      } else {
-        setTrack(_trackList![0]); // Loop back to the first track
-      }
-      notifyListeners();
-    }
-  }
-
-  void skipToPreviousTrack() {
-    if (_trackList != null && _track != null) {
-      int currentIndex = _trackList!.indexOf(_track!);
-      if (currentIndex - 1 >= 0) {
-        setTrack(_trackList![currentIndex - 1]);
-      } else {
-        setTrack(_trackList!.last); // Loop back to the last track
-      }
-      notifyListeners();
-    }
-  }
+  void skipToNextTrack() => _audioHandler.skipToNext();
+  void skipToPreviousTrack() => _audioHandler.skipToPrevious();
 
   void setTrack(Track newTrack) {
-    _track = newTrack;
-    prepareSource(newTrack.audioUrl);
-    // notifyListeners();
+    final mediaItem = MediaItem(
+      id: newTrack.id.toString(),
+      album: newTrack.album?.title ?? '',
+      title: newTrack.title,
+      artist: newTrack.artist?.name ?? '',
+      extras: {'url': newTrack.audioUrl},
+    );
+    _audioHandler.addQueueItem(mediaItem);
+    _audioHandler.skipToQueueItem(0);
   }
 
-  Future<void> playTrack() async {
-    unawaited(player.play());
-  }
+  Future<void> playTrack() async => _audioHandler.play();
+  void pauseTrack() => _audioHandler.pause();
 
-  void pauseTrack() {
-    player.pause();
-  }
-
-  Future<void> prepareSource(String newTrackUrl) async {
-    // Inform the operating system of our app's audio attributes etc.
-    // We pick a reasonable default for an app that plays speech.
-    final session = await AudioSession.instance;
-    await session.configure(const AudioSessionConfiguration.speech());
-    // Listen to errors during playback.
-    _player.playbackEventStream.listen((event) {},
-        onError: (Object e, StackTrace stackTrace) {
-      print('A stream error occurred: $e');
-    });
-    // Try to load audio from a source and catch any errors.
-    try {
-      // AAC example: https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.aac
-
-      //TAG HERE:
-      await _player.setAudioSource(AudioSource.uri(Uri.parse(newTrackUrl)));
-      print(_player.audioSource.toString());
-
-      final oldTrackUrl = _player.audioSource.toString();
-
-      // case: we already prepared this track
-      if (newTrackUrl == oldTrackUrl) return;
-
-      // use resetPlayer when trackUrl is declared now or just updated
-      //
-
-      print('before setSource: ${_player.audioSource} ');
-      // await _player
-      //     .setSource(DeviceFileSource(newTrackUrl, mimeType: 'audio/mpeg'));
-
-      print('after setSource: ${_player.audioSource} ');
-      // await _player.resume();
-      print('end of preparesource');
-      notifyListeners();
-    } on PlayerException catch (e) {
-      print("Error loading audio source: $e");
-    }
-    notifyListeners();
-  }
+  Future<void> seek(Duration position) => _audioHandler.seek(position);
 
   @override
   void dispose() {
-    ambiguate(WidgetsBinding.instance)!
-        .removeObserver(this as WidgetsBindingObserver);
-    // Release decoders and buffers back to the operating system making them
-    // available for other apps to use.
-    _player.dispose();
+    _positionTimer?.cancel();
     super.dispose();
-    notifyListeners();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused) {
-      // Release the player's resources when not in use. We use "stop" so that
-      // if the app resumes later, it will still remember what position to
-      // resume from.
-      _player.stop();
-    }
-    notifyListeners();
-  }
-
-  /// Collects the data useful for displaying in a seek bar, using a handy
-  /// feature of rx_dart to combine the 3 streams of interest into one.
-  Stream<PositionData> get positionDataStream =>
-      Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
-          _player.positionStream,
-          _player.bufferedPositionStream,
-          _player.durationStream,
-          (position, bufferedPosition, duration) => PositionData(
-              position, bufferedPosition, duration ?? Duration.zero));
+  Stream<MediaItem?> get currentTrackStream => _audioHandler.mediaItem;
+  Stream<PlaybackState> get playbackStateStream => _audioHandler.playbackState;
 }
-
-T? ambiguate<T>(T? value) => value;

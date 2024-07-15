@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:musifly/analytics/events/core/extentions/context_extentions.dart';
-import 'package:musifly/presentation/screens/player/player_notifier.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PlayerCover extends StatelessWidget {
-  PlayerCover({super.key, required this.notifier});
-  PlayerNotifier notifier;
+  PlayerCover({super.key});
   // required this.cover
   // String cover;
 
@@ -13,20 +10,11 @@ class PlayerCover extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
-    if (notifier.track!.audioUrl == Null) {
-      return Skeletonizer(
-          containersColor: Colors.grey,
-          child: Image.network(
-            notifier.track!.album?.coverUrl ?? '',
-            fit: BoxFit.contain,
-            height: context.mediaQuery.size.height * 0.7,
-          ));
-    } else
-      return Image.network(
-        notifier.track!.album?.coverUrl ?? '',
-        fit: BoxFit.contain,
-        height: context.mediaQuery.size.height * 0.7,
-      );
+    return Image.network(
+      'https://static.mp3xa.me/album_images/400x400/bianca-tilici-sincer.jpg',
+      fit: BoxFit.contain,
+      height: context.mediaQuery.size.height * 0.7,
+    );
     // Container(
     //     height: context.mediaQuery.size.height,
     //     width: context.mediaQuery.size.width,

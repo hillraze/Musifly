@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  serverpod_flutter:  2.0.0
+  serverpod_flutter: 2.0.0
   musifly_client:
     path: ../musifly_client
 
@@ -54,6 +54,9 @@ dependencies:
   just_audio: ^0.9.38
   audio_session: ^0.1.19
   rxdart: ^0.27.7
+  just_audio_background: ^0.0.1-beta.10
+  audio_service: ^0.18.10
+  mockito: ^5.4.4
 
 dev_dependencies:
   flutter_test:

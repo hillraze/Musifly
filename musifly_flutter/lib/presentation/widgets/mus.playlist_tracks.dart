@@ -46,22 +46,16 @@ class PlaylistTracks extends StatelessWidget {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Container(
-                                    height: 60,
-                                    width: 60,
-                                    decoration: playlistTrack
-                                                .track?.album?.coverUrl !=
-                                            null
-                                        ? BoxDecoration(
-                                            image: DecorationImage(
-                                            image: NetworkImage(playlistTrack
-                                                    .track!.album!.coverUrl ??
-                                                ''),
-                                          ))
-                                        : null,
-                                    // child: const MusAssetImage(
-                                    //   MusAssets.defaultCover,
-                                    // ),
-                                  ),
+                                      height: 60,
+                                      width: 60,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  'https://static.mp3xa.me/album_images/400x400/bianca-tilici-sincer.jpg')))
+                                      // child: const MusAssetImage(
+                                      //   MusAssets.defaultCover,
+                                      // ),
+                                      ),
                                 ),
                                 const Gap(7),
                                 Expanded(

@@ -7,13 +7,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:musifly/main.dart';
+import 'package:musifly/presentation/widgets/mus.mockAutoHandler.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    // Create a mock AudioHandler
+    final mockAudioHandler = MockAudioHandler();
+
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp(audioHandler: mockAudioHandler));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

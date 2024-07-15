@@ -1,18 +1,17 @@
-import "package:flutter/material.dart";
-import "package:gap/gap.dart";
-import "package:go_router/go_router.dart";
-import "package:just_audio/just_audio.dart";
-import "package:musifly/analytics/events/core/extentions/context_extentions.dart";
-import "package:musifly/core/core.dart";
-import "package:musifly/presentation/screens/player/player_notifier.dart";
-import "package:musifly/presentation/widgets/mus.player_cover.dart";
-import "package:musifly/presentation/widgets/mus.seekbar.dart";
-import "package:musifly/utils/show_feature_notification.dart";
-import "package:musifly_client/musifly_client.dart";
-import "package:provider/provider.dart";
+import 'package:audio_service/audio_service.dart';
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:musifly/core/core.dart';
+import 'package:musifly/presentation/screens/player/player_notifier.dart';
+import 'package:musifly/presentation/widgets/mus.player_cover.dart';
+import 'package:musifly/presentation/widgets/mus.seekbar.dart';
+import 'package:musifly/utils/show_feature_notification.dart';
+import 'package:musifly_client/musifly_client.dart';
+import 'package:provider/provider.dart';
 
-import "../../../core/mus.assets/mus.asset_image.dart";
-import "../../../core/mus.assets/mus.assets.dart";
+import '../../../core/mus.assets/mus.asset_image.dart';
+import '../../../core/mus.assets/mus.assets.dart';
 
 class PlayerScreen extends StatefulWidget {
   const PlayerScreen({required this.extra, super.key});
@@ -36,7 +35,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.transparent,
-      // backgroundColor: const Color(0xFF192352),
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () => context.pop(),
@@ -58,7 +56,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
             ),
           ),
         ),
-        // backgroundColor: const Color(0xFF192352),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -95,67 +92,55 @@ class _PlayerScreenState extends State<PlayerScreen> {
         backgroundColor: Colors.transparent,
       ),
       body: Consumer<PlayerNotifier>(builder: (context, notifier, _) {
-        if (notifier.track == null) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        return Container(
-          // color: Colors.red,
-          height: context.mediaQuery.size.height,
-          width: context.mediaQuery.size.width,
-          child: Center(
-            child: Stack(
-              // fit: StackFit.expand,
-              alignment: Alignment.center,
-              children: [
-                // MusAssetImage(MusAssets.playerBackground, fit: BoxFit.fill),
-
-                //COVER:
-                Positioned(top: 0, child: PlayerCover(notifier: notifier)),
-
-                // CONTROL BAR:
-                Positioned(
-                    bottom: 0,
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(50),
-                            topRight: Radius.circular(50)),
-                        color: Color(0xFF1A2447),
-                      ),
-                      width: context.mediaQuery.size.width,
-                      height: 361,
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  top: 30, left: 20, right: 20),
-                              child: Center(
-                                child: SizedBox(
-                                  height: 57,
-                                  // width: 327,
-
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Consumer<PlayerNotifier>(
-                                          builder: (context, notifier, _) {
-                                        if (notifier.track == null) {
-                                          return Center(
-                                              child:
-                                                  CircularProgressIndicator());
-                                        }
-                                        return Expanded(
+        return StreamBuilder<MediaItem?>(
+          stream: notifier.currentTrackStream,
+          builder: (context, snapshot) {
+            final mediaItem = snapshot.data;
+            if (mediaItem == null) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned(top: 0, child: PlayerCover()),
+                    Positioned(
+                      bottom: 0,
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                              topRight: Radius.circular(50)),
+                          color: Color(0xFF1A2447),
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        height: 361,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(
+                                    top: 30, left: 20, right: 20),
+                                child: Center(
+                                  child: SizedBox(
+                                    height: 57,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Flexible(
                                                 child: Text(
-                                                  notifier.track!.title,
+                                                  mediaItem.title,
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   style: TextStyle(
@@ -168,9 +153,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                               Gap(3),
                                               Flexible(
                                                 child: Text(
-                                                    notifier.track?.artist
-                                                            ?.name ??
-                                                        '',
+                                                    mediaItem.artist ?? '',
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     style: TextStyle(
@@ -179,131 +162,120 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                               ),
                                             ],
                                           ),
-                                        );
-                                      }),
-                                      Spacer(),
-                                      GestureDetector(
-                                          onTap: () =>
-                                              showFeatureNotification(context),
-                                          child: MusAssetImage(
-                                            MusAssets.favouritesFilled,
-                                          ))
-                                    ],
+                                        ),
+                                        Spacer(),
+                                        GestureDetector(
+                                            onTap: () =>
+                                                showFeatureNotification(
+                                                    context),
+                                            child: MusAssetImage(
+                                              MusAssets.favouritesFilled,
+                                            ))
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Gap(35),
+                              Gap(35),
+                              StreamBuilder<PlaybackState>(
+                                stream: notifier.playbackStateStream,
+                                builder: (context, snapshot) {
+                                  final playbackState = snapshot.data;
+                                  final processingState =
+                                      playbackState?.processingState;
+                                  final playing = playbackState?.playing;
 
-                            //PLAYER CONTROLS:
-                            Consumer<PlayerNotifier>(
-                                builder: (context, notifier, _) {
-                              // final color = Theme.of(context).primaryColor;
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  StreamBuilder<PositionData>(
-                                      stream: notifier.positionDataStream,
-                                      builder: (context, snapshot) {
-                                        final positionData = snapshot.data;
-                                        return SeekBar(
-                                          duration: positionData?.duration ??
-                                              Duration.zero,
-                                          position: positionData?.position ??
-                                              Duration.zero,
-                                          bufferedPosition:
-                                              positionData?.bufferedPosition ??
-                                                  Duration.zero,
-                                          onChangeEnd: notifier.player.seek,
-                                        );
-                                      }),
-                                  Gap(35),
-                                  Row(
+                                  return Column(
                                     mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      IconButton(
-                                        icon: MusAssetImage(MusAssets.repeat),
-                                        iconSize: 64.0,
-                                        onPressed: () =>
-                                            showFeatureNotification(context),
-                                      ),
-                                      IconButton(
-                                        onPressed: () =>
-                                            // showFeatureNotification(context),
-                                            context
-                                                .read<PlayerNotifier>()
-                                                .skipToPreviousTrack(),
-                                        icon: MusAssetImage(MusAssets.backward),
-                                        iconSize: 64.0,
-                                      ),
-                                      StreamBuilder<PlayerState>(
-                                        stream:
-                                            notifier.player.playerStateStream,
-                                        builder: (context, snapshot) {
-                                          final playerState = snapshot.data;
-                                          final processingState =
-                                              playerState?.processingState;
-                                          final playing = playerState?.playing;
-
+                                    children: <Widget>[
+                                      if (playbackState != null)
+                                        ListenableBuilder(
+                                            listenable: notifier,
+                                            builder: (context, _) {
+                                              return SeekBar(
+                                                duration: mediaItem.duration ??
+                                                    Duration.zero,
+                                                position:
+                                                    notifier.currentPosition,
+                                                bufferedPosition: playbackState
+                                                    .bufferedPosition,
+                                                onChangeEnd:
+                                                    notifier.audioHandler.seek,
+                                              );
+                                            }),
+                                      Gap(35),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconButton(
+                                            icon:
+                                                MusAssetImage(MusAssets.repeat),
+                                            iconSize: 64.0,
+                                            onPressed: () =>
+                                                showFeatureNotification(
+                                                    context),
+                                          ),
+                                          IconButton(
+                                            onPressed:
+                                                notifier.skipToPreviousTrack,
+                                            icon: MusAssetImage(
+                                                MusAssets.backward),
+                                            iconSize: 64.0,
+                                          ),
                                           if (processingState ==
-                                              ProcessingState.completed) {
-                                            notifier.player.seek(Duration.zero);
-                                            notifier.player.play();
-                                          }
-
-                                          if (processingState ==
-                                                  ProcessingState.loading ||
+                                                  AudioProcessingState
+                                                      .loading ||
                                               processingState ==
-                                                  ProcessingState.buffering) {
-                                            return IconButton(
+                                                  AudioProcessingState
+                                                      .buffering)
+                                            IconButton(
                                               icon: const MusAssetImage(
                                                   MusAssets.playLoading),
                                               iconSize: 64.0,
-                                              onPressed: () => null,
-                                            );
-                                          } else if (playing != true) {
-                                            return IconButton(
+                                              onPressed: null,
+                                            )
+                                          else if (playing != true)
+                                            IconButton(
                                               icon: const MusAssetImage(
                                                   MusAssets.play),
                                               iconSize: 64.0,
                                               onPressed: notifier.playTrack,
-                                            );
-                                          } else {
-                                            return IconButton(
+                                            )
+                                          else
+                                            IconButton(
                                               icon: const MusAssetImage(
                                                   MusAssets.pause),
                                               iconSize: 64.0,
                                               onPressed: notifier.pauseTrack,
-                                            );
-                                          }
-                                        },
+                                            ),
+                                          IconButton(
+                                              onPressed:
+                                                  notifier.skipToNextTrack,
+                                              icon: MusAssetImage(
+                                                  MusAssets.forward),
+                                              iconSize: 64.0),
+                                          IconButton(
+                                              onPressed: () =>
+                                                  showFeatureNotification(
+                                                      context),
+                                              icon: MusAssetImage(
+                                                  MusAssets.shuffle))
+                                        ],
                                       ),
-                                      IconButton(
-                                          onPressed: () =>
-                                              // showFeatureNotification(context),
-                                              context
-                                                  .read<PlayerNotifier>()
-                                                  .skipToNextTrack(),
-                                          icon:
-                                              MusAssetImage(MusAssets.forward),
-                                          iconSize: 64.0),
-                                      IconButton(
-                                          onPressed: () =>
-                                              showFeatureNotification(context),
-                                          icon:
-                                              MusAssetImage(MusAssets.shuffle))
                                     ],
-                                  ),
-                                ],
-                              );
-                            })
-                          ],
+                                  );
+                                },
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    )),
-              ],
-            ),
-          ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
         );
       }),
     );
