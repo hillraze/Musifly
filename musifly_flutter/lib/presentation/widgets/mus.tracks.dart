@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:musifly/analytics/events/screen_names.dart';
 import 'package:musifly/core/mus.assets/export.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
+import 'package:musifly/presentation/screens/player/player_notifier.dart';
 import 'package:musifly_client/musifly_client.dart';
+import 'package:provider/provider.dart';
 
 class MusTracks extends StatelessWidget {
   const MusTracks({super.key, required this.data});
@@ -61,7 +63,8 @@ class MusTracks extends StatelessWidget {
                   return GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTap: () {
-                      context.push(ScreenNames.player, extra: {'track': track});
+                      context.read<PlayerNotifier>().setTrack(track);
+                      context.push(ScreenNames.player);
                     },
                     child: Row(
                       children: [

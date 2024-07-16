@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:musifly/analytics/events/screen_names.dart';
 import 'package:musifly/core/core.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
+import 'package:musifly/presentation/screens/player/player_notifier.dart';
 import 'package:musifly/presentation/screens/playlist/playlist_notifier.dart';
 import 'package:musifly_client/musifly_client.dart';
 import 'package:provider/provider.dart';
@@ -36,10 +37,10 @@ class PlaylistTracks extends StatelessWidget {
                           return GestureDetector(
                             behavior: HitTestBehavior.translucent,
                             onTap: () {
-                              context.push(ScreenNames.player, extra: {
-                                'track': playlistTrack.track,
-                                'tracks': data
-                              });
+                              context
+                                  .read<PlayerNotifier>()
+                                  .setTrackList(data, playlistTrack);
+                              context.push(ScreenNames.player);
                             },
                             child: Row(
                               children: [
@@ -51,7 +52,7 @@ class PlaylistTracks extends StatelessWidget {
                                       decoration: BoxDecoration(
                                           image: DecorationImage(
                                               image: NetworkImage(
-                                                  'https://static.mp3xa.me/album_images/400x400/bianca-tilici-sincer.jpg')))
+                                                  'https://static.mp3xa.me/album_images/400x400/tyla-tyla.jpg')))
                                       // child: const MusAssetImage(
                                       //   MusAssets.defaultCover,
                                       // ),

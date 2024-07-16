@@ -28,7 +28,8 @@ class PlayerNotifier extends ChangeNotifier {
     });
   }
 
-  void setTrackList(List<PlaylistTrack> playlistTracks, Track thisTrack) {
+  void setTrackList(
+      List<PlaylistTrack> playlistTracks, PlaylistTrack? thisTrack) {
     final mediaItems = playlistTracks
         .map((pt) => MediaItem(
               id: pt.track!.id.toString(),
@@ -36,13 +37,16 @@ class PlayerNotifier extends ChangeNotifier {
               title: pt.track!.title,
               artist: pt.track!.artist?.name ?? '',
               artUri: Uri.parse(
-                  'https://static.mp3xa.me/album_images/400x400/bianca-tilici-sincer.jpg'),
+                  'https://static.mp3xa.me/album_images/400x400/tyla-tyla.jpg'),
               extras: {'url': pt.track!.audioUrl},
             ))
         .toList();
-
-    _audioHandler.addQueueItems(mediaItems);
-    setTrack(thisTrack);
+    if (thisTrack != null) {
+      _audioHandler.addQueueItems(mediaItems);
+      int _index = playlistTracks.indexOf(thisTrack);
+      _audioHandler.skipToQueueItem(_index);
+    }
+    // setTrack(thisTrack);
   }
 
   void skipToNextTrack() => _audioHandler.skipToNext();
@@ -57,7 +61,6 @@ class PlayerNotifier extends ChangeNotifier {
       extras: {'url': newTrack.audioUrl},
     );
     _audioHandler.addQueueItem(mediaItem);
-    _audioHandler.skipToQueueItem(0);
   }
 
   Future<void> playTrack() async => _audioHandler.play();

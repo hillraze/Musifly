@@ -11,7 +11,7 @@ class PlayerCover extends StatelessWidget {
     BuildContext context,
   ) {
     return Image.network(
-      'https://static.mp3xa.me/album_images/400x400/bianca-tilici-sincer.jpg',
+      'https://static.mp3xa.me/album_images/400x400/tyla-tyla.jpg',
       fit: BoxFit.contain,
       height: context.mediaQuery.size.height * 0.7,
     );

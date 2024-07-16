@@ -75,9 +75,9 @@ class RouterService {
           path: ScreenNames.player,
           name: ScreenNames.player,
           pageBuilder: (ctx, state) {
-            Map<String, dynamic> extra;
+            // Map<String, dynamic> extra;
             return _rootMaterialPage(
-              PlayerScreen(extra: state.extra as Map<String, dynamic>),
+              PlayerScreen(),
               ScreenNames.player,
             );
           },

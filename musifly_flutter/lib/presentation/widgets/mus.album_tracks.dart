@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:musifly/analytics/events/screen_names.dart';
 import 'package:musifly/core/core.dart';
 import 'package:musifly/core/mus.assets/mus.asset_image.dart';
+import 'package:musifly/presentation/screens/player/player_notifier.dart';
 import 'package:musifly/presentation/screens/search/search_notifier.dart';
 import 'package:musifly_client/musifly_client.dart';
 import 'package:provider/provider.dart';
@@ -42,8 +43,10 @@ class AlbumTracks extends StatelessWidget {
                           return GestureDetector(
                             behavior: HitTestBehavior.translucent,
                             onTap: () {
-                              context.push(ScreenNames.player,
-                                  extra: {'track': albumTrack});
+                              context
+                                  .read<PlayerNotifier>()
+                                  .setTrack(albumTrack);
+                              context.push(ScreenNames.player);
                             },
                             child: Row(
                               children: [
